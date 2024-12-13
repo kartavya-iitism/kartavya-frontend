@@ -12,6 +12,8 @@ import AuthVerify from '../../helper/JWTVerify';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+// include otp verification in this file itself
+
 export default function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setformData] = useState({
