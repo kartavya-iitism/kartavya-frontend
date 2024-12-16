@@ -1,5 +1,5 @@
 // LoginForm.js
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -43,26 +43,21 @@ export default function LoginForm() {
         setError(false);
 
         try {
-            // const response = await axios.post(
-            //     `LINK`,
-            //     formData,
-            //     {
-            //         headers: {
-            //             'Content-type': 'application/json; charset=UTF-8',
-            //         },
-            //     }
-            // );
-            const response = {
-                data: {
-                    message: "HELLO"
+            const response = await axios.post(
+                `http://localhost:3000/user/login`,
+                formData,
+                {
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
                 }
-            }
+            );
             setLoading(false);
-            if (response.data.message === 'Login Successful') {
+            if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('role', response.data.role);
                 setSuccess(true);
-                navigate('/profile');
+                navigate('/');
             } else {
                 setError(true);
                 setErrorMessage(response.data.message);
@@ -82,19 +77,26 @@ export default function LoginForm() {
     }, []);
 
     return (
-        <Box className="login-container">
-            <div className="form-container">
+        <div className="login-form-container">
+            <Box
+                className="form-box"
+                component="form"
+                noValidate
+                autoComplete="off"
+                style={{ margin: "2.5%" }}
+            >
                 <h1>LogIn</h1>
                 <TextField
+                    required
                     label="Username"
-                    id="outlined-start-adornment"
-                    sx={{ m: 1, width: '100%' }}
-                    value={formData.username}
                     name="username"
+                    value={formData.username}
                     onChange={handleChange}
+                    fullWidth
+                    style={{ marginTop: '20px' }}
                 />
-                <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                <FormControl sx={{ mt: '20px', mb: '20px', width: '100%' }} variant="outlined">
+                    <InputLabel required htmlFor="outlined-adornment-password">Password</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-password"
                         type={showPassword ? 'text' : 'password'}
@@ -112,6 +114,7 @@ export default function LoginForm() {
                         label="Password"
                         value={formData.password}
                         name="password"
+                        fullWidth
                         onChange={handleChange}
                     />
                 </FormControl>
@@ -121,16 +124,16 @@ export default function LoginForm() {
                 >
                     Login
                 </Button>
-                {success ? <div>Login Successful</div> : <React.Fragment></React.Fragment>}
-                {error ? <div>{errorMessage}</div> : <React.Fragment></React.Fragment>}
-                {loading ? <div>Please Wait...</div> : <React.Fragment></React.Fragment>}
+                {success && <div>Login Successful</div>}
+                {error && <div>{errorMessage}</div>}
+                {loading && <div>Please Wait...</div>}
                 <div className="new-user">
                     <p>Don&apos;t have an account?
                         <a href="/register" className="register-link">Register</a>
                     </p>
                 </div>
-            </div>
+            </Box>
+        </div>
 
-        </Box>
     );
 }
