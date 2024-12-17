@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-// import axios from 'axios';
+import axios from 'axios';
 
 export default function DonationForm() {
     const [formData, setformData] = useState({
@@ -41,10 +41,29 @@ export default function DonationForm() {
         setLoading(true);
         setSuccess(false);
         setError(false);
-
+        const ReactFormData = new FormData();
+        for (let prop in formData) {
+            ReactFormData.append(prop, formData[prop]);
+        }
+        ReactFormData.append('reciept', reciept, reciept.name);
+        console.log(ReactFormData);
         try {
-            console.log(user)
+            const response = await axios.post(
+                `http://localhost:3000/donation`,
+                ReactFormData,
+                {
+                    headers: {
+                        'Content-Type': `multipart/form-data`,
+                    },
+                }
+            );
             setLoading(false);
+            if (response.status === 201) {
+                setSuccess(true);
+            } else {
+                setError(true);
+                setErrorMessage(response.data.message);
+            }
         } catch (err) {
             setLoading(false);
             setError(true);
@@ -53,7 +72,7 @@ export default function DonationForm() {
     };
     useEffect(() => {
         setLoading(true);
-        setUser(localStorage.getItem('user'))
+        setUser(JSON.parse(localStorage.getItem('user')))
         setLoading(false);
     }, []);
 
@@ -96,11 +115,47 @@ export default function DonationForm() {
                     fullWidth
                     style={{ marginTop: '20px' }}
                 />
+                <TextField
+                    required
+                    label="Date of Donation"
+                    name="donationDate"
+                    value={formData.donationDate}
+                    onChange={handleChange}
+                    fullWidth
+                    style={{ marginTop: '20px' }}
+                />
+                <TextField
+                    required
+                    label="Amount"
+                    name="amount"
+                    value={formData.amount}
+                    onChange={handleChange}
+                    fullWidth
+                    style={{ marginTop: '20px' }}
+                />
+                <div>
+                    <input
+                        type="file"
+                        className="form-control"
+                        id="material"
+                        name="material"
+                        onChange={handleRecieptChange}
+                    />
+                </div>
+                <TextField
+                    required
+                    label="Number of Children"
+                    name="numChild"
+                    value={formData.numChild}
+                    onChange={handleChange}
+                    fullWidth
+                    style={{ marginTop: '20px' }}
+                />
                 <Button
                     onClick={handleSubmit}
                     variant="contained"
                 >
-                    Login
+                    Donate
                 </Button>
                 {success && <div>Login Successful</div>}
                 {error && <div>{errorMessage}</div>}
