@@ -70,7 +70,7 @@ export default function App() {
                             </>
                             :
                             <>
-                                <MDBBtn outline style={{ width: '98px' }} onClick={() => navigate('/user/login')} color="success" className='me-2' type='button'>
+                                <MDBBtn outline style={{ width: '98px' }} onClick={() => navigate('/login')} color="success" className='me-2' type='button'>
                                     Login
                                 </MDBBtn>
                                 <MDBBtn outline style={{ width: '128px' }} onClick={() => navigate('/user/register')} color="success" className='me-2' type='button'>

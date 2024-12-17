@@ -4,9 +4,10 @@ import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import LandingPage from "./pages/Landing";
 import RegisterForm from "./pages/user/Registration";
-import AdminLoginForm from "./pages/admin/Login";
-import UserLoginForm from "./pages/user/Login";
+import LoginForm from "./pages/Login";
 import Navbar from "./components/Navbar"
+import Profile from "./pages/user/Profile"
+import DonationForm from "./pages/Donate";
 
 function App() {
 
@@ -23,15 +24,17 @@ function App() {
           path="/user/register"
           element={<RegisterForm />}
         />
-
         <Route
-          path="/admin/login"
-          element={<AdminLoginForm />}
+          path="/login"
+          element={<LoginForm />}
         />
-
         <Route
-          path="/user/login"
-          element={<UserLoginForm />}
+          path="/user/profile"
+          element={<Profile />}
+        />
+        <Route
+          path="/donate"
+          element={<DonationForm />}
         />
       </Routes>
     </React.Fragment>

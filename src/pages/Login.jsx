@@ -11,7 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from 'axios';
-import AuthVerify from '../../helper/JWTVerify';
+import AuthVerify from '../helper/JWTVerify';
 
 export default function LoginForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -55,9 +55,14 @@ export default function LoginForm() {
             setLoading(false);
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
-                localStorage.setItem('role', response.data.role);
+                localStorage.setItem('user', JSON.stringify(response.data.user));
                 setSuccess(true);
-                navigate('/');
+                if (response.data.role !== "admin") {
+                    navigate('/user/profile');
+                }
+                else {
+                    navigate('/admin/dashboard')
+                }
             } else {
                 setError(true);
                 setErrorMessage(response.data.message);
