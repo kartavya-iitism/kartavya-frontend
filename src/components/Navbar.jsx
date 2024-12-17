@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
     MDBNavbar,
     MDBContainer,
@@ -10,7 +10,6 @@ import {
     MDBBtn,
     MDBNavbarNav,
     MDBIcon,
-    MDBInputGroup
 } from 'mdb-react-ui-kit';
 
 import { useNavigate } from "react-router-dom";
@@ -20,7 +19,7 @@ export default function App() {
     const [openNavNoTogglerThird, setOpenNavNoTogglerThird] = useState(false);
     const navigate = useNavigate();
     const handleLogout = () => {
-        localStorage.removeItem("token")
+        localStorage.clear()
         window.location.reload();
     }
 

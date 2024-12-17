@@ -130,9 +130,9 @@ export default function RegisterForm() {
         }
     };
 
-    const token = localStorage.getItem('token');
     useEffect(() => {
         setLoading(true);
+        const token = localStorage.getItem('token');
         if (AuthVerify(token)) navigate('/');
         setLoading(false);
     }, []);

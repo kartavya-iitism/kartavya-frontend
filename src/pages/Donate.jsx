@@ -33,8 +33,6 @@ export default function DonationForm() {
             [fieldName]: value,
         }));
     };
-    const [user, setUser] = useState();
-
     const handleSubmit = async (evt) => {
         evt.preventDefault();
 
@@ -72,9 +70,19 @@ export default function DonationForm() {
     };
     useEffect(() => {
         setLoading(true);
-        setUser(JSON.parse(localStorage.getItem('user')))
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        setformData({
+            name: storedUser ? storedUser.name : '',
+            contactNumber: storedUser ? storedUser.contactNumber : '',
+            email: storedUser ? storedUser.email : '',
+            numChild: '',
+            amount: '',
+            donationDate: ''
+        })
         setLoading(false);
     }, []);
+
+
 
 
     return (
