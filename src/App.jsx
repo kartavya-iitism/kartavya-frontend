@@ -4,10 +4,11 @@ import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import LandingPage from "./pages/Landing";
 import RegisterForm from "./pages/user/Registration";
-import LoginForm from "./pages/Login";
-import Navbar from "./components/Navbar"
+import LoginForm from "./pages/Login/Login";
+import Navbar from "./components/Navbar/Navbar"
 import Profile from "./pages/user/Profile"
-import DonationForm from "./pages/Donate";
+import DonationForm from "./pages/Donate/Donate";
+import Footer from "./components/Footer/Footer";
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
           element={<DonationForm />}
         />
       </Routes>
+      <Footer />
     </React.Fragment>
   )
 }

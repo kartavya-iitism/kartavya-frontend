@@ -1,0 +1,186 @@
+/* General styles for nav items */
+.navbar {
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Nav link styles */
+.navbar-nav .nav-link {
+    position: relative;
+    color: #000000 !important;
+    font-weight: 500;
+    margin: 0 15px;
+    padding: 0px 0;
+    transition: color 0.3s ease;
+}
+
+/* Underline animation for nav links */
+.navbar-nav .nav-link::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #24a845;
+    transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #023964 !important;
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 100%;
+}
+
+/* Active nav link state */
+.navbar-nav .nav-link.active {
+    color: #24a845 !important;
+}
+
+.navbar-nav .nav-link.active::after {
+    width: 100%;
+}
+
+/* Button styles */
+.btn-outline-success {
+    border: 2px solid #24a845 !important;
+    color: #24a845 !important;
+    font-weight: 500;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-outline-success::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: #24a845;
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.btn-outline-success:hover {
+    color: white !important;
+}
+
+.btn-outline-success:hover::before {
+    left: 0;
+}
+
+/* Special Donate Button Style */
+.btn-donate {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+    border: none !important;
+    padding: 10px 25px;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    transition: all 0.3s ease;
+    transform-origin: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+/* Text styling */
+.btn-donate span {
+    position: relative;
+    z-index: 2;
+    color: white !important;
+    font-weight: 600;
+}
+
+/* Gradient overlay */
+.btn-donate::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: "white";
+    /* background: linear-gradient(45deg, #ff8e53, #ff6b6b); */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.btn-donate:hover {
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+.btn-donate:hover::before {
+    opacity: 1;
+}
+
+.btn-donate:active {
+    transform: translateY(1px);
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(255, 107, 107, 0.5);
+    }
+    100% {
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    }
+}
+
+.btn-donate {
+    animation: pulse 2s infinite;
+}
+/* Mobile navigation styles */
+@media (max-width: 991px) {
+    .navbar-nav {
+        padding: 20px 0;
+    }
+
+    .navbar-nav .nav-link {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .btn {
+        margin: 8px 0 !important;
+        width: 200px !important;
+    }
+}
+
+/* Collapse/Expand animation */
+.navbar-collapse {
+    transition: height 0.3s ease;
+}
+
+/* Navbar toggler animation */
+.navbar-toggler {
+    border: none;
+    padding: 10px;
+    transition: transform 0.3s ease;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+/* Add fade-in animation for nav items */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

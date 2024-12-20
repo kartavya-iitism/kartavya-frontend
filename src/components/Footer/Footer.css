@@ -1,0 +1,18 @@
+.text-reset {
+    text-decoration: none !important;
+}
+.logo-footer {
+    width: 200px;
+    height: auto;
+    margin-top: -20px;
+}
+a {
+    color: inherit;
+}
+a:hover {
+    color: #24a845;
+}
+h6 {
+    margin-bottom: 0;
+    align-self: center;
+}

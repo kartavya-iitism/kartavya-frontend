@@ -1,0 +1,161 @@
+.donation-form-container {
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+}
+
+.form-box {
+    max-width: 600px;
+    margin: 0 auto !important;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.5s ease forwards;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-box h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/* Custom TextField Styles */
+.custom-textfield {
+    margin-bottom: 20px !important;
+}
+
+.custom-textfield .MuiOutlinedInput-root {
+    transition: all 0.3s ease;
+}
+
+.custom-textfield
+    .MuiOutlinedInput-root:hover
+    .MuiOutlinedInput-notchedOutline {
+    border-color: #ff6b6b;
+}
+
+.custom-textfield
+    .MuiOutlinedInput-root.Mui-focused
+    .MuiOutlinedInput-notchedOutline {
+    border-color: #ff6b6b;
+    border-width: 2px;
+}
+
+.custom-textfield .MuiInputLabel-root.Mui-focused {
+    color: #ff6b6b;
+}
+
+/* File Input Styles */
+.file-input-container {
+    margin: 20px 0;
+    position: relative;
+}
+
+.file-input-label {
+    display: block;
+    padding: 15px;
+    background: #f8f9fa;
+    border: 2px dashed #ff8e53;
+    border-radius: 10px;
+    text-align: center;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-input-label:hover {
+    background: #fff;
+    border-color: #ff6b6b;
+}
+
+.file-input {
+    display: none;
+}
+
+/* Submit Button Styles */
+.submit-button {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e53) !important;
+    color: white !important;
+    padding: 12px 30px !important;
+    border-radius: 25px !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    letter-spacing: 1px !important;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3) !important;
+    transition: all 0.3s ease !important;
+    width: 100%;
+    margin-top: 20px !important;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4) !important;
+}
+
+/* Status Messages */
+.status-message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.loading-message {
+    background-color: #e9ecef;
+    color: #666;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Register Link Styles */
+.new-user {
+    margin-top: 20px;
+    text-align: center;
+    color: #666;
+}
+
+.register-link {
+    color: #ff6b6b;
+    text-decoration: none;
+    margin-left: 5px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.register-link:hover {
+    color: #ff8e53;
+    text-decoration: underline;
+}

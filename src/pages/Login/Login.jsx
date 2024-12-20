@@ -11,7 +11,8 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from 'axios';
-import AuthVerify from '../helper/JWTVerify';
+import AuthVerify from '../../helper/JWTVerify';
+import './Login.css'
 
 export default function LoginForm() {
     const [showPassword, setShowPassword] = useState(false);
