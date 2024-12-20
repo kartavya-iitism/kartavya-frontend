@@ -127,7 +127,7 @@ const ChangePasswordDialog = ({ open, onClose, username }) => {
     );
 };
 
-// Prop validation
+
 ChangePasswordDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     username: PropTypes.string.isRequired,
