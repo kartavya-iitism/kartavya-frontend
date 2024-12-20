@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import IconButton from '@mui/material/IconButton';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
-import { FormLabel, RadioGroup, Radio, FormControlLabel } from '@mui/material';
+import { useState, useEffect } from 'react';
+import {
+    Box,
+    TextField,
+    OutlinedInput,
+    IconButton,
+    InputLabel,
+    InputAdornment,
+    FormControl,
+    FormLabel,
+    RadioGroup,
+    Radio,
+    FormControlLabel,
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Typography,
+} from '@mui/material';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import Button from '@mui/material/Button';
 import AuthVerify from '../../helper/JWTVerify';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-// include otp verification in this file itself
 
 export default function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -33,9 +41,10 @@ export default function RegisterForm() {
         yearsOfServiceStart: "",
         yearsOfServiceEnd: ""
     });
-    const [otpEmail, setOtpEmail] = useState("")
-    const [profilePicture, setProfilePicture] = useState()
+    const [otpEmail, setOtpEmail] = useState("");
+    const [profilePicture, setProfilePicture] = useState();
     const [success, setSuccess] = useState(false);
+    const [otpDialogOpen, setOtpDialogOpen] = useState(false);
     const [otpSuccess, setOtpSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -50,39 +59,37 @@ export default function RegisterForm() {
             [fieldName]: (fieldName === "governmentOfficial" || fieldName === "ismPassout" || fieldName === "kartavyaVolunteer") ? value === "true" : value,
         }));
     };
+
     const handleProfilePictureChange = (e) => {
-        console.log(e.target.files)
         setProfilePicture(e.target.files[0]);
-    }
+    };
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
+
     const handleSubmit = async (evt) => {
         evt.preventDefault();
-
         setLoading(true);
         setSuccess(false);
         setError(false);
-        console.log(formData)
-        console.log(profilePicture)
+
         const ReactFormData = new FormData();
         for (let prop in formData) {
             ReactFormData.append(prop, formData[prop]);
         }
-        ReactFormData.append('profilePicture', profilePicture, profilePicture.name);
-        console.log(ReactFormData);
+        if (profilePicture) {
+            ReactFormData.append('profilePicture', profilePicture, profilePicture?.name);
+        }
+
         try {
             const response = await axios.post(
                 `http://localhost:3000/user/register`,
                 ReactFormData,
-                {
-                    headers: {
-                        'Content-Type': `multipart/form-data`,
-                    },
-                }
+                { headers: { 'Content-Type': `multipart/form-data` } }
             );
             setLoading(false);
             if (response.status === 201) {
                 setSuccess(true);
+                setOtpDialogOpen(true); // Open the OTP dialog after successful registration
             } else {
                 setError(true);
                 setErrorMessage(response.data.message);
@@ -94,40 +101,39 @@ export default function RegisterForm() {
         }
     };
 
-
-    const handleSubmitOtp = async (evt) => {
-        evt.preventDefault();
+    const handleOtpSubmit = async () => {
         setLoading(true);
         setOtpSuccess(false);
         setError(false);
         const data = {
             username: formData.username,
             otpEmail: otpEmail
-        }
-        console.log(data)
+        };
         try {
+            console.log(data)
             const response = await axios.post(
                 `http://localhost:3000/user/verify`,
                 data,
-                {
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8"
-                    },
-                }
+                { headers: { "Content-type": "application/json; charset=UTF-8" } }
             );
             setLoading(false);
-            if (response.status === 201) {
+            if (response.status === 200) {
                 setOtpSuccess(true);
+                setOtpDialogOpen(false); // Close the dialog on success
             } else {
                 setError(true);
                 setErrorMessage(response.data.message);
             }
         } catch (err) {
-            console.log(err)
             setLoading(false);
             setError(true);
             setErrorMessage(err.response.data.message);
         }
+    };
+
+    const handleOtpDialogClose = () => {
+        setOtpDialogOpen(false);
+        setOtpEmail("");
     };
 
     useEffect(() => {
@@ -139,7 +145,6 @@ export default function RegisterForm() {
 
     return (
         <div className="register-form-container">
-
             <Box
                 className="form-box"
                 component="form"
@@ -380,41 +385,38 @@ export default function RegisterForm() {
                         </> : <></>
                 }
 
-                {(!success) &&
-                    <Button onClick={handleSubmit} variant="contained" style={{ marginTop: '20px' }}>
-                        Register
-                    </Button>
-                }
-                {success &&
-                    <React.Fragment>
-                        <FormControl component="fieldset" style={{ marginTop: '20px', width: '100%' }}>
-                            <FormLabel component="legend">
-                                Please enter the OTP received on your Email.
-                            </FormLabel>
-                            <TextField
-                                required
-                                label="OTP"
-                                name="otpEmail"
-                                value={otpEmail}
-                                onChange={(e) => setOtpEmail(e.target.value)}
-                                fullWidth
-                                style={{ marginTop: '5px' }}
-                            />
 
-                        </FormControl>
-                        <Button onClick={handleSubmitOtp} variant="contained" style={{ marginTop: '20px' }}>
+                <Button onClick={handleSubmit} variant="contained" style={{ marginTop: '20px' }} disabled={success}>
+                    Register
+                </Button>
+
+                {error && <div>{errorMessage}</div>}
+                {loading && <div>Registering...</div>}
+                {otpSuccess && <div>OTP Verified Successfully! Please <a href='/login'>Login</a></div>}
+
+                <Dialog open={otpDialogOpen} onClose={handleOtpDialogClose}>
+                    <DialogTitle>OTP Verification</DialogTitle>
+                    <DialogContent>
+                        <Typography>Please enter the OTP sent to your email:</Typography>
+                        <TextField
+                            required
+                            label="OTP"
+                            name="otpEmail"
+                            value={otpEmail}
+                            onChange={(e) => setOtpEmail(e.target.value)}
+                            fullWidth
+                            style={{ marginTop: '10px' }}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleOtpDialogClose} color="secondary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleOtpSubmit} variant="contained" color="primary">
                             Verify
                         </Button>
-                    </React.Fragment>
-                }
-                {error && <div>{errorMessage}</div>}
-                {loading && <div>Registering</div>}
-                {otpSuccess && <div>OTP Verified Succesfully</div>}
-                <div className="old-user" style={{ marginTop: "1em" }}>
-                    <p>Already have an account?
-                        <a href="/login" className="login-link" >Login</a>
-                    </p>
-                </div>
+                    </DialogActions>
+                </Dialog>
             </Box>
         </div>
     );

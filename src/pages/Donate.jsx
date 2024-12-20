@@ -47,7 +47,7 @@ export default function DonationForm() {
         console.log(ReactFormData);
         try {
             const response = await axios.post(
-                `http://localhost:3000/donation`,
+                `http://localhost:3000/donation/new`,
                 ReactFormData,
                 {
                     headers: {
