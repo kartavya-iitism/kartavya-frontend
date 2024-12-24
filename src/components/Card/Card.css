@@ -1,0 +1,56 @@
+.blue-btn {
+    background: #023964;
+    padding: 5px;
+    border: 0;
+    color: white;
+    font-size: 20px;
+    font-weight: 400;
+}
+.cardPile {
+    display: flex;
+}
+.card {
+    padding: 50px;
+    border-radius: 0px;
+    width: 25%;
+}
+img.card-img {
+    width: 100%;
+    height: 200px;
+}
+@media screen and (max-width: 900px) {
+    .cardPile {
+        display: block;
+        align-items: center;
+        justify-content: center;
+        column-count: 2;
+    }
+    .card {
+        width: 100%;
+    }
+    .card-img {
+        height: 37vw;
+    }
+}
+@media screen and (max-width: 600px) {
+    .cardPile {
+        column-count: 1;
+        margin: 0;
+    }
+    .card {
+        width: 100%;
+    }
+}
+.card p {
+    color: #f2f2f2;
+    font-size: 20px;
+    font-weight: 500;
+}
+.card button {
+    padding: 6px 30px;
+    color: #e0f8db;
+    transition: 1s;
+}
+.card button:hover {
+    background-color: #04508a;
+}

@@ -1,3 +1,37 @@
-body {
+:root {
+    --green-light: #86c540;
+    --green-dark: #437a1e;
+    --bg-light: #f8f9fa;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-light);
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--green-light);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--green-dark);
+}
+
+/* Firefox * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--green-light) var(--bg-light);
+}
+
+/* For Edge and others */
+* {
+    -ms-overflow-style: none;
+}
+*/ body {
     font-family: Roboto, Helvetica, Arial, sans-serif;
 }

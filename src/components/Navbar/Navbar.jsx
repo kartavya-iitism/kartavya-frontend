@@ -18,9 +18,20 @@ import { useNavigate } from "react-router-dom";
 export default function App() {
     const [openNavNoTogglerThird, setOpenNavNoTogglerThird] = useState(false);
     const navigate = useNavigate();
+
     const handleLogout = () => {
-        localStorage.clear()
+        localStorage.clear();
+        setOpenNavNoTogglerThird(false);
         window.location.reload();
+    }
+
+    const handleNavClick = () => {
+        setOpenNavNoTogglerThird(false);
+    }
+
+    const handleNavigate = (path) => {
+        setOpenNavNoTogglerThird(false);
+        navigate(path);
     }
 
     return (
@@ -42,7 +53,7 @@ export default function App() {
                         aria-controls='navbarTogglerDemo03'
                         aria-expanded='false'
                         aria-label='Toggle navigation'
-                        style={{ 'backgroundColor': 'white', 'color': '#24a845' }}
+                        style={{ 'color': '#24a845' }}
                         onClick={() => setOpenNavNoTogglerThird(!openNavNoTogglerThird)}
                     >
                         <MDBIcon icon='bars' fas />
@@ -50,25 +61,25 @@ export default function App() {
                     <MDBCollapse navbar open={openNavNoTogglerThird} className="flex-grow-0">
                         <MDBNavbarNav className="justify-content-lg-end justify-content-center align-items-center text-center">
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='#'>
+                                <MDBNavbarLink href='#' onClick={handleNavClick}>
                                     Home
                                 </MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='#'>About Us</MDBNavbarLink>
+                                <MDBNavbarLink href='#' onClick={handleNavClick}>About Us</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='#'>Our Work</MDBNavbarLink>
+                                <MDBNavbarLink href='#' onClick={handleNavClick}>Our Work</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='#'>FAQs</MDBNavbarLink>
+                                <MDBNavbarLink href='#' onClick={handleNavClick}>FAQs</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='#'>Contact Us</MDBNavbarLink>
+                                <MDBNavbarLink href='#' onClick={handleNavClick}>Contact Us</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
                                 {localStorage.token ?
-                                    <MDBNavbarLink href='/profile' tabIndex={-1} aria-disabled='true'>
+                                    <MDBNavbarLink href='/profile' onClick={handleNavClick} tabIndex={-1} aria-disabled='true'>
                                         Profile
                                     </MDBNavbarLink> : <></>
                                 }
@@ -83,12 +94,12 @@ export default function App() {
                                 :
                                 <>
                                     <MDBNavbarItem className="d-flex justify-content-center">
-                                        <MDBBtn outline style={{ width: '110px' }} onClick={() => navigate('/login')} color="success" className='me-2' type='button'>
+                                        <MDBBtn outline style={{ width: '110px' }} onClick={() => handleNavigate('/login')} color="success" className='me-2' type='button'>
                                             Login
                                         </MDBBtn>
                                     </MDBNavbarItem>
                                     <MDBNavbarItem className="d-flex justify-content-center">
-                                        <MDBBtn style={{ width: '110px' }} onClick={() => navigate('/donate')} className='btn-donate me-2' type='button'>
+                                        <MDBBtn style={{ width: '110px' }} onClick={() => handleNavigate('/donate')} className='btn-donate me-2' type='button'>
                                             <span>Donate</span>
                                         </MDBBtn>
                                     </MDBNavbarItem>

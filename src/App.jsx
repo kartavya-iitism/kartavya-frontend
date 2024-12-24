@@ -2,8 +2,8 @@ import CssBaseline from "@mui/material/CssBaseline"
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
-import LandingPage from "./pages/Landing";
-import RegisterForm from "./pages/user/Registration";
+import LandingPage from "./pages/Landing/Landing";
+import RegisterForm from "./pages/Registration/Registration";
 import LoginForm from "./pages/Login/Login";
 import Navbar from "./components/Navbar/Navbar"
 import Profile from "./pages/user/Profile"
@@ -22,7 +22,7 @@ function App() {
           element={<LandingPage />}
         />
         <Route
-          path="/user/register"
+          path="/register"
           element={<RegisterForm />}
         />
         <Route

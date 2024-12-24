@@ -89,30 +89,25 @@ export default function LoginForm() {
                 component="form"
                 noValidate
                 autoComplete="off"
-                style={{ margin: "2.5%" }}
+                onSubmit={handleSubmit}
             >
-                <h1>LogIn</h1>
+                <h1>Login</h1>
                 <TextField
                     required
+                    className="custom-textfield"
                     label="Username"
                     name="username"
                     value={formData.username}
                     onChange={handleChange}
                     fullWidth
-                    style={{ marginTop: '20px' }}
                 />
-                <FormControl sx={{ mt: '20px', mb: '20px', width: '100%' }} variant="outlined">
-                    <InputLabel required htmlFor="outlined-adornment-password">Password</InputLabel>
+                <FormControl className="custom-textfield" variant="outlined" fullWidth>
+                    <InputLabel required>Password</InputLabel>
                     <OutlinedInput
-                        id="outlined-adornment-password"
                         type={showPassword ? 'text' : 'password'}
                         endAdornment={
                             <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    edge="end"
-                                >
+                                <IconButton onClick={handleClickShowPassword} edge="end">
                                     {showPassword ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
                             </InputAdornment>
@@ -120,19 +115,23 @@ export default function LoginForm() {
                         label="Password"
                         value={formData.password}
                         name="password"
-                        fullWidth
                         onChange={handleChange}
                     />
                 </FormControl>
+
                 <Button
+                    className="submit-button"
                     onClick={handleSubmit}
                     variant="contained"
+                    disabled={loading}
                 >
-                    Login
+                    {loading ? 'Processing...' : 'Login'}
                 </Button>
-                {success && <div>Login Successful</div>}
-                {error && <div>{errorMessage}</div>}
-                {loading && <div>Please Wait...</div>}
+
+                {success && <div className="status-message success-message">Login Successful</div>}
+                {error && <div className="status-message error-message">{errorMessage}</div>}
+                {loading && <div className="status-message loading-message">Please Wait...</div>}
+
                 <div className="new-user">
                     <p>Don&apos;t have an account?
                         <a href="/register" className="register-link">Register</a>
@@ -140,6 +139,5 @@ export default function LoginForm() {
                 </div>
             </Box>
         </div>
-
     );
 }
