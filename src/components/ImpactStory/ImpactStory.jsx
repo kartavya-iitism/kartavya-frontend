@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const ImpactStory = () => {
     return (
         <Box className="founding-story-section">
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" style={{ padding: '0 0' }}>
                 <Box className="story-header">
                     <Typography
                         variant="h2"

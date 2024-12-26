@@ -4,7 +4,7 @@ import "./AboutMission.css";
 const AboutMission = () => {
     return (
         <Box className="about_mission">
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" class='top-container'>
                 <Box className="title-container">
                     <Typography
                         variant="h2"

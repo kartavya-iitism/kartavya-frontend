@@ -1,0 +1,92 @@
+.features-section {
+    background: linear-gradient(rgba(2, 57, 100, 0.9), rgba(2, 57, 100, 0.9)),
+        url(https://akshayapatra.org/includefiles/images/1920x700x2.jpg);
+    background-size: cover;
+    background-position: center;
+    padding: 4rem 2rem;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.features-stack {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto !important;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px !important;
+    padding: 1.5rem;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.feature-card:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.02) !important;
+}
+
+.icon-wrapper {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.icon-wrapper img {
+    width: 64px;
+    height: 64px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.feature-card:hover .icon-wrapper img {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.feature-title {
+    color: var(--green-light) !important;
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    text-align: center;
+    margin-bottom: 1rem !important;
+}
+
+.feature-description {
+    color: white !important;
+    text-align: center;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+}
+
+@media (max-width: 960px) {
+    .features-section {
+        padding: 3rem 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .features-section {
+        padding: 2rem 1rem;
+    }
+
+    .feature-card {
+        padding: 1rem;
+    }
+
+    .feature-title {
+        font-size: 1.3rem !important;
+    }
+
+    .feature-description {
+        font-size: 0.9rem !important;
+    }
+
+    .icon-wrapper img {
+        width: 48px;
+        height: 48px;
+    }
+}

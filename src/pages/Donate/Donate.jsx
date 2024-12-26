@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
+import { Box, Paper, Typography, Card, CardContent } from '@mui/material';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import QRCode from '../../assets/qrcode.png';
 import axios from 'axios';
 import './Donate.css';
 
@@ -14,6 +15,20 @@ export default function DonationForm() {
         email: '',
         numChild: ''
     });
+    const donationSteps = [
+        {
+            title: "Choose Amount",
+            description: "Select how much you'd like to donate to support our cause"
+        },
+        {
+            title: "Make Payment",
+            description: "Transfer the amount using our bank details or scan QR code"
+        },
+        {
+            title: "Fill Details",
+            description: "Complete the form with your information and upload payment receipt"
+        }
+    ];
     const [receipt, setReceipt] = useState(null);
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -96,83 +111,133 @@ export default function DonationForm() {
     }, []);
 
     return (
-        <div className="donation-form-container">
-            <Box
-                className="form-box"
-                component="form"
-                noValidate
-                autoComplete="off"
-                onSubmit={handleSubmit}
-            >
-                <h1>Make a Donation</h1>
+        <div className="donation-container">
+            <Box className="form-box donation-main">
+                <Typography variant="h3" className="page-title">
+                    Make a Difference Today
+                </Typography>
+                <Typography variant="subtitle1" className="page-subtitle">
+                    Your contribution helps create a better future for children in need
+                </Typography>
 
-                {[
-                    { name: 'name', label: 'Name', type: 'text', required: true },
-                    { name: 'email', label: 'Email', type: 'email', required: true },
-                    { name: 'contactNumber', label: 'Contact Number', type: 'tel', required: true },
-                    { name: 'donationDate', label: 'Date of Donation', type: 'date', shrink: true, required: true },
-                    { name: 'amount', label: 'Amount', type: 'number', required: true },
-                    { name: 'numChild', label: 'Number of Children', type: 'number', required: false }
-                ].map((field) => (
-                    <TextField
-                        key={field.name}
-                        required={field.required}
-                        className="custom-textfield"
-                        label={field.label}
-                        name={field.name}
-                        type={field.type}
-                        value={formData[field.name]}
-                        onChange={handleChange}
-                        fullWidth
-                        InputLabelProps={{
-                            shrink: field.shrink || undefined,
-                        }}
-                    />
-                ))}
-
-                <div className="file-input-container">
-                    <label className="file-input-label">
-                        {fileName || 'Upload Receipt'}
-                        <input
-                            type="file"
-                            className="file-input"
-                            onChange={handleReceiptChange}
-                            accept="image/*,.pdf"
-                        />
-                    </label>
+                <div className="steps-wrapper">
+                    {donationSteps.map((step, index) => (
+                        <Card key={index} className="step-card">
+                            <CardContent>
+                                <Typography variant="h2" className="step-number">
+                                    {index + 1}
+                                </Typography>
+                                <Typography variant="h6" className="step-title">
+                                    {step.title}
+                                </Typography>
+                                <Typography variant="body2" className="step-description">
+                                    {step.description}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    ))}
                 </div>
 
-                <Button
-                    className="submit-button"
-                    onClick={handleSubmit}
-                    variant="contained"
-                    disabled={loading}
-                >
-                    {loading ? 'Processing...' : 'Make Donation'}
-                </Button>
+                <Paper elevation={3} className="payment-details">
+                    <Typography variant="h4" className="section-title">
+                        Payment Information
+                    </Typography>
 
-                {success && (
-                    <div className="status-message success-message">
-                        Thank you for your donation! We&apos;ll get in touch soon.
-                    </div>
-                )}
-                {error && (
-                    <div className="status-message error-message">
-                        {errorMessage}
-                    </div>
-                )}
-                {loading && (
-                    <div className="status-message loading-message">
-                        Processing your donation...
-                    </div>
-                )}
+                    <Box className="payment-grid">
+                        <div className="bank-details">
+                            {[
+                                { label: 'Account Name', value: 'Kartavya Foundation' },
+                                { label: 'Account Number', value: '1234567890' },
+                                { label: 'IFSC Code', value: 'ABCD0123456' },
+                                { label: 'Bank Name', value: 'State Bank of India' },
+                                { label: 'Branch', value: 'Main Branch, City' }
+                            ].map((detail, index) => (
+                                <Card key={index} className="bank-detail-card">
+                                    <CardContent className="bank-detail-content">
+                                        <Typography className="detail-label">
+                                            {detail.label}
+                                        </Typography>
+                                        <Typography className="detail-value">
+                                            {detail.value}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </div>
 
-                <div className="new-user">
-                    <p>
-                        Don&apos;t have an account?
-                        <a href="/register" className="register-link">Register</a>
-                    </p>
-                </div>
+                        <div className="qr-section">
+                            <Typography variant="h6" className="qr-title">
+                                Scan to Pay
+                            </Typography>
+                            <img src={QRCode} alt="Payment QR Code" className="qr-code" />
+                        </div>
+                    </Box>
+                </Paper>
+
+                <Paper component="form" className="donation-form" onSubmit={handleSubmit}>
+                    <Typography variant="h4" className="form-title section-title">
+                        Donation Details
+                    </Typography>
+
+                    <div className="form-grid">
+                        {[
+                            { name: 'name', label: 'Name', type: 'text', required: true },
+                            { name: 'email', label: 'Email', type: 'email', required: true },
+                            { name: 'contactNumber', label: 'Contact Number', type: 'tel', required: true },
+                            { name: 'donationDate', label: 'Date of Donation', type: 'date', required: true, shrink: true },
+                            { name: 'amount', label: 'Amount', type: 'number', required: true },
+                            { name: 'numChild', label: 'Number of Children', type: 'number', required: false }
+                        ].map((field) => (
+                            <TextField
+                                key={field.name}
+                                className="custom-textfield"
+                                label={field.label}
+                                name={field.name}
+                                type={field.type}
+                                required={field.required}
+                                value={formData[field.name]}
+                                onChange={handleChange}
+                                fullWidth
+                                variant="outlined"
+                                InputLabelProps={{
+                                    shrink: field.shrink || undefined,
+                                }}
+                            />
+                        ))}
+
+                        <div className="file-input-container">
+                            <label className="file-input-label">
+                                {fileName || 'Upload Payment Receipt'}
+                                <input
+                                    type="file"
+                                    onChange={handleReceiptChange}
+                                    accept="image/*,.pdf"
+                                    className="file-input"
+                                />
+                            </label>
+                        </div>
+
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            className="submit-button"
+                            disabled={loading}
+                        >
+                            {loading ? 'Processing...' : 'Complete Donation'}
+                        </Button>
+                    </div>
+
+                    {success && (
+                        <div className="status-message success-message">
+                            Thank you for your generous donation! We&apos;ll get in touch soon.
+                        </div>
+                    )}
+                    {error && (
+                        <div className="status-message error-message">
+                            {errorMessage}
+                        </div>
+                    )}
+                </Paper>
             </Box>
         </div>
     );
