@@ -43,21 +43,20 @@
     background: linear-gradient(45deg, #ff6b6b, #ff8e53) !important;
     color: white !important;
     padding: 15px 35px !important;
-    border-radius: 30px !important;
+    border-radius: 25px !important;
     text-transform: uppercase !important;
     font-weight: 600 !important;
     font-size: clamp(14px, 3vw, 16px) !important;
     letter-spacing: 1.5px !important;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3) !important;
     transition: all 0.3s ease !important;
     width: 100%;
-    margin-top: 30px !important;
+    margin-top: 15px !important;
     min-height: 56px;
 }
 
 .status-message {
     margin-top: 25px;
-    padding: 18px;
+    padding: 15px;
     border-radius: 12px;
     text-align: center;
     font-size: clamp(14px, 3vw, 16px);

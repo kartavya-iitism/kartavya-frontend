@@ -6,7 +6,7 @@ import LandingPage from "./pages/Landing/Landing";
 import RegisterForm from "./pages/Registration/Registration";
 import LoginForm from "./pages/Login/Login";
 import Navbar from "./components/Navbar/Navbar"
-import Profile from "./pages/user/Profile"
+import Profile from "./pages/user/Profile/Profile"
 import DonationForm from "./pages/Donate/Donate";
 import Footer from "./components/Footer/Footer";
 

@@ -61,21 +61,21 @@ export default function App() {
                     <MDBCollapse navbar open={openNavNoTogglerThird} className="flex-grow-0">
                         <MDBNavbarNav className="justify-content-lg-end justify-content-center align-items-center text-center">
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='#' onClick={handleNavClick}>
+                                <MDBNavbarLink href='/' onClick={handleNavClick}>
                                     Home
                                 </MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='#' onClick={handleNavClick}>About Us</MDBNavbarLink>
+                                <MDBNavbarLink href='about' onClick={handleNavClick}>About Us</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='#' onClick={handleNavClick}>Our Work</MDBNavbarLink>
+                                <MDBNavbarLink href='work' onClick={handleNavClick}>Our Work</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='#' onClick={handleNavClick}>FAQs</MDBNavbarLink>
+                                <MDBNavbarLink href='faqs' onClick={handleNavClick}>FAQs</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='#' onClick={handleNavClick}>Contact Us</MDBNavbarLink>
+                                <MDBNavbarLink href='contact' onClick={handleNavClick}>Contact Us</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
                                 {localStorage.token ?

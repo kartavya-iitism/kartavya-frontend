@@ -71,7 +71,7 @@ export default function LoginForm() {
         } catch (err) {
             setLoading(false);
             setError(true);
-            setErrorMessage(err.response.data.message);
+            setErrorMessage(err.response?.data?.message || 'An error occurred');
         }
     };
 
@@ -101,7 +101,7 @@ export default function LoginForm() {
                     onChange={handleChange}
                     fullWidth
                 />
-                <FormControl className="custom-textfield" variant="outlined" fullWidth>
+                <FormControl className="custom-textfield login-textfield" variant="outlined" fullWidth>
                     <InputLabel required>Password</InputLabel>
                     <OutlinedInput
                         type={showPassword ? 'text' : 'password'}
@@ -132,7 +132,7 @@ export default function LoginForm() {
                 {error && <div className="status-message error-message">{errorMessage}</div>}
                 {loading && <div className="status-message loading-message">Please Wait...</div>}
 
-                <div className="new-user">
+                <div className="new-user" style={{ marginTop: '5px' }}>
                     <p>Don&apos;t have an account?
                         <a href="/register" className="register-link">Register</a>
                     </p>

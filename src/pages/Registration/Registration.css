@@ -121,7 +121,6 @@
     font-weight: 600 !important;
     font-size: 16px !important;
     letter-spacing: 1.5px !important;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3) !important;
     transition: all 0.3s ease !important;
     width: 100%;
     margin-top: 30px !important;
@@ -129,7 +128,6 @@
 
 .submit-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4) !important;
 }
 
 .submit-button:disabled {
@@ -140,7 +138,7 @@
 /* Status Messages */
 .status-message {
     margin-top: 25px;
-    padding: 18px;
+    padding: 15px;
     border-radius: 12px;
     text-align: center;
     font-size: 16px;

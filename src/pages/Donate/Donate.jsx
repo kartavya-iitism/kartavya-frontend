@@ -117,9 +117,10 @@ export default function DonationForm() {
                     Make a Difference Today
                 </Typography>
                 <Typography variant="subtitle1" className="page-subtitle">
-                    Your contribution helps create a better future for children in need
+                    Your contribution helps create a better future for children in need.
+                    If you wish to donate regularly consider registering to our portal. Click to
+                    <a href="/register" className="register-link"> Register</a>
                 </Typography>
-
                 <div className="steps-wrapper">
                     {donationSteps.map((step, index) => (
                         <Card key={index} className="step-card">
@@ -190,7 +191,7 @@ export default function DonationForm() {
                         ].map((field) => (
                             <TextField
                                 key={field.name}
-                                className="custom-textfield"
+                                className="custom-textfield custom-textfield-donation"
                                 label={field.label}
                                 name={field.name}
                                 type={field.type}

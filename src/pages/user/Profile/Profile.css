@@ -1,0 +1,234 @@
+.profile-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    padding: 2rem;
+}
+
+.profile-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease;
+}
+
+.loading-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+.profile-card {
+    background: white !important;
+    border-radius: 15px !important;
+    padding: 2rem !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12) !important;
+    transition: transform 0.3s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-0px);
+}
+
+.profile-avatar {
+    width: 200px !important;
+    height: 200px !important;
+    border: 3px solid var(--green-light);
+}
+
+.profile-name {
+    color: #333;
+    font-weight: 600 !important;
+    margin-bottom: 1rem !important;
+}
+
+.profile-detail {
+    color: #666;
+    margin-bottom: 0.5rem !important;
+}
+
+.profile-detail strong {
+    color: #333;
+}
+
+.card-title {
+    color: #333;
+    font-weight: 600 !important;
+    margin-bottom: 1rem !important;
+}
+
+.divider {
+    margin: 1rem 0 2rem !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.details-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.list-content {
+    padding: 1rem 0;
+}
+
+.password-button {
+    margin-top: 1rem !important;
+    background-color: var(--green-light) !important;
+    color: white !important;
+    padding: 0.8rem 2rem !important;
+    border-radius: 15px !important;
+    transition: all 0.3s ease !important;
+}
+
+.password-button:hover {
+    background-color: var(--green-dark) !important;
+    transform: translateY(-2px);
+}
+
+.error-message {
+    text-align: center;
+    color: #dc3545;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    background: #f8d7da;
+}
+
+.donations-table {
+    margin-top: 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table-header {
+    background-color: var(--green-light) !important;
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+.table-row {
+    transition: background-color 0.3s ease;
+}
+
+.table-row:hover {
+    background-color: rgba(134, 197, 64, 0.1) !important;
+}
+
+.receipt-link {
+    color: var(--green-light) !important;
+    text-decoration: none !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.receipt-link:hover {
+    color: var(--green-dark) !important;
+    text-decoration: underline !important;
+}
+
+.students-table {
+    margin-top: 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.student-link {
+    color: var(--green-light) !important;
+    text-decoration: none !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.student-link:hover {
+    color: var(--green-dark) !important;
+    text-decoration: underline !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 1rem;
+    }
+
+    .profile-card {
+        padding: 1.5rem !important;
+    }
+
+    .profile-avatar {
+        width: 100px !important;
+        height: 100px !important;
+    }
+
+    .profile-name {
+        font-size: 1.8rem !important;
+    }
+
+    .card-title {
+        font-size: 1.3rem !important;
+    }
+    .donations-table {
+        overflow-x: auto;
+    }
+
+    .MuiTableCell-root {
+        padding: 8px !important;
+        font-size: 0.875rem !important;
+    }
+    .students-table {
+        overflow-x: auto;
+    }
+
+    .students-table .MuiTableCell-root {
+        padding: 12px !important;
+        font-size: 0.95rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-container {
+        padding: 0.5rem;
+    }
+
+    .profile-card {
+        padding: 1rem !important;
+    }
+
+    .profile-name {
+        font-size: 1.5rem !important;
+    }
+
+    .profile-detail {
+        font-size: 0.9rem !important;
+    }
+
+    .password-button {
+        width: 100%;
+        padding: 0.6rem !important;
+    }
+    .donations-table {
+        overflow-x: auto;
+    }
+
+    .MuiTableCell-root {
+        padding: 8px !important;
+        font-size: 0.875rem !important;
+    }
+    .students-table .MuiTableCell-root {
+        padding: 8px !important;
+        font-size: 0.875rem !important;
+    }
+
+    .student-link {
+        padding: 4px 8px;
+        white-space: nowrap;
+    }
+}

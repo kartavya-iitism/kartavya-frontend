@@ -57,14 +57,22 @@
 }
 
 .cards-container {
-    margin-top: 20px !important;
+    margin-top: 10px !important;
     display: flex;
-    min-height: 300px; /* Set minimum height */
+    min-height: 100px; /* Set minimum height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 2rem;
+    max-width: 1500px;
+    margin: 0 auto;
 }
 
 .mission-card,
 .vision-card {
     padding: 40px !important;
+    max-width: 750px;
     height: 100%;
     border-radius: 10px !important;
     background: white !important;
@@ -123,7 +131,16 @@
     }
 
     .cards-container {
-        min-height: auto; /* Reset for mobile */
+        margin-top: 5px !important;
+        display: flex;
+        min-height: auto; /* Set minimum height */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.2rem;
+        padding: 0rem;
+        max-width: 1500px;
+        margin: 0 auto;
     }
 
     .mission-card,

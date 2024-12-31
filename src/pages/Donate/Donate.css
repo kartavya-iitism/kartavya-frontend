@@ -161,7 +161,7 @@
     margin-bottom: 2rem;
 }
 
-.custom-textfield {
+.custom-textfield-donation {
     margin-bottom: 0rem !important;
 }
 
@@ -193,7 +193,7 @@
 
 .submit-button {
     grid-column: 1 / -1;
-    background-color: var(--green-light) !important;
+    /* background-color: var(--green-light) !important; */
     color: white !important;
     padding: 0rem !important;
     font-size: 1rem !important;
@@ -202,7 +202,7 @@
 }
 
 .submit-button:hover {
-    background-color: var(--green-dark) !important;
+    /* background-color: var(--green-dark) !important; */
     transform: translateY(-2px);
 }
 

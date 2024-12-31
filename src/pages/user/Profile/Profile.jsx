@@ -1,0 +1,282 @@
+import { useState, useEffect } from 'react';
+import AuthVerify from '../../../helper/JWTVerify';
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import {
+    Box,
+    Typography,
+    Avatar,
+    Stack,
+    CircularProgress,
+    Paper,
+    Button,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Link
+} from '@mui/material';
+import ChangePasswordDialog from '../../../components/ChangePasswordDialog/ChangePassword'
+import './Profile.css'
+
+export default function Profile() {
+    const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState({});
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [dialogOpen, setDialogOpen] = useState(false);
+
+    const handleOpenDialog = () => {
+        setDialogOpen(true);
+    };
+
+    const handleCloseDialog = () => {
+        setDialogOpen(false);
+    };
+
+    const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+    const formatDate = (dateString) => {
+        if (!dateString) return "N/A";
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+        }).format(date);
+    };
+
+    useEffect(() => {
+        setLoading(true);
+        if (!AuthVerify(token)) navigate('/login');
+        axios.get(`http://localhost:3000/user/view`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
+            .then((res) => {
+                setUser(res.data)
+                console.log(res.data)
+                setLoading(false)
+            })
+            .catch((err) => {
+                console.error(err)
+                setError(true)
+                setLoading(false)
+                setErrorMessage(err.message)
+            });
+        //
+    }, [])
+
+    return (
+        <Box className="profile-container">
+            <Box className="profile-content">
+                {(!user?.name || loading) && (
+                    <Box className="loading-state">
+                        <CircularProgress />
+                    </Box>
+                )}
+
+                {user?.name && (
+                    <Stack spacing={3}>
+                        {/* Personal Details Card */}
+                        <Paper className="profile-card personal-details">
+                            <Stack direction={{ xs: 'column', md: 'row' }} spacing={3} alignItems="center">
+                                <Avatar
+                                    className="profile-avatar"
+                                    src={user.profileImage || 'default-avatar-url'}
+                                />
+                                <Box className="profile-info">
+                                    <Typography variant="h4" className="profile-name">
+                                        {user.name}
+                                    </Typography>
+                                    {[
+                                        { label: 'Username', value: user.username },
+                                        { label: 'Email', value: user.email },
+                                        { label: 'Contact', value: user.contactNumber },
+                                        { label: 'Date of Birth', value: formatDate(user.dateOfBirth) }
+                                    ].map((detail, index) => (
+                                        <Typography key={index} variant="subtitle1" className="profile-detail">
+                                            {detail.label}: <strong>{detail.value}</strong>
+                                        </Typography>
+                                    ))}
+                                </Box>
+                            </Stack>
+                            <Button
+                                variant="contained"
+                                onClick={handleOpenDialog}
+                                className="password-button"
+                            >
+                                Change Password
+                            </Button>
+                        </Paper>
+
+                        {/* Additional Details Card */}
+                        <Paper className="profile-card">
+                            <Typography variant="h5" className="card-title">
+                                Additional Details
+                            </Typography>
+                            <Stack spacing={2} className="details-grid">
+                                <Box>
+                                    <Typography variant="body1" style={{ marginTop: '0px' }}>
+                                        <strong>Gender:</strong> {user.gender}
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="body1" style={{ marginTop: '-15px' }}>
+                                        <strong>Address:</strong> {user.address}
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="body1" style={{ marginTop: '-15px' }}>
+                                        <strong>Government Official:</strong>{' '}
+                                        {user.governmentOfficial ? 'Yes' : 'No'}
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="body1" style={{ marginTop: '-15px' }}>
+                                        <strong>ISM Passout:</strong> {user.ismPassout ? 'Yes' : 'No'}
+                                    </Typography>
+                                </Box>
+
+                                {user.ismPassout &&
+                                    <Box>
+                                        <Typography variant="body1" style={{ marginTop: '-15px' }}>
+                                            <strong>Batch:</strong>{' '}
+                                            {user.batch}
+                                        </Typography>
+                                    </Box>
+                                }
+
+                                <Box>
+                                    <Typography variant="body1" style={{ marginTop: '-15px' }}>
+                                        <strong>Kartavya Volunteer:</strong>{' '}
+                                        {user.kartavyaVolunteer ? 'Yes' : 'No'}
+                                    </Typography>
+                                </Box>
+
+                                {user.kartavyaVolunteer &&
+                                    <Box>
+                                        <Typography variant="body1" style={{ marginTop: '-15px' }}>
+                                            <strong>Years of Service:</strong>{' '}
+                                            {user.yearsOfServiceStart} - {user.yearsOfServiceEnd}
+                                        </Typography>
+                                    </Box>
+                                }
+                            </Stack>
+                        </Paper>
+
+                        {/* Donations Card */}
+                        <Paper className="profile-card">
+                            <Typography variant="h5" className="card-title">
+                                Donations
+                            </Typography>
+                            <Stack spacing={1} className="list-content">
+                                {user.donations?.length > 0 ? (
+                                    <TableContainer className="donations-table">
+                                        <Table>
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell className="table-header">S.No.</TableCell>
+                                                    <TableCell className="table-header">Amount</TableCell>
+                                                    <TableCell className="table-header">Date</TableCell>
+                                                    <TableCell className="table-header">Receipt</TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {user.donations.map((donation, index) => (
+                                                    <TableRow key={index} className="table-row">
+                                                        <TableCell>{index + 1}</TableCell>
+                                                        <TableCell>₹{donation.amount}</TableCell>
+                                                        <TableCell>{formatDate(donation.date)}</TableCell>
+                                                        <TableCell>
+                                                            {donation.receipt ? (
+                                                                <Link
+                                                                    href={donation.receipt}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="receipt-link"
+                                                                >
+                                                                    View Receipt
+                                                                </Link>
+                                                            ) : (
+                                                                'Not Available'
+                                                            )}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                ) : (
+                                    <Typography variant="body1">No donations available.</Typography>
+                                )}
+                            </Stack>
+                        </Paper>
+
+                        {/* Sponsored Students Card */}
+                        <Paper className="profile-card">
+                            <Typography variant="h5" className="card-title">
+                                Sponsored Students
+                            </Typography>
+                            <Stack spacing={1} className="list-content">
+                                {user.sponsoredStudents?.length > 0 ? (
+                                    <TableContainer className="students-table">
+                                        <Table>
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell className="table-header">S.No.</TableCell>
+                                                    <TableCell className="table-header">Name</TableCell>
+                                                    <TableCell className="table-header">School</TableCell>
+                                                    <TableCell className="table-header">Profile</TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {user.sponsoredStudents.map((student, index) => (
+                                                    <TableRow key={index} className="table-row">
+                                                        <TableCell>{index + 1}</TableCell>
+                                                        <TableCell>{student.name}</TableCell>
+                                                        <TableCell>{student.school}</TableCell>
+                                                        <TableCell>
+                                                            <Link
+                                                                href={`/student/${student.id}`}
+                                                                className="student-link"
+                                                            >
+                                                                View Profile
+                                                            </Link>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                ) : (
+                                    <Typography variant="body1">
+                                        No sponsored students available.
+                                    </Typography>
+                                )}
+                            </Stack>
+                        </Paper>
+                    </Stack>
+                )}
+
+                {error && (
+                    <Typography className="error-message">
+                        {errorMessage}
+                    </Typography>
+                )}
+
+                <ChangePasswordDialog
+                    open={dialogOpen}
+                    onClose={() => {
+                        handleCloseDialog();
+                        document.querySelector('.password-button')?.focus();
+                    }}
+                    username={user?.username || ''}
+                    disableEnforceFocus={false}
+                    keepMounted={false}
+                />
+            </Box>
+        </Box>
+    );
+}

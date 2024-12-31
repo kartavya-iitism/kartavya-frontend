@@ -347,7 +347,7 @@ export default function RegisterForm() {
                     </div>
                 )}
 
-                <div className="existing-user">
+                <div className="existing-user" style={{ marginTop: '5px' }}>
                     <p>
                         Already have an account?
                         <a href="/login" className="login-link">Login</a>
