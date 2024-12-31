@@ -118,8 +118,12 @@ export default function DonationForm() {
                 </Typography>
                 <Typography variant="subtitle1" className="page-subtitle">
                     Your contribution helps create a better future for children in need.
-                    If you wish to donate regularly consider registering to our portal. Click to
-                    <a href="/register" className="register-link"> Register</a>
+                    {!localStorage.getItem('token') && (
+                        <p>
+                            If you wish to donate regularly consider registering to our portal. Click to
+                            <a href="/register" className="register-link"> Register</a>
+                        </p>
+                    )}
                 </Typography>
                 <div className="steps-wrapper">
                     {donationSteps.map((step, index) => (
