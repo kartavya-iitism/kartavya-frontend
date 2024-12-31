@@ -71,10 +71,10 @@
 }
 
 .password-button {
-    margin-top: 1rem !important;
+    margin: 0.5rem !important;
     background-color: var(--green-light) !important;
     color: white !important;
-    padding: 0.8rem 2rem !important;
+    padding: 0.6rem 1.8rem !important;
     border-radius: 15px !important;
     transition: all 0.3s ease !important;
 }
@@ -141,6 +141,20 @@
 .student-link:hover {
     color: var(--green-dark) !important;
     text-decoration: underline !important;
+}
+
+.edit-button {
+    margin: 0.5rem !important;
+    background-color: var(--green-light) !important;
+    color: white !important;
+    padding: 0.6rem 1.8rem !important;
+    border-radius: 15px !important;
+    transition: all 0.3s ease !important;
+}
+
+.edit-button:hover {
+    background-color: var(--green-dark) !important;
+    transform: translateY(-2px);
 }
 
 @keyframes fadeIn {
@@ -211,8 +225,14 @@
     }
 
     .password-button {
-        width: 100%;
+        width: 80%;
         padding: 0.6rem !important;
+        margin-left: 10% !important;
+    }
+    .edit-button {
+        width: 80%;
+        padding: 0.6rem !important;
+        margin-left: 10% !important;
     }
     .donations-table {
         overflow-x: auto;

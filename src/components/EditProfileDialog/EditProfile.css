@@ -1,4 +1,4 @@
-.password-dialog {
+.profile-dialog {
     animation: fadeIn 0.3s ease;
 }
 
@@ -29,53 +29,43 @@
     gap: 1.5rem;
 }
 
-.password-field .MuiOutlinedInput-root {
+.form-field .MuiOutlinedInput-root {
     transition: all 0.3s ease;
-}
-
-.password-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
-    border-color: var(--green-light);
-}
-
-.password-field
-    .MuiOutlinedInput-root.Mui-focused
-    .MuiOutlinedInput-notchedOutline {
-    border-color: var(--green-light);
-}
-
-.password-field {
-    margin-bottom: 0px !important;
-}
-
-.password-field .MuiOutlinedInput-root {
-    min-height: 56px;
+    min-height: 40px;
     font-size: 16px;
-    transition: all 0.3s ease;
 }
 
-.password-field .MuiOutlinedInput-input {
+.form-field .MuiOutlinedInput-input {
     padding: 16px !important;
     font-size: 16px !important;
 }
 
-.password-field .MuiInputLabel-root {
+.form-field .MuiInputLabel-root {
     font-size: 16px;
 }
 
-.password-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+.form-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
     border-color: var(--green-light);
     border-width: 2px;
 }
 
-.password-field
+.form-field
     .MuiOutlinedInput-root.Mui-focused
     .MuiOutlinedInput-notchedOutline {
     border-color: var(--green-light);
     border-width: 2px;
 }
 
-.password-field .MuiInputLabel-root.Mui-focused {
+.form-field .MuiInputLabel-root.Mui-focused {
     color: var(--green-light);
+}
+
+.switch-label {
+    margin-left: 0 !important;
+}
+
+.govt-switch.Mui-checked {
+    color: var(--green-light) !important;
 }
 
 .error-text {
@@ -104,15 +94,10 @@
     transform: translateY(-2px);
 }
 
-.save-button:disabled {
-    background-color: rgba(0, 0, 0, 0.12) !important;
-    transform: none;
-}
-
 .cancel-button {
     color: #666 !important;
-    padding: 0.5rem 2rem !important;
     border-radius: 10px !important;
+    padding: 0.5rem 2rem !important;
     transition: all 0.3s ease !important;
 }
 
@@ -139,6 +124,23 @@
 .close-button:hover {
     background-color: var(--green-dark) !important;
     transform: translateY(-2px);
+}
+
+.radio-group {
+    margin: 0 !important;
+}
+
+.radio-label {
+    color: rgba(0, 0, 0, 0.6) !important;
+    margin-bottom: 8px !important;
+}
+
+.radio-button.Mui-checked {
+    color: var(--green-light) !important;
+}
+
+.radio-button:hover {
+    background-color: rgba(var(--green-light-rgb), 0.04) !important;
 }
 
 @keyframes fadeIn {

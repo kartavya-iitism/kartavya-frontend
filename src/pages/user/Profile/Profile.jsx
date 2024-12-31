@@ -19,6 +19,7 @@ import {
     Link
 } from '@mui/material';
 import ChangePasswordDialog from '../../../components/ChangePasswordDialog/ChangePassword'
+import EditProfileDialog from '../../../components/EditProfileDialog/EditProfile';
 import './Profile.css'
 
 export default function Profile() {
@@ -27,6 +28,7 @@ export default function Profile() {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [editProfileDialogOpen, setEditProfileDialogOpen] = useState(false);
 
     const handleOpenDialog = () => {
         setDialogOpen(true);
@@ -34,6 +36,14 @@ export default function Profile() {
 
     const handleCloseDialog = () => {
         setDialogOpen(false);
+    };
+
+    const handleOpenEditDialog = () => {
+        setEditProfileDialogOpen(true);
+    };
+
+    const handleCloseEditDialog = () => {
+        setEditProfileDialogOpen(false);
     };
 
     const navigate = useNavigate();
@@ -102,6 +112,13 @@ export default function Profile() {
                                     ))}
                                 </Box>
                             </Stack>
+                            <Button
+                                variant="contained"
+                                className="edit-button"
+                                onClick={handleOpenEditDialog}
+                            >
+                                Edit Details
+                            </Button>
                             <Button
                                 variant="contained"
                                 onClick={handleOpenDialog}
@@ -265,7 +282,20 @@ export default function Profile() {
                         {errorMessage}
                     </Typography>
                 )}
-
+                <EditProfileDialog
+                    open={editProfileDialogOpen}
+                    onClose={() => {
+                        handleCloseEditDialog();
+                        document.querySelector('.edit-button')?.focus();
+                    }}
+                    username={user?.username || ''}
+                    initialData={{
+                        email: user?.email || '',
+                        contactNumber: user?.contactNumber || '',
+                        address: user?.address || '',
+                        isGovernmentOfficial: user?.isGovernmentOfficial || false
+                    }}
+                />
                 <ChangePasswordDialog
                     open={dialogOpen}
                     onClose={() => {
@@ -276,6 +306,7 @@ export default function Profile() {
                     disableEnforceFocus={false}
                     keepMounted={false}
                 />
+
             </Box>
         </Box>
     );
