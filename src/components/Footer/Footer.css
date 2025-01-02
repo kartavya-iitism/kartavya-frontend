@@ -1,18 +1,133 @@
-.text-reset {
-    text-decoration: none !important;
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+    --color-primary: #1a4d2e;
+    --color-secondary: #437a1e;
+    --color-accent: #86c540;
+    --color-text: #4a4a4a;
+    --transition: all 0.3s ease;
 }
+
+.MDBFooter {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%) !important;
+    font-family: "Poppins", sans-serif !important;
+}
+
+.text-uppercase {
+    font-family: "Playfair Display", serif !important;
+    color: var(--color-primary) !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    position: relative;
+    margin-bottom: 25px !important;
+}
+
+.text-uppercase::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        var(--color-accent),
+        var(--color-secondary)
+    );
+}
+
 .logo-footer {
     width: 200px;
     height: auto;
-    margin-top: -20px;
+    margin: 0;
+    transition: var(--transition);
 }
-a {
-    color: inherit;
+
+.logo-footer:hover {
+    transform: translateY(-2px);
 }
-a:hover {
-    color: #24a845;
+
+.text-reset {
+    text-decoration: none !important;
+    color: var(--color-text) !important;
+    font-family: "Poppins", sans-serif !important;
+    transition: var(--transition);
+    display: inline-block;
 }
-h6 {
-    margin-bottom: 0;
-    align-self: center;
+
+.text-reset:hover {
+    color: var(--color-secondary) !important;
+    transform: translateX(5px);
+}
+
+.me-4 {
+    transition: var(--transition);
+}
+
+.me-4:hover {
+    transform: translateY(-2px);
+}
+
+.MDBIcon {
+    color: var(--color-primary) !important;
+}
+
+.border-bottom {
+    border-color: var(--color-accent) !important;
+}
+
+p {
+    font-family: "Poppins", sans-serif !important;
+    color: var(--color-text) !important;
+    line-height: 1.8 !important;
+    margin-bottom: 12px !important;
+}
+
+.text-center.p-4 {
+    background: linear-gradient(90deg, #f2f2f2, #e6e6e6) !important;
+    color: #333333 !important;
+}
+
+.text-center.p-4 a {
+    color: var(--color-primary) !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease;
+}
+
+.text-center.p-4 a:hover {
+    color: var(--color-primary) !important;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+    .text-uppercase {
+        font-size: 1.1rem !important;
+        margin-bottom: 20px !important;
+    }
+    .text-uppercase::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .logo-footer {
+        width: 150px;
+    }
+
+    p {
+        font-size: 0.9rem !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .text-uppercase {
+        font-size: 1rem !important;
+        margin-bottom: 15px !important;
+    }
+
+    .logo-footer {
+        width: 120px;
+    }
+
+    p {
+        font-size: 0.85rem !important;
+    }
 }

@@ -1,0 +1,218 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap");
+
+.contact-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    padding: 80px 0;
+    min-height: 100vh;
+}
+
+.content-box {
+    padding: 0px !important;
+}
+
+.title-container {
+    margin-bottom: 60px;
+}
+
+.main-title {
+    font-family: "Playfair Display", serif !important;
+    font-weight: 700 !important;
+    font-size: 3.5rem !important;
+    color: #1a4d2e !important;
+    position: relative;
+    margin-bottom: 30px !important;
+    text-align: center;
+}
+
+.main-title::after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #86c540, #437a1e);
+}
+
+.subtitle {
+    font-family: "Poppins", sans-serif !important;
+    color: #437a1e !important;
+    font-weight: 500 !important;
+    font-size: 1.8rem !important;
+    margin-top: 20px !important;
+    text-align: center;
+}
+
+.contact-info-card {
+    padding: 40px !important;
+    height: 100%;
+    border-radius: 10px !important;
+    background: white !important;
+    border-top: 5px solid #437a1e !important;
+    transition: all 0.3s ease !important;
+    text-align: center;
+}
+
+.contact-info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.contact-icon {
+    font-size: 3rem !important;
+    color: #1a4d2e !important;
+    margin-bottom: 20px !important;
+}
+
+.info-title {
+    font-family: "Playfair Display", serif !important;
+    color: #1a4d2e !important;
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 15px !important;
+}
+
+.info-text {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 1.1rem !important;
+    line-height: 1.8 !important;
+    color: #4a4a4a !important;
+}
+
+.contact-section {
+    margin-top: 60px !important;
+}
+
+.map-container {
+    height: auto;
+    border-radius: 10px !important;
+    overflow: hidden;
+    border-top: 5px solid #437a1e !important;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+}
+
+.contact-form {
+    padding: 40px !important;
+    border-radius: 10px !important;
+    background: white !important;
+    border-top: 5px solid #437a1e !important;
+}
+
+.form-title {
+    font-family: "Playfair Display", serif !important;
+    color: #1a4d2e !important;
+    font-size: 1.8rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 25px !important;
+    padding-bottom: 15px !important;
+    border-bottom: 2px solid #86c540 !important;
+}
+
+.contact-form .MuiTextField-root {
+    margin-bottom: 20px !important;
+}
+
+.contact-form .MuiInputLabel-root {
+    font-family: "Poppins", sans-serif !important;
+    color: #4a4a4a !important;
+}
+
+.contact-form .MuiOutlinedInput-root {
+    border-radius: 10px;
+}
+
+.contact-form .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #437a1e;
+}
+
+.contact-form
+    .MuiOutlinedInput-root.Mui-focused
+    .MuiOutlinedInput-notchedOutline {
+    border-color: #1a4d2e;
+}
+
+.submit-button {
+    background-color: #1a4d2e !important;
+    color: white !important;
+    padding: 12px 30px !important;
+    border-radius: 25px !important;
+    font-family: "Poppins", sans-serif !important;
+    font-size: 1.1rem !important;
+    text-transform: none !important;
+    transition: all 0.3s ease !important;
+    margin-top: 20px !important;
+}
+
+.submit-button:hover {
+    background-color: #437a1e !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 768px) {
+    .contact-container {
+        padding: 60px 20px;
+    }
+
+    .main-title {
+        font-size: 2.8rem !important;
+    }
+
+    .subtitle {
+        font-size: 1.5rem !important;
+    }
+
+    .contact-info-card,
+    .contact-form {
+        padding: 30px !important;
+    }
+
+    .map-container iframe {
+        height: 400px;
+    }
+
+    .info-title {
+        font-size: 1.3rem !important;
+    }
+
+    .info-text {
+        font-size: 1rem !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .main-title {
+        font-size: 2.2rem !important;
+    }
+
+    .subtitle {
+        font-size: 1.3rem !important;
+    }
+
+    .contact-info-card,
+    .contact-form {
+        padding: 20px !important;
+    }
+
+    .contact-icon {
+        font-size: 2.5rem !important;
+    }
+
+    .map-container iframe {
+        height: 300px;
+    }
+
+    .form-title {
+        font-size: 1.5rem !important;
+    }
+
+    .submit-button {
+        width: 100%;
+    }
+}

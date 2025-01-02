@@ -1,0 +1,183 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap");
+
+.faq-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    padding: 80px 0;
+    min-height: 100vh;
+}
+
+.content-box {
+    padding: 0px !important;
+}
+
+.title-container {
+    margin-bottom: 30px;
+}
+
+.main-title {
+    font-family: "Playfair Display", serif !important;
+    font-weight: 700 !important;
+    font-size: 3.5rem !important;
+    color: #1a4d2e !important;
+    position: relative;
+    margin-bottom: 30px !important;
+}
+
+.main-title::after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #86c540, #437a1e);
+}
+
+.subtitle {
+    font-family: "Poppins", sans-serif !important;
+    color: #437a1e !important;
+    font-weight: 500 !important;
+    font-size: 1.8rem !important;
+    margin-top: 20px !important;
+}
+
+.description-container {
+    max-width: 900px;
+    margin: 0 auto 60px !important;
+    padding: 30px !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 10px !important;
+}
+
+.description-text {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 1.1rem !important;
+    line-height: 1.8 !important;
+    color: #4a4a4a !important;
+    text-align: center;
+}
+
+.faq-wrapper {
+    max-width: 900px;
+    margin: 0 auto 60px;
+}
+
+.faq-accordion {
+    margin-bottom: 16px !important;
+    border-radius: 10px !important;
+    border-top: 3px solid #437a1e !important;
+    transition: all 0.3s ease !important;
+}
+
+.faq-accordion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.accordion-summary {
+    padding: 20px 24px !important;
+}
+
+.accordion-details {
+    padding: 0 24px 20px !important;
+    background: rgba(134, 197, 64, 0.05);
+}
+
+.question-text {
+    font-family: "Playfair Display", serif !important;
+    color: #1a4d2e !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+}
+
+.answer-text {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 1.1rem !important;
+    line-height: 1.8 !important;
+    color: #4a4a4a !important;
+}
+
+.contact-card {
+    max-width: 900px;
+    margin: 0 auto !important;
+    padding: 40px !important;
+    border-radius: 10px !important;
+    background: white !important;
+    border-top: 5px solid #437a1e !important;
+    transition: all 0.3s ease !important;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-title {
+    font-family: "Playfair Display", serif !important;
+    color: #1a4d2e !important;
+    font-size: 1.8rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 25px !important;
+    padding-bottom: 15px !important;
+    border-bottom: 2px solid #86c540 !important;
+}
+
+.card-content {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 1.1rem !important;
+    line-height: 1.8 !important;
+    color: #4a4a4a !important;
+}
+
+@media screen and (max-width: 768px) {
+    .faq-container {
+        padding: 60px 20px;
+    }
+
+    .main-title {
+        font-size: 2.8rem !important;
+    }
+
+    .subtitle {
+        font-size: 1.5rem !important;
+    }
+
+    .description-container {
+        padding: 25px !important;
+        margin-bottom: 40px !important;
+    }
+
+    .contact-card {
+        padding: 30px !important;
+    }
+
+    .question-text {
+        font-size: 1.1rem !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .main-title {
+        font-size: 2.2rem !important;
+    }
+
+    .subtitle {
+        font-size: 1.3rem !important;
+    }
+
+    .description-text,
+    .answer-text,
+    .card-content {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+    }
+
+    .contact-card {
+        padding: 20px !important;
+    }
+
+    .question-text {
+        font-size: 1rem !important;
+    }
+}

@@ -9,6 +9,10 @@ import Navbar from "./components/Navbar/Navbar"
 import Profile from "./pages/user/Profile/Profile"
 import DonationForm from "./pages/Donate/Donate";
 import Footer from "./components/Footer/Footer";
+import About from "./pages/About/About";
+import Works from "./pages/Works/Works";
+import Contact from "./pages/Contact/Contact";
+import FAQ from "./pages/FAQ/FAQ";
 
 function App() {
 
@@ -36,6 +40,22 @@ function App() {
         <Route
           path="/donate"
           element={<DonationForm />}
+        />
+        <Route
+          path="/about"
+          element={<About />}
+        />
+        <Route
+          path="/work"
+          element={<Works />}
+        />
+        <Route
+          path="/contact"
+          element={<Contact />}
+        />
+        <Route
+          path="/faqs"
+          element={<FAQ />}
         />
       </Routes>
       <Footer />

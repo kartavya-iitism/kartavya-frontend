@@ -1,4 +1,4 @@
-import { Container, Typography, Box, Button, Paper } from '@mui/material';
+import { Container, Typography, Box, Paper } from '@mui/material';
 import logo from "../../assets/amreshmishra.webp";
 import "./ImpactStory.css";
 import { Link } from "react-router-dom";
@@ -14,7 +14,7 @@ const ImpactStory = () => {
                         align="center"
                         gutterBottom
                     >
-                        FOUNDING STORY
+                        Founding Story
                     </Typography>
                     <Typography
                         variant="h5"
@@ -59,13 +59,7 @@ const ImpactStory = () => {
 
                         <Box className="cta-container">
                             <Link to="/about" style={{ textDecoration: 'none' }}>
-                                <Button
-                                    variant="contained"
-                                    className="story-cta-button"
-                                    aria-label="Read more about our story"
-                                >
-                                    READ MORE
-                                </Button>
+                                Read More
                             </Link>
                         </Box>
                     </Box>

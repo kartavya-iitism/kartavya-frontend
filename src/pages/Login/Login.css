@@ -40,27 +40,53 @@
 }
 
 .submit-button {
-    background: linear-gradient(45deg, #ff6b6b, #ff8e53) !important;
+    background: linear-gradient(
+        45deg,
+        var(--color-orange-dark),
+        var(--color-orange)
+    ) !important;
     color: white !important;
-    padding: 15px 35px !important;
-    border-radius: 25px !important;
-    text-transform: uppercase !important;
-    font-weight: 600 !important;
-    font-size: clamp(14px, 3vw, 16px) !important;
-    letter-spacing: 1.5px !important;
+    padding: 10px 25px !important;
+    border-radius: 30px !important;
+    text-transform: none !important;
+    font-weight: 500 !important;
+    font-size: 1.5rem !important;
+    letter-spacing: normal !important;
     transition: all 0.3s ease !important;
     width: 100%;
     margin-top: 15px !important;
-    min-height: 56px;
+    min-height: 50px;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(244, 81, 30, 0.3) !important;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(244, 81, 30, 0.4) !important;
 }
 
 .status-message {
-    margin-top: 25px;
+    margin-top: 20px;
     padding: 15px;
-    border-radius: 12px;
+    border-radius: 25px !important;
     text-align: center;
-    font-size: clamp(14px, 3vw, 16px);
+    font-family: "Poppins", sans-serif !important;
+    font-size: 1.1rem !important;
+    line-height: 1;
     animation: fadeIn 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
 
 @media screen and (max-width: 768px) {

@@ -22,6 +22,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AuthVerify from '../../helper/JWTVerify';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import DateField from '../../components/DateField/DateField';
 import './Registration.css';
 
 export default function RegisterForm() {
@@ -150,8 +151,9 @@ export default function RegisterForm() {
                 autoComplete="off"
                 onSubmit={handleSubmit}
             >
-                <h1>Register</h1>
-
+                <Typography variant="h1" className="form-title section-title">
+                    Register
+                </Typography>
                 {[
                     { name: 'name', label: 'Name', type: 'text', required: true },
                     { name: 'email', label: 'Email', type: 'email', required: true },
@@ -203,27 +205,35 @@ export default function RegisterForm() {
                 {[
                     { name: 'contactNumber', label: 'Contact Number', type: 'tel', required: true },
                     { name: 'address', label: 'Address', type: 'text', required: true, multiline: true, rows: 3 },
-                    { name: 'dateOfBirth', label: 'Date of Birth', type: 'date', required: true, shrink: true },
+                    { component: DateField, name: 'dateOfBirth', label: 'Date of Birth', required: true }
                 ].map((field) => (
-                    <TextField
-                        key={field.name}
-                        required={field.required}
-                        className="custom-textfield"
-                        label={field.label}
-                        name={field.name}
-                        type={field.type}
-                        value={formData[field.name]}
-                        onChange={handleChange}
-                        fullWidth
-                        multiline={field.multiline}
-                        rows={field.rows}
-                        InputLabelProps={{
-                            shrink: field.shrink || undefined,
-                        }}
-                    />
+                    field.component ? (
+                        <field.component
+                            key={field.name}
+                            name={field.name}
+                            label={field.label}
+                            required={field.required}
+                            value={formData[field.name]}
+                            onChange={handleChange}
+                        />
+                    ) : (
+                        <TextField
+                            key={field.name}
+                            required={field.required}
+                            className="custom-textfield"
+                            label={field.label}
+                            name={field.name}
+                            type={field.type}
+                            value={formData[field.name]}
+                            onChange={handleChange}
+                            fullWidth
+                            multiline={field.multiline}
+                            rows={field.rows}
+                        />
+                    )
                 ))}
 
-                <FormControl component="fieldset" className="custom-textfield" fullWidth>
+                <FormControl style={{ marginTop: '15px' }} component="fieldset" className="custom-textfield" fullWidth>
                     <FormLabel required>Gender</FormLabel>
                     <RadioGroup
                         name="gender"
@@ -347,10 +357,10 @@ export default function RegisterForm() {
                     </div>
                 )}
 
-                <div className="existing-user" style={{ marginTop: '5px' }}>
+                <div className="existing-user" style={{ marginTop: '15px' }}>
                     <p>
                         Already have an account?
-                        <a href="/login" className="login-link">Login</a>
+                        <a href="/login" className="login-link"> Login</a>
                     </p>
                 </div>
 

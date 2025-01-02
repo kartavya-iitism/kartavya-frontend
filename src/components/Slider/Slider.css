@@ -1,9 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+    --color-primary: #1a4d2e;
+    --color-secondary: #437a1e;
+    --color-accent: #86c540;
+}
+
 .carousel {
     position: relative;
     height: 70vh;
     will-change: transform;
     perspective: 1000px;
     overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
 }
 
 .carousel-item {
@@ -23,45 +32,49 @@
 
 .carousel-caption {
     position: absolute;
-    bottom: 0% !important;
-    left: 0% !important;
-    right: 0% !important;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem !important;
-    opacity: 0;
-    box-sizing: border-box;
-    animation: fadeInUp 0.8s forwards;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 4rem 2rem !important;
     background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.05) 0%,
-        rgba(0, 0, 0, 0.3) 10%,
-        rgba(0, 0, 0, 0.4) 25%,
-        rgba(0, 0, 0, 0.5) 40%,
-        rgba(0, 0, 0, 0.55) 50%,
-        rgba(0, 0, 0, 0.5) 60%,
-        rgba(0, 0, 0, 0.4) 75%,
-        rgba(0, 0, 0, 0.3) 90%,
-        rgba(0, 0, 0, 0.05) 100%
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.5) 20%,
+        rgba(0, 0, 0, 0.7) 100%
     );
+    opacity: 0;
+    animation: fadeInUp 0.8s forwards;
 }
 
 .slide-title {
-    color: white;
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin: 0 auto 1rem;
-    padding: 0 2rem;
-    max-width: 1200px;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    font-family: "Playfair Display", serif !important;
+    color: white !important;
+    font-size: 3rem !important;
+    font-weight: 700 !important;
+    text-align: center;
+    margin-bottom: 1.5rem !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.slide-title::after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-accent), white);
 }
 
 .slide-description {
-    color: white;
-    font-size: 1.2rem;
+    font-family: "Poppins", sans-serif !important;
+    color: white !important;
+    font-size: 1.3rem !important;
+    text-align: center;
     max-width: 800px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin: 0 auto !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .carousel-indicators {
@@ -70,25 +83,20 @@
 }
 
 .carousel-indicators [data-mdb-target] {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+    width: 30px;
+    height: 4px;
+    border-radius: 2px;
     background-color: rgba(255, 255, 255, 0.5);
-    border: 2px solid rgba(255, 255, 255, 0.7);
+    border: none;
     margin: 0 6px;
     padding: 0;
-    transition: all 0.3s ease;
+    transition: all 0.8s ease;
 }
 
 .carousel-indicators .active {
-    background-color: white;
-    transform: scale(1.2);
-    border-color: white;
-}
-
-.carousel-indicators [data-mdb-target]:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    transform: scale(1.1);
+    background-color: var(--color-accent);
+    transform: scaleX(1.2);
+    border: none;
 }
 .carousel-control-prev,
 .carousel-control-next {
@@ -119,15 +127,10 @@
         height: 90vh;
     }
     .slide-title {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
     .slide-description {
-        font-size: 1rem;
-    }
-    .carousel-indicators [data-mdb-target] {
-        width: 10px;
-        height: 10px;
-        margin: 0 4px;
+        font-size: 1.1rem;
     }
 }
 
@@ -139,13 +142,10 @@
     .slide-title {
         font-size: 1.5rem;
     }
+    .slide-description {
+        font-size: 1rem;
+    }
     .carousel-indicators {
         margin-bottom: 10px;
-    }
-
-    .carousel-indicators [data-mdb-target] {
-        width: 8px;
-        height: 8px;
-        margin: 0 3px;
     }
 }

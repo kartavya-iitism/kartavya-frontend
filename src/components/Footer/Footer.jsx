@@ -57,7 +57,7 @@ export default function Footer() {
                 <MDBContainer className="text-center text-md-start mt-5">
                     <MDBRow className="mt-3">
                         <MDBCol lg="4" xl="3" className="mx-auto mb-4">
-                            <h6 className="text-uppercase fw-bold">
+                            <h6 className="fw-bold">
                                 {/* <MDBIcon color='secondary' icon='gem' className='me-3' /> */}
                                 <img className="logo-footer" src={logo} alt="logo" />
                             </h6>

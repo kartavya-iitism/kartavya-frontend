@@ -2,11 +2,11 @@
 
 .about_mission {
     background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
-    padding: 80px 0;
+    padding: 40px 0;
     min-height: 100vh;
 }
 .top-container {
-    padding: 20px;
+    padding: 0px !important;
 }
 .title-container {
     margin-bottom: 30px;
@@ -42,7 +42,7 @@
 
 .description-container {
     max-width: 900px;
-    margin: 0 auto 60px !important;
+    margin: 0 auto 30px !important;
     padding: 30px !important;
     background: rgba(255, 255, 255, 0.9) !important;
     border-radius: 10px !important;
@@ -57,7 +57,7 @@
 }
 
 .cards-container {
-    margin-top: 10px !important;
+    /* margin-top: 10px !important; */
     display: flex;
     min-height: 100px; /* Set minimum height */
     display: flex;

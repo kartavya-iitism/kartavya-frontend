@@ -1,21 +1,22 @@
 :root {
     --green-light: #86c540;
     --green-dark: #437a1e;
+    --green-primary: #1a4d2e;
     --bg-light: #f8f9fa;
 }
 
 ::-webkit-scrollbar {
-    width: 4px;
+    width: 6px;
 }
 
 ::-webkit-scrollbar-track {
     background: var(--bg-light);
-    border-radius: 2px;
+    border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--green-light);
-    border-radius: 2px;
+    background: var(--green-primary);
+    border-radius: 3px;
     transition: all 0.3s ease;
 }
 
@@ -23,15 +24,18 @@
     background: var(--green-dark);
 }
 
-/* Firefox * {
+/* Firefox */
+* {
     scrollbar-width: thin;
-    scrollbar-color: var(--green-light) var(--bg-light);
+    scrollbar-color: var(--green-primary) var(--bg-light);
 }
 
 /* For Edge and others */
 * {
-    -ms-overflow-style: none;
+    -ms-overflow-style: scrollbar;
 }
-*/ body {
-    font-family: Roboto, Helvetica, Arial, sans-serif;
+
+body {
+    font-family: "Poppins", Roboto, Helvetica, Arial, sans-serif;
+    scroll-behavior: smooth;
 }

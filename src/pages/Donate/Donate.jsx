@@ -1,20 +1,30 @@
 import { useState, useEffect } from 'react';
-import { Box, Paper, Typography, Card, CardContent } from '@mui/material';
+import {
+    Box,
+    Paper,
+    Typography,
+    Card,
+    CardContent
+} from '@mui/material';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import QRCode from '../../assets/qrcode.png';
 import axios from 'axios';
+import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
 import './Donate.css';
+import DateField from '../../components/DateField/DateField';
 
 export default function DonationForm() {
     const [formData, setformData] = useState({
-        amount: '',
+        extamount: '',
         donationDate: '',
         name: '',
         contactNumber: '',
         email: '',
-        numChild: ''
+        numChild: '',
+        amount: ''
     });
+    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const donationSteps = [
         {
             title: "Choose Amount",
@@ -36,6 +46,11 @@ export default function DonationForm() {
     const [errorMessage, setErrorMessage] = useState('');
     const [fileName, setFileName] = useState('');
 
+    const handleOpenConfirm = (evt) => {
+        evt.preventDefault();
+        setOpenConfirmDialog(true);
+    };
+
     const handleReceiptChange = (e) => {
         const file = e.target.files[0];
         setReceipt(file);
@@ -50,13 +65,15 @@ export default function DonationForm() {
             [fieldName]: value,
         }));
     };
+    const today = new Date().toISOString().split('T')[0];
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();
+        setOpenConfirmDialog(false);
         setLoading(true);
         setSuccess(false);
         setError(false);
-        if (Number(formData.amount) > 5000) {
+        if (Number(formData.amount) > 500000) {
             console.log("HII")
             setLoading(false)
             setError(true)
@@ -71,7 +88,7 @@ export default function DonationForm() {
         if (receipt) {
             formDataToSend.append('receipt', receipt, receipt.name);
         }
-
+        console.log(formData)
         try {
             const response = await axios.post(
                 `http://localhost:3000/donation/new`,
@@ -104,11 +121,23 @@ export default function DonationForm() {
             contactNumber: storedUser?.contactNumber || '',
             email: storedUser?.email || '',
             numChild: '',
-            amount: '',
-            donationDate: ''
+            extamount: '',
+            amount: '0',
+            donationDate: today
         });
         setLoading(false);
     }, []);
+
+    useEffect(() => {
+        const childAmount = parseInt(formData.numChild || 0) * 8000;
+        const extraAmount = parseInt(formData.extamount || 0);
+        const totalAmount = childAmount + extraAmount;
+
+        setformData(prev => ({
+            ...prev,
+            amount: totalAmount.toString()
+        }));
+    }, [formData.numChild, formData.extamount]);
 
     return (
         <div className="donation-container">
@@ -119,7 +148,7 @@ export default function DonationForm() {
                 <Typography variant="subtitle1" className="page-subtitle">
                     Your contribution helps create a better future for children in need.
                     {!localStorage.getItem('token') && (
-                        <p>
+                        <p className='page-subtitle-2'>
                             If you wish to donate regularly consider registering to our portal. Click to
                             <a href="/register" className="register-link"> Register</a>
                         </p>
@@ -179,7 +208,7 @@ export default function DonationForm() {
                     </Box>
                 </Paper>
 
-                <Paper component="form" className="donation-form" onSubmit={handleSubmit}>
+                <Paper component="form" className="donation-form" onSubmit={handleOpenConfirm}>
                     <Typography variant="h4" className="form-title section-title">
                         Donation Details
                     </Typography>
@@ -189,26 +218,54 @@ export default function DonationForm() {
                             { name: 'name', label: 'Name', type: 'text', required: true },
                             { name: 'email', label: 'Email', type: 'email', required: true },
                             { name: 'contactNumber', label: 'Contact Number', type: 'tel', required: true },
-                            { name: 'donationDate', label: 'Date of Donation', type: 'date', required: true, shrink: true },
-                            { name: 'amount', label: 'Amount', type: 'number', required: true },
-                            { name: 'numChild', label: 'Number of Children', type: 'number', required: false }
+                            { component: DateField, name: 'donationDate', label: 'Date of Donation', required: true },
+                            { name: 'numChild', label: 'Number of Children', type: 'number', required: false },
+                            { name: 'extamount', label: 'Extra Amount', type: 'number', required: true }
                         ].map((field) => (
-                            <TextField
-                                key={field.name}
-                                className="custom-textfield custom-textfield-donation"
-                                label={field.label}
-                                name={field.name}
-                                type={field.type}
-                                required={field.required}
-                                value={formData[field.name]}
-                                onChange={handleChange}
-                                fullWidth
-                                variant="outlined"
-                                InputLabelProps={{
-                                    shrink: field.shrink || undefined,
-                                }}
-                            />
-                        ))}
+                            field.component ? (
+                                <field.component
+                                    className="custom-textfield custom-textfield-donation"
+                                    name={field.name}
+                                    key={field.name}
+                                    label={field.label}
+                                    required={field.required}
+                                    value={formData[field.name]}
+                                    onChange={handleChange}
+                                />
+                            ) : (
+                                <TextField
+                                    key={field.name}
+                                    className="custom-textfield custom-textfield-donation"
+                                    label={field.label}
+                                    name={field.name}
+                                    type={field.type}
+                                    required={field.required}
+                                    value={formData[field.name]}
+                                    onChange={handleChange}
+                                    fullWidth
+                                    variant="outlined"
+                                    InputLabelProps={{
+                                        shrink: field.shrink || undefined,
+                                    }}
+                                    helperText={field.helperText}
+                                />
+                            )))}
+
+                        <TextField
+                            label="Amount For Children Sponsorship"
+                            className="custom-textfield custom-textfield-donation"
+                            disabled
+                            value={`₹${(parseInt(formData.numChild || 0) * 8000).toLocaleString('en-IN')}`}
+                            helperText={`${formData.numChild || 0} children × ₹8,000 per child`}
+                        />
+                        <TextField
+                            label="Total Amount"
+                            name='amount'
+                            className="custom-textfield custom-textfield-donation"
+                            disabled
+                            value={`₹${parseInt(formData.amount || 0).toLocaleString('en-IN')}`}
+                            helperText="Sponsorship amount + Extra donation"
+                        />
 
                         <div className="file-input-container">
                             <label className="file-input-label">
@@ -244,6 +301,14 @@ export default function DonationForm() {
                     )}
                 </Paper>
             </Box>
+
+            <ConfirmDialog
+                open={openConfirmDialog}
+                onClose={() => setOpenConfirmDialog(false)}
+                onConfirm={handleSubmit}
+                formData={formData}
+                loading={loading}
+            />
         </div>
     );
 }

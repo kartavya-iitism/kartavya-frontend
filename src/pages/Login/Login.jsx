@@ -11,6 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from 'axios';
+import { Typography } from '@mui/material';
 import AuthVerify from '../../helper/JWTVerify';
 import './Login.css'
 
@@ -91,7 +92,9 @@ export default function LoginForm() {
                 autoComplete="off"
                 onSubmit={handleSubmit}
             >
-                <h1>Login</h1>
+                <Typography variant="h1" className="form-title section-title">
+                    Login
+                </Typography>
                 <TextField
                     required
                     className="custom-textfield"
@@ -132,9 +135,10 @@ export default function LoginForm() {
                 {error && <div className="status-message error-message">{errorMessage}</div>}
                 {loading && <div className="status-message loading-message">Please Wait...</div>}
 
-                <div className="new-user" style={{ marginTop: '5px' }}>
-                    <p>Don&apos;t have an account?
-                        <a href="/register" className="register-link">Register</a>
+                <div className="existing-user" style={{ marginTop: '15px' }}>
+                    <p>
+                        New User?
+                        <a href="/register" className="login-link"> Register</a>
                     </p>
                 </div>
             </Box>
