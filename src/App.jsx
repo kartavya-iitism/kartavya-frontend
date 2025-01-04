@@ -7,6 +7,7 @@ import RegisterForm from "./pages/Registration/Registration";
 import LoginForm from "./pages/Login/Login";
 import Navbar from "./components/Navbar/Navbar"
 import Profile from "./pages/user/Profile/Profile"
+import Dashboard from "./pages/user/Dashboard/Dashboard"
 import DonationForm from "./pages/Donate/Donate";
 import Footer from "./components/Footer/Footer";
 import About from "./pages/About/About";
@@ -56,6 +57,10 @@ function App() {
         <Route
           path="/faqs"
           element={<FAQ />}
+        />
+        <Route
+          path="/user/dash"
+          element={<Dashboard />}
         />
       </Routes>
       <Footer />

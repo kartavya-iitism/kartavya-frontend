@@ -66,16 +66,16 @@ export default function App() {
                                 </MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='about' onClick={handleNavClick}>About Us</MDBNavbarLink>
+                                <MDBNavbarLink href='/about' onClick={handleNavClick}>About Us</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='work' onClick={handleNavClick}>Our Work</MDBNavbarLink>
+                                <MDBNavbarLink href='/work' onClick={handleNavClick}>Our Work</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='faqs' onClick={handleNavClick}>FAQs</MDBNavbarLink>
+                                <MDBNavbarLink href='/faqs' onClick={handleNavClick}>FAQs</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='contact' onClick={handleNavClick}>Contact Us</MDBNavbarLink>
+                                <MDBNavbarLink href='/contact' onClick={handleNavClick}>Contact Us</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
                                 {localStorage.token ?

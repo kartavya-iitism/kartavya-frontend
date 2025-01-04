@@ -197,7 +197,7 @@ export default function Profile() {
                                                     <TableCell className="table-header">S.No.</TableCell>
                                                     <TableCell className="table-header">Amount</TableCell>
                                                     <TableCell className="table-header">Date</TableCell>
-                                                    <TableCell className="table-header">Receipt</TableCell>
+                                                    <TableCell className="table-header">Reciept</TableCell>
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
@@ -205,16 +205,16 @@ export default function Profile() {
                                                     <TableRow key={index} className="table-row">
                                                         <TableCell>{index + 1}</TableCell>
                                                         <TableCell>₹{donation.amount}</TableCell>
-                                                        <TableCell>{formatDate(donation.date)}</TableCell>
+                                                        <TableCell>{formatDate(donation.donationDate)}</TableCell>
                                                         <TableCell>
-                                                            {donation.receipt ? (
+                                                            {donation.recieptUrl ? (
                                                                 <Link
-                                                                    href={donation.receipt}
+                                                                    href={donation.recieptUrl}
                                                                     target="_blank"
                                                                     rel="noopener noreferrer"
-                                                                    className="receipt-link"
+                                                                    className="reciept-link"
                                                                 >
-                                                                    View Receipt
+                                                                    View Reciept
                                                                 </Link>
                                                             ) : (
                                                                 'Not Available'

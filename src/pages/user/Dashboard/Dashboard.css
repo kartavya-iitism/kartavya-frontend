@@ -1,0 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+    --color-primary: #1a4d2e;
+    --color-secondary: #437a1e;
+    --color-accent: #86c540;
+}
+
+.dashboard-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    padding: 80px 0;
+    min-height: 100vh;
+}
+
+.welcome-banner {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeIn 0.5s ease;
+}
+
+.welcome-title {
+    font-family: "Playfair Display", serif !important;
+    color: var(--color-primary) !important;
+    font-size: 3.5rem !important;
+    font-weight: 700 !important;
+    position: relative;
+    margin-bottom: 30px !important;
+}
+
+.welcome-title::after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        var(--color-accent),
+        var(--color-secondary)
+    );
+}
+
+.welcome-subtitle {
+    font-family: "Poppins", sans-serif !important;
+    color: var(--color-secondary) !important;
+    font-size: 1.8rem !important;
+    font-weight: 500 !important;
+    margin-top: 20px !important;
+}
+
+.metric-card {
+    padding: 30px !important;
+    border-radius: 10px !important;
+    background: white !important;
+    border-top: 5px solid var(--color-primary) !important;
+    transition: all 0.3s ease !important;
+    animation: slideUp 0.5s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+.metric-value {
+    font-family: "Playfair Display", serif !important;
+    color: var(--color-primary) !important;
+    font-size: 2.8rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 15px !important;
+}
+
+.metric-title {
+    font-family: "Poppins", sans-serif !important;
+    color: var(--color-secondary) !important;
+    font-size: 1.4rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+}
+
+.metric-description {
+    font-family: "Poppins", sans-serif !important;
+    color: #4a4a4a !important;
+    font-size: 1.1rem !important;
+    line-height: 1.6 !important;
+}
+
+.action-card {
+    padding: 40px !important;
+    border-radius: 10px !important;
+    background: white !important;
+    border-top: 5px solid var(--color-primary) !important;
+    transition: all 0.3s ease !important;
+    text-align: center;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-title {
+    font-family: "Playfair Display", serif !important;
+    color: var(--color-primary) !important;
+    font-size: 2.2rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 20px !important;
+}
+
+.card-content {
+    font-family: "Poppins", sans-serif !important;
+    color: #4a4a4a !important;
+    font-size: 1.1rem !important;
+    line-height: 1.8 !important;
+    margin-bottom: 30px !important;
+}
+
+.action-button {
+    background: var(--color-primary) !important;
+    color: white !important;
+    padding: 12px 30px !important;
+    border-radius: 25px !important;
+    font-family: "Poppins", sans-serif !important;
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(26, 77, 46, 0.2) !important;
+}
+
+.action-button:hover {
+    background: var(--color-secondary) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(67, 122, 30, 0.3) !important;
+}
+
+.recent-donations {
+    margin-top: 50px !important;
+    padding: 40px !important;
+    border-radius: 10px !important;
+    background: white !important;
+    border-top: 5px solid var(--color-primary) !important;
+}
+
+.section-title {
+    font-family: "Playfair Display", serif !important;
+    color: var(--color-primary) !important;
+    font-size: 2.2rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 30px !important;
+    padding-bottom: 15px !important;
+    border-bottom: 2px solid var(--color-accent) !important;
+    text-align: center;
+}
+
+.donation-item {
+    border-radius: 10px !important;
+    background: white !important;
+    transition: all 0.3s ease !important;
+    border: 1px solid rgba(67, 122, 30, 0.1) !important;
+}
+
+.donation-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.receipt-button {
+    color: var(--color-primary) !important;
+    font-family: "Poppins", sans-serif !important;
+    text-transform: none !important;
+    margin-top: 15px !important;
+    transition: all 0.3s ease !important;
+}
+
+.receipt-button:hover {
+    color: var(--color-secondary) !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard-container {
+        padding: 60px 20px;
+    }
+
+    .welcome-title {
+        font-size: 2.8rem !important;
+    }
+
+    .welcome-subtitle {
+        font-size: 1.5rem !important;
+    }
+
+    .metric-value {
+        font-size: 2.2rem !important;
+    }
+
+    .card-title {
+        font-size: 1.8rem !important;
+    }
+
+    .action-card {
+        padding: 30px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .dashboard-container {
+        padding: 40px 15px;
+    }
+
+    .welcome-title {
+        font-size: 2.2rem !important;
+    }
+
+    .welcome-subtitle {
+        font-size: 1.3rem !important;
+    }
+
+    .metric-value {
+        font-size: 2rem !important;
+    }
+
+    .card-title {
+        font-size: 1.5rem !important;
+    }
+
+    .card-content {
+        font-size: 1rem !important;
+    }
+
+    .action-button {
+        width: 100%;
+        margin: 5px 0 !important;
+    }
+}

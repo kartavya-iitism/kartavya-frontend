@@ -36,10 +36,10 @@ export default function DonationForm() {
         },
         {
             title: "Fill Details",
-            description: "Complete the form with your information and upload payment receipt"
+            description: "Complete the form with your information and upload payment reciept"
         }
     ];
-    const [receipt, setReceipt] = useState(null);
+    const [reciept, setReciept] = useState(null);
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -51,9 +51,9 @@ export default function DonationForm() {
         setOpenConfirmDialog(true);
     };
 
-    const handleReceiptChange = (e) => {
+    const handleRecieptChange = (e) => {
         const file = e.target.files[0];
-        setReceipt(file);
+        setReciept(file);
         setFileName(file ? file.name : '');
     };
 
@@ -85,8 +85,8 @@ export default function DonationForm() {
         for (let prop in formData) {
             formDataToSend.append(prop, formData[prop]);
         }
-        if (receipt) {
-            formDataToSend.append('receipt', receipt, receipt.name);
+        if (reciept) {
+            formDataToSend.append('reciept', reciept, reciept.name);
         }
         console.log(formData)
         try {
@@ -269,10 +269,10 @@ export default function DonationForm() {
 
                         <div className="file-input-container">
                             <label className="file-input-label">
-                                {fileName || 'Upload Payment Receipt'}
+                                {fileName || 'Upload Payment reciept'}
                                 <input
                                     type="file"
-                                    onChange={handleReceiptChange}
+                                    onChange={handleRecieptChange}
                                     accept="image/*,.pdf"
                                     className="file-input"
                                 />
