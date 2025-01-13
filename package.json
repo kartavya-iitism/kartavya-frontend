@@ -18,6 +18,8 @@
     "@mui/styled-engine-sc": "^6.1.10",
     "axios": "^1.7.9",
     "mdb-react-ui-kit": "^9.0.0",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.9.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-material-ui-carousel": "^3.4.2",

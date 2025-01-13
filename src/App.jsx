@@ -14,6 +14,7 @@ import About from "./pages/About/About";
 import Works from "./pages/Works/Works";
 import Contact from "./pages/Contact/Contact";
 import FAQ from "./pages/FAQ/FAQ";
+import AdminDashboard from "./pages/admin/Dashboard/Dashboard";
 
 function App() {
 
@@ -61,6 +62,10 @@ function App() {
         <Route
           path="/user/dash"
           element={<Dashboard />}
+        />
+        <Route
+          path="/admin/dash"
+          element={<AdminDashboard />}
         />
       </Routes>
       <Footer />
