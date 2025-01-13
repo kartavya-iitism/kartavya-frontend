@@ -18,6 +18,16 @@ const UsersTable = () => {
     const [userDetailsDialog, setUserDetailsDialog] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const toast = useRef(null);
+    const [promoteDialog, setPromoteDialog] = useState(false);
+    const [selectedPromoteUser, setSelectedPromoteUser] = useState(null);
+    const [promoting, setPromoting] = useState(false);
+    const [deleteDialog, setDeleteDialog] = useState(false);
+    const [demoteDialog, setDemoteDialog] = useState(false);
+    const [selectedDeleteUser, setSelectedDeleteUser] = useState(null);
+    const [selectedDemoteUser, setSelectedDemoteUser] = useState(null);
+    const [deleting, setDeleting] = useState(false);
+    const [demoting, setDemoting] = useState(false);
+
 
     const roleOptions = [
         { label: 'Admin', value: 'admin' },
@@ -64,6 +74,148 @@ const UsersTable = () => {
             setLoading(false);
         }
     };
+
+    const handlePromoteUser = async () => {
+        setPromoting(true);
+        try {
+            await axios.put(`http://localhost:3000/user/promote/${selectedPromoteUser.id}`, {}, {
+                headers: { Authorization: `Bearer ${localStorage.token}` }
+            });
+
+            setUsers(users.map(user =>
+                user.id === selectedPromoteUser.id ? { ...user, role: 'admin' } : user
+            ));
+
+            toast.current.show({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'User promoted to admin successfully',
+                life: 3000
+            });
+        } catch (error) {
+            console.error('Promote error:', error);
+            toast.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to promote user',
+                life: 3000
+            });
+        } finally {
+            setPromoting(false);
+            setPromoteDialog(false);
+            setSelectedPromoteUser(null);
+        }
+    };
+
+    const handleDeleteUser = async () => {
+        setDeleting(true);
+        try {
+            await axios.delete(`http://localhost:3000/user/delete/${selectedDeleteUser.id}`, {
+                headers: { Authorization: `Bearer ${localStorage.token}` }
+            });
+
+            setUsers(users.filter(user => user.id !== selectedDeleteUser.id));
+            toast.current.show({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'User deleted successfully',
+                life: 3000
+            });
+        } catch (error) {
+            console.error('Delete error:', error);
+            toast.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to delete user',
+                life: 3000
+            });
+        } finally {
+            setDeleting(false);
+            setDeleteDialog(false);
+            setSelectedDeleteUser(null);
+        }
+    };
+
+    const handleDemoteUser = async () => {
+        setDemoting(true);
+        try {
+            await axios.put(`http://localhost:3000/user/demote/${selectedDemoteUser.id}`, {}, {
+                headers: { Authorization: `Bearer ${localStorage.token}` }
+            });
+
+            setUsers(users.map(user =>
+                user.id === selectedDemoteUser.id ? { ...user, role: 'regular' } : user
+            ));
+            toast.current.show({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'User demoted successfully',
+                life: 3000
+            });
+        } catch (error) {
+            console.error('Demote error:', error);
+            toast.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to demote user',
+                life: 3000
+            });
+        } finally {
+            setDemoting(false);
+            setDemoteDialog(false);
+            setSelectedDemoteUser(null);
+        }
+    };
+
+    const actionBodyTemplate = (rowData) => {
+        if (rowData.role === 'admin') {
+            return (
+                <div className="action-buttons">
+                    <Button
+                        icon="pi pi-user-minus"
+                        className="p-button-rounded p-button-info p-button-text"
+                        onClick={() => {
+                            setSelectedDemoteUser(rowData);
+                            setDemoteDialog(true);
+                        }}
+                        tooltip="Demote to Regular"
+                    />
+                    <Button
+                        icon="pi pi-trash"
+                        className="p-button-rounded p-button-danger p-button-text"
+                        onClick={() => {
+                            setSelectedDeleteUser(rowData);
+                            setDeleteDialog(true);
+                        }}
+                        tooltip="Delete User"
+                    />
+                </div>
+            );
+        }
+        return (
+            <div className="action-buttons">
+                <Button
+                    icon="pi pi-user-plus"
+                    className="p-button-rounded p-button-warning p-button-text"
+                    onClick={() => {
+                        setSelectedPromoteUser(rowData);
+                        setPromoteDialog(true);
+                    }}
+                    tooltip="Promote to Admin"
+                />
+                <Button
+                    icon="pi pi-trash"
+                    className="p-button-rounded p-button-danger p-button-text"
+                    onClick={() => {
+                        setSelectedDeleteUser(rowData);
+                        setDeleteDialog(true);
+                    }}
+                    tooltip="Delete User"
+                />
+            </div>
+        );
+    };
+
 
     const handleViewDetails = (user) => {
         setSelectedUser(user);
@@ -194,6 +346,94 @@ const UsersTable = () => {
         </Dialog>
     );
 
+    const renderPromoteDialog = () => (
+        <Dialog
+            visible={promoteDialog}
+            onHide={() => setPromoteDialog(false)}
+            header="Confirm Promotion"
+            modal
+            footer={
+                <div>
+                    <Button
+                        label="Cancel"
+                        icon="pi pi-times"
+                        onClick={() => setPromoteDialog(false)}
+                        className="p-button-text"
+                    />
+                    <Button
+                        label="Promote"
+                        icon="pi pi-check"
+                        onClick={handlePromoteUser}
+                        loading={promoting}
+                        className="p-button-warning"
+                        autoFocus
+                    />
+                </div>
+            }
+        >
+            <p>Are you sure you want to promote {selectedPromoteUser?.name} to admin?</p>
+        </Dialog>
+    );
+
+    const renderDemoteDialog = () => (
+        <Dialog
+            visible={demoteDialog}
+            onHide={() => setDemoteDialog(false)}
+            header="Confirm Demotion"
+            modal
+            footer={
+                <div>
+                    <Button
+                        label="Cancel"
+                        icon="pi pi-times"
+                        onClick={() => setDemoteDialog(false)}
+                        className="p-button-text"
+                    />
+                    <Button
+                        label="Demote"
+                        icon="pi pi-check"
+                        onClick={handleDemoteUser}
+                        loading={demoting}
+                        className="p-button-info"
+                        autoFocus
+                    />
+                </div>
+            }
+        >
+            <p>Are you sure you want to demote {selectedDemoteUser?.name} to regular user?</p>
+        </Dialog>
+    );
+
+    const renderDeleteDialog = () => (
+        <Dialog
+            visible={deleteDialog}
+            onHide={() => setDeleteDialog(false)}
+            header="Confirm Delete"
+            modal
+            footer={
+                <div>
+                    <Button
+                        label="Cancel"
+                        icon="pi pi-times"
+                        onClick={() => setDeleteDialog(false)}
+                        className="p-button-text"
+                    />
+                    <Button
+                        label="Delete"
+                        icon="pi pi-trash"
+                        onClick={handleDeleteUser}
+                        loading={deleting}
+                        className="p-button-danger"
+                        autoFocus
+                    />
+                </div>
+            }
+        >
+            <p>Are you sure you want to delete {selectedDeleteUser?.name}?</p>
+        </Dialog>
+    );
+
+
     return (
         <>
             <Toast ref={toast} position="bottom-right" />
@@ -230,16 +470,19 @@ const UsersTable = () => {
                         body={nameBodyTemplate}
                         sortable
                         filter
+                        style={{ width: '15%', minWidth: '150px' }}
                     />
                     <Column
                         field="email"
                         header="Email"
                         sortable
                         filter
+                        style={{ width: '20%', minWidth: '200px' }}
                     />
                     <Column
                         field="contactNumber"
                         header="Contact"
+                        style={{ width: '12%', minWidth: '120px' }}
                     />
                     <Column
                         field="role"
@@ -256,6 +499,17 @@ const UsersTable = () => {
                                 className="p-column-filter"
                             />
                         )}
+                        style={{ width: '10%', minWidth: '100px' }}
+                    />
+                    <Column
+                        field="dateOfRegistration"
+                        header="Registered On"
+                        body={dateBodyTemplate}
+                        sortable
+                        filter
+                        dataType="date"
+                        filterElement={dateFilterTemplate}
+                        style={{ width: '15%', minWidth: '150px' }}
                     />
                     <Column
                         field="isVerified"
@@ -272,20 +526,22 @@ const UsersTable = () => {
                                 className="p-column-filter"
                             />
                         )}
+                        style={{ width: '10%', minWidth: '100px' }}
                     />
                     <Column
-                        field="dateOfRegistration"
-                        header="Registered On"
-                        headerStyle={{ whiteSpace: 'nowrap' }}
-                        body={dateBodyTemplate}
-                        sortable
-                        filter
-                        dataType="date"
-                        filterElement={dateFilterTemplate}
+                        field="actions"
+                        header="Actions"
+                        body={actionBodyTemplate}
+                        style={{ width: '10%', minWidth: '120px' }}
+                        headerStyle={{ textAlign: 'center' }}
+                        bodyStyle={{ textAlign: 'center', padding: '0.5rem' }}
                     />
                 </DataTable>
             </div>
             {renderUserDetailsDialog()}
+            {renderPromoteDialog()}
+            {renderDeleteDialog()}
+            {renderDemoteDialog()}
         </>
     );
 };

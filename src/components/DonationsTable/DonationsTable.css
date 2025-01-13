@@ -176,14 +176,24 @@
     justify-content: flex-start !important;
 }
 
-.name-cell-btn.p-button-link:disabled {
+.name-cell-btn.p-button.p-button-link:disabled {
+    opacity: 1 !important;
+    cursor: default !important;
+    color: #9e9e9e !important;
+    background: transparent !important;
+    border: none !important;
     padding: 0 !important;
     margin: 0 !important;
     height: auto !important;
     min-width: 0 !important;
     justify-content: flex-start !important;
-    color: var(--admin-primary) !important;
     text-decoration: none !important;
+}
+
+/* Remove hover effect on disabled button */
+.name-cell-btn.p-button.p-button-link:disabled:hover {
+    background: transparent !important;
+    color: #666 !important;
 }
 .name-cell-text {
     color: var(--admin-primary);
@@ -192,8 +202,7 @@
 
 .status-cell-wrapper {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    justify-content: center;
 }
 
 .verify-btn {
@@ -226,6 +235,28 @@
 .admin-donations-table .p-datatable-thead > tr > th .p-sortable-column-icon {
     color: white !important;
     opacity: 0.7;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.action-buttons .p-button-rounded {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.admin-donations-table .p-column-filter-menu {
+    max-width: 150px;
+    min-width: 80px;
+    width: auto !important;
+}
+
+.admin-donations-table .p-column-filter-overlay {
+    min-width: auto !important;
+    width: auto !important;
 }
 
 @media screen and (max-width: 992px) {
