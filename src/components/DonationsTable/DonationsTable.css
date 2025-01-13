@@ -248,15 +248,26 @@
     height: 2.5rem;
 }
 
-.admin-donations-table .p-column-filter-menu {
-    max-width: 150px;
-    min-width: 80px;
-    width: auto !important;
+/* Add column filter constraints */
+.admin-donations-table .p-column-filter-menu-button {
+    width: 2rem !important;
+    height: 2rem !important;
 }
 
 .admin-donations-table .p-column-filter-overlay {
-    min-width: auto !important;
+    min-width: 150px !important;
     width: auto !important;
+    max-width: 200px !important;
+}
+
+.admin-donations-table .p-column-filter {
+    width: 100% !important;
+    min-width: auto !important;
+}
+
+/* Constrain filter dropdown widths */
+.admin-donations-table .p-dropdown.p-column-filter {
+    max-width: 150px !important;
 }
 
 @media screen and (max-width: 992px) {

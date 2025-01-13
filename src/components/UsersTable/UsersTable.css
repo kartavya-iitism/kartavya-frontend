@@ -96,6 +96,27 @@
     white-space: nowrap;
 }
 
+/* Add filter menu constraints */
+.admin-users-table .p-column-filter-menu-button {
+    width: 2rem !important;
+    height: 2rem !important;
+}
+
+.admin-users-table .p-column-filter-overlay {
+    min-width: 150px !important;
+    width: auto !important;
+    max-width: 200px !important;
+}
+
+.admin-users-table .p-column-filter {
+    width: 100% !important;
+    min-width: auto !important;
+}
+
+/* Constrain dropdown widths */
+.admin-users-table .p-dropdown.p-column-filter {
+    max-width: 150px !important;
+}
 .date-filter-container {
     display: flex;
     flex-direction: column;
@@ -170,10 +191,16 @@
     border-bottom: 1px solid #eee;
 }
 
-.user-details-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
+.user-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+    padding: 0rem 0;
+}
+
+.user-details-list p {
+    margin: 0;
+    padding: 0.2rem 0;
 }
 
 .admin-donations-table .p-datatable-thead > tr > th .p-sortable-column-icon {

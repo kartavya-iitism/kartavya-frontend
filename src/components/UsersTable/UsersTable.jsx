@@ -179,6 +179,7 @@ const UsersTable = () => {
                             setDemoteDialog(true);
                         }}
                         tooltip="Demote to Regular"
+                        tooltipOptions={{ position: 'left' }}
                     />
                     <Button
                         icon="pi pi-trash"
@@ -188,6 +189,7 @@ const UsersTable = () => {
                             setDeleteDialog(true);
                         }}
                         tooltip="Delete User"
+                        tooltipOptions={{ position: 'left' }}
                     />
                 </div>
             );
@@ -202,6 +204,7 @@ const UsersTable = () => {
                         setPromoteDialog(true);
                     }}
                     tooltip="Promote to Admin"
+                    tooltipOptions={{ position: 'left' }}
                 />
                 <Button
                     icon="pi pi-trash"
@@ -211,11 +214,11 @@ const UsersTable = () => {
                         setDeleteDialog(true);
                     }}
                     tooltip="Delete User"
+                    tooltipOptions={{ position: 'left' }}
                 />
             </div>
         );
     };
-
 
     const handleViewDetails = (user) => {
         setSelectedUser(user);
@@ -262,7 +265,7 @@ const UsersTable = () => {
                 rowData.role === 'admin' ? 'danger' :
                     rowData.role === 'volunteer' ? 'warning' : 'info'
             }
-            value={rowData.role?.toUpperCase()}
+            value={rowData.role?.charAt(0).toUpperCase() + rowData.role?.slice(1)}
         />
     );
 
@@ -304,7 +307,7 @@ const UsersTable = () => {
                         />
                     </div>
 
-                    <div className="user-details-grid">
+                    <div className="user-details-list">
                         <p><strong>Username:</strong> {selectedUser.username}</p>
                         <p><strong>Email:</strong> {selectedUser.email}</p>
                         <p><strong>Contact:</strong> {selectedUser.contactNumber}</p>
@@ -318,7 +321,6 @@ const UsersTable = () => {
                             <p><strong>Gender:</strong> {selectedUser.gender}</p>
                         )}
                         <p><strong>Verified:</strong> {selectedUser.isVerified ? 'Yes' : 'No'}</p>
-
                         {selectedUser.governmentOfficial && (
                             <p><strong>Government Official:</strong> Yes</p>
                         )}
@@ -470,19 +472,25 @@ const UsersTable = () => {
                         body={nameBodyTemplate}
                         sortable
                         filter
-                        style={{ width: '15%', minWidth: '150px' }}
+                    />
+                    <Column
+                        field="contactNumber"
+                        header="Contact"
                     />
                     <Column
                         field="email"
                         header="Email"
                         sortable
                         filter
-                        style={{ width: '20%', minWidth: '200px' }}
                     />
                     <Column
-                        field="contactNumber"
-                        header="Contact"
-                        style={{ width: '12%', minWidth: '120px' }}
+                        field="dateOfRegistration"
+                        header="Registered On"
+                        body={dateBodyTemplate}
+                        sortable
+                        filter
+                        dataType="date"
+                        filterElement={dateFilterTemplate}
                     />
                     <Column
                         field="role"
@@ -499,17 +507,6 @@ const UsersTable = () => {
                                 className="p-column-filter"
                             />
                         )}
-                        style={{ width: '10%', minWidth: '100px' }}
-                    />
-                    <Column
-                        field="dateOfRegistration"
-                        header="Registered On"
-                        body={dateBodyTemplate}
-                        sortable
-                        filter
-                        dataType="date"
-                        filterElement={dateFilterTemplate}
-                        style={{ width: '15%', minWidth: '150px' }}
                     />
                     <Column
                         field="isVerified"
@@ -526,7 +523,6 @@ const UsersTable = () => {
                                 className="p-column-filter"
                             />
                         )}
-                        style={{ width: '10%', minWidth: '100px' }}
                     />
                     <Column
                         field="actions"

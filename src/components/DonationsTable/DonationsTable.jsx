@@ -186,8 +186,7 @@ const DonationsTable = () => {
                 <div className="admin-user-details">
                     <p><strong>Name:</strong> {selectedUser.name}</p>
                     <p><strong>Email:</strong> {selectedUser.email}</p>
-                    <p><strong>Contact:</strong> {selectedUser.contactNumber}</p>
-                    <p><strong>Children Sponsored:</strong> {selectedUser.numChild}</p>
+                    <p><strong>Username:</strong> {selectedUser.username}</p>
                 </div>
             )}
         </Dialog>
@@ -202,6 +201,7 @@ const DonationsTable = () => {
                         className="p-button-rounded p-button-success p-button-text"
                         onClick={() => handleVerifyClick(rowData.id)}
                         tooltip="Verify Donation"
+                        tooltipOptions={{ position: 'left' }}
                     />
                 </div>
             );
@@ -270,19 +270,16 @@ const DonationsTable = () => {
                         body={nameBodyTemplate}
                         sortable
                         filter
-                        style={{ width: '20%', minWidth: '150px' }}
                     />
                     <Column
                         field="contactNumber"
                         header="Contact"
-                        style={{ width: '10%', minWidth: '120px' }}
                     />
                     <Column
                         field="email"
                         header="Email"
                         sortable
                         filter
-                        style={{ width: '20%', minWidth: '150px' }}
                     />
                     <Column
                         field="donationDate"
@@ -292,7 +289,6 @@ const DonationsTable = () => {
                         sortable
                         filter
                         filterElement={dateFilterTemplate}
-                        style={{ width: '10%', minWidth: '120px' }}
                     />
                     <Column
                         field="numChild"
@@ -300,7 +296,6 @@ const DonationsTable = () => {
                         dataType="numeric"
                         sortable
                         filter
-                        style={{ width: '4%', minWidth: '40px' }}
                         filterPlaceholder="Children"
                     />
 
@@ -311,14 +306,12 @@ const DonationsTable = () => {
                         body={amountBodyTemplate}
                         sortable
                         filter
-                        style={{ width: '5%', minWidth: '50px' }}
                         filterPlaceholder="Amount"
                     />
                     <Column
                         field="recieptUrl"
                         header="Receipt"
                         body={receiptBodyTemplate}
-                        style={{ width: '6%', minWidth: '60px' }}
                     />
                     <Column
                         field="verified"
@@ -335,13 +328,12 @@ const DonationsTable = () => {
                                 className="p-column-filter"
                             />
                         )}
-                        style={{ width: '5%', minWidth: '50px' }}
                     />
                     <Column
                         field="actions"
                         header="Actions"
                         body={actionBodyTemplate}
-                        style={{ width: '7%', minWidth: '60px' }}
+                        style={{ width: '8%', minWidth: '80px' }}
                         headerStyle={{ textAlign: 'center' }}
                         bodyStyle={{ textAlign: 'center', padding: '0.5rem' }}
                     />
