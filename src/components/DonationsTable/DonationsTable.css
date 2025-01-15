@@ -54,9 +54,10 @@
 .admin-donations-table .p-datatable-thead > tr > th {
     background: var(--admin-primary);
     color: white;
-    padding: 1rem;
     font-weight: 500;
     border: none;
+    padding: 0.8rem 1.2rem !important;
+    line-height: 1.2 !important;
 }
 
 .admin-donations-table .p-datatable-tbody > tr {
@@ -68,10 +69,12 @@
 }
 
 .admin-donations-table .p-datatable-tbody > tr > td {
-    padding: 1rem;
+    padding: 0.5rem 1rem !important;
+    line-height: 1 !important;
     border-color: #f0f0f0;
 }
 
+/* Button Styles */
 .p-button-link {
     color: var(--admin-primary) !important;
     font-weight: 500 !important;
@@ -94,6 +97,7 @@
     background: rgba(26, 77, 46, 0.1) !important;
 }
 
+/* Tag Styles */
 .p-tag {
     border-radius: 20px;
     padding: 0.25rem 0.75rem;
@@ -107,6 +111,7 @@
     background: var(--admin-warning);
 }
 
+/* Dialog Styles */
 .admin-user-dialog {
     min-width: 400px;
     border-radius: 12px;
@@ -124,7 +129,7 @@
 }
 
 .admin-user-details p {
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     font-family: "Poppins", sans-serif;
     font-size: 1.1rem;
     line-height: 1.6;
@@ -135,6 +140,7 @@
     margin-right: 0.5rem;
 }
 
+/* Paginator Styles */
 .p-paginator {
     padding: 1rem;
     background: transparent;
@@ -149,6 +155,7 @@
     color: white;
 }
 
+/* Toast and Filter Styles */
 .p-toast .p-toast-message {
     border-radius: 8px;
     box-shadow: 0 4px 12px var(--admin-shadow);
@@ -157,12 +164,16 @@
 .p-column-filter-overlay {
     border-radius: 8px;
     box-shadow: 0 4px 12px var(--admin-shadow);
+    min-width: 150px !important;
+    width: auto !important;
+    max-width: 200px !important;
 }
 
 .p-column-filter-row-items .p-column-filter-row-item {
     padding: 0.75rem 1rem;
 }
 
+/* Name Cell Styles */
 .name-cell-wrapper {
     text-align: left;
     padding: 0;
@@ -171,6 +182,7 @@
 .name-cell-btn.p-button-link {
     padding: 0 !important;
     margin: 0 !important;
+    line-height: 1.2 !important;
     height: auto !important;
     min-width: 0 !important;
     justify-content: flex-start !important;
@@ -179,67 +191,36 @@
 .name-cell-btn.p-button.p-button-link:disabled {
     opacity: 1 !important;
     cursor: default !important;
-    color: #9e9e9e !important;
+    color: #666 !important;
     background: transparent !important;
     border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    height: auto !important;
-    min-width: 0 !important;
-    justify-content: flex-start !important;
     text-decoration: none !important;
 }
 
-/* Remove hover effect on disabled button */
 .name-cell-btn.p-button.p-button-link:disabled:hover {
     background: transparent !important;
     color: #666 !important;
 }
-.name-cell-text {
-    color: var(--admin-primary);
-    font-family: "Poppins", sans-serif;
-}
 
-.status-cell-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
-.verify-btn {
+/* Filter Styles */
+.admin-donations-table .p-column-filter-menu-button {
     width: 2rem !important;
     height: 2rem !important;
-    color: var(--admin-success) !important;
 }
 
-.verify-btn:hover {
-    background: rgba(16, 185, 129, 0.1) !important;
+.admin-donations-table .p-column-filter {
+    width: 100% !important;
+    min-width: auto !important;
 }
 
-.p-column-filter.p-dropdown {
-    width: 100%;
-    min-width: 140px;
+.admin-donations-table .p-dropdown.p-column-filter {
+    max-width: 150px !important;
 }
 
-.verify-btn.p-button {
-    position: relative;
-}
-
-.verify-btn .p-tooltip {
-    left: -100% !important;
-}
-
-.p-tooltip.status-tooltip {
-    max-width: 150px;
-}
-
-.admin-donations-table .p-datatable-thead > tr > th .p-sortable-column-icon {
-    color: white !important;
-    opacity: 0.7;
-}
-
+/* Action Buttons */
 .action-buttons {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start !important;
     gap: 0.5rem;
 }
 
@@ -248,28 +229,39 @@
     height: 2.5rem;
 }
 
-/* Add column filter constraints */
-.admin-donations-table .p-column-filter-menu-button {
-    width: 2rem !important;
-    height: 2rem !important;
+/* Dialog Footer */
+.p-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 1.5rem;
 }
 
-.admin-donations-table .p-column-filter-overlay {
-    min-width: 150px !important;
-    width: auto !important;
-    max-width: 200px !important;
+.p-dialog-footer .p-button {
+    margin: 0;
 }
 
-.admin-donations-table .p-column-filter {
-    width: 100% !important;
-    min-width: auto !important;
+.p-dialog .p-dialog-footer > div {
+    display: flex;
+    gap: 0.5rem;
 }
 
-/* Constrain filter dropdown widths */
-.admin-donations-table .p-dropdown.p-column-filter {
-    max-width: 150px !important;
+/* Form Field Styles */
+.p-dialog .p-field {
+    margin-bottom: 1.5rem;
 }
 
+.p-dialog .p-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.p-dialog .p-inputtext {
+    width: 100%;
+}
+
+/* Responsive Design */
 @media screen and (max-width: 992px) {
     .admin-dashboard-container {
         padding: 1.5rem;

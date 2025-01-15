@@ -25,7 +25,8 @@
 .admin-users-table .p-datatable-thead > tr > th {
     background: var(--admin-primary);
     color: white;
-    padding: 1rem;
+    padding: 0.8rem 1rem;
+    line-height: 1.2;
     font-weight: 500;
     border: none;
 }
@@ -39,7 +40,8 @@
 }
 
 .admin-users-table .p-datatable-tbody > tr > td {
-    padding: 1rem;
+    padding: 0.8rem 1.2rem;
+    line-height: 1.2;
     border-color: #f0f0f0;
 }
 
@@ -158,6 +160,7 @@
     padding: 0;
     margin: 0;
     text-align: left;
+    line-height: 1.2 !important;
     font-weight: normal;
 }
 
@@ -215,13 +218,29 @@
 
 .action-buttons {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-start !important;
     gap: 0.5rem;
 }
 
 .action-buttons .p-button-rounded {
     width: 2.5rem;
     height: 2.5rem;
+}
+
+.p-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 1.5rem;
+}
+
+.p-dialog-footer .p-button {
+    margin: 0;
+}
+
+.p-dialog .p-dialog-footer > div {
+    display: flex;
+    gap: 0.5rem;
 }
 
 @media screen and (max-width: 768px) {
@@ -240,5 +259,9 @@
 
     .user-details-grid {
         grid-template-columns: 1fr;
+    }
+    .admin-users-table .p-datatable-thead > tr > th,
+    .admin-users-table .p-datatable-tbody > tr > td {
+        padding: 0.75rem;
     }
 }

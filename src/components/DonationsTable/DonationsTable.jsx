@@ -26,6 +26,11 @@ const DonationsTable = () => {
     const [confirmDialog, setConfirmDialog] = useState(false);
     const [selectedDonationId, setSelectedDonationId] = useState(null);
     const [verifying, setVerifying] = useState(false);
+    const [rejectDialog, setRejectDialog] = useState(false);
+    const [selectedRejectDonation, setSelectedRejectDonation] = useState(null);
+    const [rejectMessage, setRejectMessage] = useState('');
+    const [rejecting, setRejecting] = useState(false);
+
 
     // Filters
     const [filters, setFilters] = useState({
@@ -106,6 +111,40 @@ const DonationsTable = () => {
             setVerifying(false);
             setConfirmDialog(false);
             setSelectedDonationId(null);
+        }
+    };
+
+    const handleRejectSubmit = async () => {
+        setRejecting(true);
+        try {
+            await axios.put(`http://localhost:3000/donation/reject/${selectedRejectDonation.id}`,
+                { message: rejectMessage },
+                { headers: { Authorization: `Bearer ${localStorage.token}` } }
+            );
+
+            setDonations(donations.map(d =>
+                d.id === selectedRejectDonation.id ? { ...d, verified: false, rejected: true } : d
+            ));
+
+            toast.current.show({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Donation rejected successfully',
+                life: 3000
+            });
+        } catch (error) {
+            console.error('Reject error:', error);
+            toast.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to reject donation',
+                life: 3000
+            });
+        } finally {
+            setRejecting(false);
+            setRejectDialog(false);
+            setSelectedRejectDonation(null);
+            setRejectMessage('');
         }
     };
 
@@ -193,7 +232,7 @@ const DonationsTable = () => {
     );
 
     const actionBodyTemplate = (rowData) => {
-        if (!rowData.verified) {
+        if (!rowData.verified && !rowData.rejected) {
             return (
                 <div className="action-buttons">
                     <Button
@@ -203,11 +242,69 @@ const DonationsTable = () => {
                         tooltip="Verify Donation"
                         tooltipOptions={{ position: 'left' }}
                     />
+                    <Button
+                        icon="pi pi-times"
+                        className="p-button-rounded p-button-danger p-button-text"
+                        onClick={() => {
+                            setSelectedRejectDonation(rowData);
+                            setRejectDialog(true);
+                        }}
+                        tooltip="Reject Donation"
+                        tooltipOptions={{ position: 'left' }}
+                    />
                 </div>
             );
         }
         return null;
     };
+
+    const renderRejectDialog = () => (
+        <Dialog
+            visible={rejectDialog}
+            onHide={() => {
+                setRejectDialog(false);
+                setRejectMessage('');
+            }}
+            header="Reject Donation"
+            modal
+            footer={
+                <div>
+                    <Button
+                        label="Cancel"
+                        icon="pi pi-times"
+                        onClick={() => {
+                            setRejectDialog(false);
+                            setRejectMessage('');
+                        }}
+                        className="p-button-text"
+                    />
+                    <Button
+                        label="Reject"
+                        icon="pi pi-times"
+                        onClick={handleRejectSubmit}
+                        loading={rejecting}
+                        className="p-button-danger"
+                        disabled={!rejectMessage.trim()}
+                        autoFocus
+                    />
+                </div>
+            }
+        >
+            <div className="p-fluid">
+                <div className="p-field">
+                    <label htmlFor="rejectMessage">Rejection Reason</label>
+                    <InputText
+                        id="rejectMessage"
+                        value={rejectMessage}
+                        onChange={(e) => setRejectMessage(e.target.value)}
+                        required
+                        autoFocus
+                        className="w-full"
+                    />
+                </div>
+            </div>
+        </Dialog>
+    );
 
     return (
         <>
@@ -340,6 +437,7 @@ const DonationsTable = () => {
                 </DataTable>
             </div >
             {renderUserDialog()}
+            {renderRejectDialog()}
         </>
     );
 };
