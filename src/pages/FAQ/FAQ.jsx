@@ -1,46 +1,72 @@
 import { Box, Container, Typography, Accordion, AccordionSummary, AccordionDetails, Paper } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useEffect, useState } from 'react';
+import { fetchContent } from '../../helper/contentFetcher';
+import { CircularProgress, Alert } from '@mui/material';
 import './FAQ.css';
 
+const FAQ_URL = 'https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/faq.json';
 const FAQ = () => {
-    const faqs = [
-        {
-            question: "How can I support Kartavya?",
-            answer: "You can support Kartavya through donations, volunteering, or by spreading awareness about our initiatives. Visit our donation page to contribute financially."
-        },
-        {
-            question: "What is the child sponsorship program?",
-            answer: "Our child sponsorship program provides educational support to underprivileged children. The sponsorship amount of ₹8,000 covers educational expenses for one year."
-        },
-        {
-            question: "How are the donations utilized?",
-            answer: "Donations are primarily used for educational programs, health initiatives, and community development projects. We maintain complete transparency in fund utilization."
-        },
-        {
-            question: "Can I volunteer at Kartavya?",
-            answer: "Yes, we welcome volunteers! IIT (ISM) students can join as regular volunteers, while others can participate in specific events and programs."
-        },
-        {
-            question: "Is my donation tax-deductible?",
-            answer: "Yes, all donations to Kartavya are eligible for tax deduction under Section 80G of the Income Tax Act."
-        }
-    ];
+    const [content, setContent] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                const data = await fetchContent(FAQ_URL);
+                setContent(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadContent();
+    }, []);
+
+    if (loading) return (
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="60vh"
+        >
+            <CircularProgress color="primary" />
+        </Box>
+    );
+
+    if (error) return (
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="60vh"
+            padding={2}
+        >
+            <Alert severity="error" variant="filled">
+                {error}
+            </Alert>
+        </Box>
+    );
+
+    const { main, contactCard, faqs } = content;
     return (
         <Box className="faq-container">
             <Container maxWidth="lg" className="content-box">
                 <Box className="title-container">
                     <Typography variant="h2" className="main-title" align="center">
-                        Frequently Asked Questions
+                        {main.heading}
                     </Typography>
                     <Typography variant="h4" className="subtitle" align="center">
-                        Find answers to common questions about Kartavya
+                        {main.subHeading}
                     </Typography>
                 </Box>
 
                 <Paper elevation={0} className="description-container">
                     <Typography variant="body1" className="description-text">
-                        We&apos;ve compiled a list of frequently asked questions to help you better understand our organization and its initiatives. If you can&apos;t find the answer you&apos;re looking for, feel free to contact us.
+                        {main.description}
                     </Typography>
                 </Paper>
 
@@ -66,10 +92,10 @@ const FAQ = () => {
 
                 <Paper elevation={3} className="contact-card">
                     <Typography variant="h5" className="card-title">
-                        Still Have Questions?
+                        {contactCard.heading}
                     </Typography>
                     <Typography variant="body1" className="card-content">
-                        If you couldn&apos;t find the answer you were looking for, please don&apos;t hesitate to reach out to us. Our team is here to help you with any queries you may have.
+                        {contactCard.description}
                     </Typography>
                 </Paper>
             </Container>

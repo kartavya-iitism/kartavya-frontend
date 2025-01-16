@@ -1,34 +1,52 @@
+import { useState, useEffect } from 'react';
+import { Box, CircularProgress, Alert } from '@mui/material';
 import Card from "./Card";
-import education from "../../assets/book.png";
-import training from "../../assets/training.png";
-import health from "../../assets/health.png";
-import environment from "../../assets/environment.png";
-
+import { fetchContent } from '../../helper/contentFetcher';
 import "./Card.css";
 
+const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/cardList.json";
+
 const CardList = () => {
+    const [content, setContent] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                const data = await fetchContent(CONTENT_URL);
+                setContent(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadContent();
+    }, []);
+
+    if (loading) return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+            <CircularProgress color="primary" />
+        </Box>
+    );
+
+    if (error) return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh" padding={2}>
+            <Alert severity="error" variant="filled">{error}</Alert>
+        </Box>
+    );
+
     return (
         <div className="cardPile">
-            <Card
-                image={education}
-                title="Providing Free Education and Evening Tutions"
-                bg="#92d05b"
-            />
-            <Card
-                image={training}
-                title="Training and Providing Financial Supports"
-                bg="#3da76e"
-            />
-            <Card
-                image={health}
-                title="Organising Health-camps Regularly"
-                bg="#0da8a7"
-            />
-            <Card
-                image={environment}
-                title="Creating Environmental and Social Awareness"
-                bg="#13628c"
-            />
+            {content.cards.map((card, index) => (
+                <Card
+                    key={index}
+                    image={card.image}
+                    title={card.title}
+                    bg={card.backgroundColor}
+                />
+            ))}
         </div>
     );
 };

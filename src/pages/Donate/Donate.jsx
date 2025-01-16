@@ -1,20 +1,21 @@
 import { useState, useEffect } from 'react';
 import {
-    Box,
-    Paper,
-    Typography,
-    Card,
-    CardContent
+    Box, Paper, Typography, Card, CardContent, TextField, Button,
+    CircularProgress, Alert
 } from '@mui/material';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import QRCode from '../../assets/qrcode.png';
 import axios from 'axios';
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
-import './Donate.css';
 import DateField from '../../components/DateField/DateField';
+import { fetchContent } from '../../helper/contentFetcher';
+import './Donate.css';
+
+const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/donate.json";
 
 export default function DonationForm() {
+    const [content, setContent] = useState(null);
+    const [pageLoading, setPageLoading] = useState(true);
+    const [pageError, setPageError] = useState(null);
     const [formData, setformData] = useState({
         extamount: '',
         donationDate: '',
@@ -25,26 +26,63 @@ export default function DonationForm() {
         amount: ''
     });
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-    const donationSteps = [
-        {
-            title: "Choose Amount",
-            description: "Select how much you'd like to donate to support our cause"
-        },
-        {
-            title: "Make Payment",
-            description: "Transfer the amount using our bank details or scan QR code"
-        },
-        {
-            title: "Fill Details",
-            description: "Complete the form with your information and upload payment reciept"
-        }
-    ];
     const [reciept, setReciept] = useState(null);
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [fileName, setFileName] = useState('');
+    const today = new Date().toISOString().split('T')[0];
+
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                const data = await fetchContent(CONTENT_URL);
+                setContent(data);
+            } catch (err) {
+                setPageError(err.message);
+            } finally {
+                setPageLoading(false);
+            }
+        };
+        loadContent();
+
+        setLoading(true);
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        setformData({
+            name: storedUser?.name || '',
+            contactNumber: storedUser?.contactNumber || '',
+            email: storedUser?.email || '',
+            numChild: '',
+            extamount: '',
+            amount: '0',
+            donationDate: today
+        });
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        const childAmount = parseInt(formData.numChild || 0) * content?.sponsorship.amountPerChild || 0;
+        const extraAmount = parseInt(formData.extamount || 0);
+        const totalAmount = childAmount + extraAmount;
+
+        setformData(prev => ({
+            ...prev,
+            amount: totalAmount.toString()
+        }));
+    }, [formData.numChild, formData.extamount, content]);
+
+    if (pageLoading) return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+            <CircularProgress color="primary" />
+        </Box>
+    );
+
+    if (pageError) return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh" padding={2}>
+            <Alert severity="error" variant="filled">{pageError}</Alert>
+        </Box>
+    );
 
     const handleOpenConfirm = (evt) => {
         evt.preventDefault();
@@ -65,7 +103,6 @@ export default function DonationForm() {
             [fieldName]: value,
         }));
     };
-    const today = new Date().toISOString().split('T')[0];
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();
@@ -73,11 +110,11 @@ export default function DonationForm() {
         setLoading(true);
         setSuccess(false);
         setError(false);
+
         if (Number(formData.amount) > 500000) {
-            console.log("HII")
-            setLoading(false)
-            setError(true)
-            setErrorMessage("Please register yourself to donate large amounts.")
+            setLoading(false);
+            setError(true);
+            setErrorMessage(content.messages.error.largeAmount);
             return;
         }
 
@@ -88,15 +125,13 @@ export default function DonationForm() {
         if (reciept) {
             formDataToSend.append('reciept', reciept, reciept.name);
         }
-        console.log(formData)
+
         try {
             const response = await axios.post(
                 `http://localhost:3000/donation/new`,
                 formDataToSend,
                 {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
+                    headers: { 'Content-Type': 'multipart/form-data' }
                 }
             );
             setLoading(false);
@@ -113,49 +148,28 @@ export default function DonationForm() {
         }
     };
 
-    useEffect(() => {
-        setLoading(true);
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        setformData({
-            name: storedUser?.name || '',
-            contactNumber: storedUser?.contactNumber || '',
-            email: storedUser?.email || '',
-            numChild: '',
-            extamount: '',
-            amount: '0',
-            donationDate: today
-        });
-        setLoading(false);
-    }, []);
-
-    useEffect(() => {
-        const childAmount = parseInt(formData.numChild || 0) * 8000;
-        const extraAmount = parseInt(formData.extamount || 0);
-        const totalAmount = childAmount + extraAmount;
-
-        setformData(prev => ({
-            ...prev,
-            amount: totalAmount.toString()
-        }));
-    }, [formData.numChild, formData.extamount]);
+    const { hero, steps, payment, form, messages, sponsorship } = content;
 
     return (
         <div className="donation-container">
             <Box className="form-box donation-main">
                 <Typography variant="h3" className="page-title">
-                    Make a Difference Today
+                    {hero.title}
                 </Typography>
                 <Typography variant="subtitle1" className="page-subtitle">
-                    Your contribution helps create a better future for children in need.
+                    {hero.subtitle}
                     {!localStorage.getItem('token') && (
                         <p className='page-subtitle-2'>
-                            If you wish to donate regularly consider registering to our portal. Click to
-                            <a href="/register" className="register-link"> Register</a>
+                            {hero.registerPrompt.text}
+                            <a href={hero.registerPrompt.linkUrl} className="register-link">
+                                {` `}{hero.registerPrompt.linkText}
+                            </a>
                         </p>
                     )}
                 </Typography>
+
                 <div className="steps-wrapper">
-                    {donationSteps.map((step, index) => (
+                    {steps.map((step, index) => (
                         <Card key={index} className="step-card">
                             <CardContent>
                                 <Typography variant="h2" className="step-number">
@@ -174,18 +188,12 @@ export default function DonationForm() {
 
                 <Paper elevation={3} className="payment-details">
                     <Typography variant="h4" className="section-title">
-                        Payment Information
+                        {payment.title}
                     </Typography>
 
                     <Box className="payment-grid">
                         <div className="bank-details">
-                            {[
-                                { label: 'Account Name', value: 'Kartavya Foundation' },
-                                { label: 'Account Number', value: '1234567890' },
-                                { label: 'IFSC Code', value: 'ABCD0123456' },
-                                { label: 'Bank Name', value: 'State Bank of India' },
-                                { label: 'Branch', value: 'Main Branch, City' }
-                            ].map((detail, index) => (
+                            {payment.bankDetails.map((detail, index) => (
                                 <Card key={index} className="bank-detail-card">
                                     <CardContent className="bank-detail-content">
                                         <Typography className="detail-label">
@@ -201,16 +209,16 @@ export default function DonationForm() {
 
                         <div className="qr-section">
                             <Typography variant="h6" className="qr-title">
-                                Scan to Pay
+                                {payment.qr.title}
                             </Typography>
-                            <img src={QRCode} alt="Payment QR Code" className="qr-code" />
+                            <img src={QRCode} alt={payment.qr.alt} className="qr-code" />
                         </div>
                     </Box>
                 </Paper>
 
                 <Paper component="form" className="donation-form" onSubmit={handleOpenConfirm}>
                     <Typography variant="h4" className="form-title section-title">
-                        Donation Details
+                        {form.title}
                     </Typography>
 
                     <div className="form-grid">
@@ -224,9 +232,9 @@ export default function DonationForm() {
                         ].map((field) => (
                             field.component ? (
                                 <field.component
+                                    key={field.name}
                                     className="custom-textfield custom-textfield-donation"
                                     name={field.name}
-                                    key={field.name}
                                     label={field.label}
                                     required={field.required}
                                     value={formData[field.name]}
@@ -244,32 +252,29 @@ export default function DonationForm() {
                                     onChange={handleChange}
                                     fullWidth
                                     variant="outlined"
-                                    InputLabelProps={{
-                                        shrink: field.shrink || undefined,
-                                    }}
-                                    helperText={field.helperText}
                                 />
-                            )))}
+                            )
+                        ))}
 
                         <TextField
-                            label="Amount For Children Sponsorship"
+                            label={sponsorship.labels.sponsorshipAmount}
                             className="custom-textfield custom-textfield-donation"
                             disabled
-                            value={`₹${(parseInt(formData.numChild || 0) * 8000).toLocaleString('en-IN')}`}
-                            helperText={`${formData.numChild || 0} children × ₹8,000 per child`}
+                            value={`₹${(parseInt(formData.numChild || 0) * sponsorship.amountPerChild).toLocaleString('en-IN')}`}
+                            helperText={sponsorship.helperText.sponsorship}
                         />
                         <TextField
-                            label="Total Amount"
+                            label={sponsorship.labels.totalAmount}
                             name='amount'
                             className="custom-textfield custom-textfield-donation"
                             disabled
                             value={`₹${parseInt(formData.amount || 0).toLocaleString('en-IN')}`}
-                            helperText="Sponsorship amount + Extra donation"
+                            helperText={sponsorship.helperText.total}
                         />
 
                         <div className="file-input-container">
                             <label className="file-input-label">
-                                {fileName || 'Upload Payment reciept'}
+                                {fileName || form.uploadLabel}
                                 <input
                                     type="file"
                                     onChange={handleRecieptChange}
@@ -285,13 +290,13 @@ export default function DonationForm() {
                             className="submit-button"
                             disabled={loading}
                         >
-                            {loading ? 'Processing...' : 'Complete Donation'}
+                            {loading ? form.submitButton.loading : form.submitButton.default}
                         </Button>
                     </div>
 
                     {success && (
                         <div className="status-message success-message">
-                            Thank you for your generous donation! We&apos;ll get in touch soon.
+                            {messages.success}
                         </div>
                     )}
                     {error && (

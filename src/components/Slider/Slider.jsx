@@ -1,37 +1,53 @@
+import { useState, useEffect } from 'react';
 import {
     MDBCarousel,
     MDBCarouselItem,
 } from 'mdb-react-ui-kit';
-import Image3 from "../../assets/image-k-3.jpg";
-import Image4 from "../../assets/DSC_0105.jpg";
-import Image6 from "../../assets/IMG_20240323_125518.jpg";
+import { Box, CircularProgress, Alert } from '@mui/material';
+import { fetchContent } from '../../helper/contentFetcher';
 import './Slider.css';
 
+const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/slider.json";
+
 function Slider() {
-    const items = [
-        {
-            img: Image6,
-            title: "Educate a Child. Empower a Society",
-            description: "Young readers are future leaders!"
-        },
-        {
-            img: Image3,
-            title: "Towards an educated India",
-            description: "Dedicated to all-round development of children with academics, sports, and culture."
-        },
-        {
-            img: Image4,
-            title: "Educate and Empower Young Girls and Women",
-            description: "The progress of a community is measured by the degree of progress of both men and women."
-        }
-    ];
+    const [content, setContent] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                const data = await fetchContent(CONTENT_URL);
+                setContent(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadContent();
+    }, []);
+
+    if (loading) return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+            <CircularProgress color="primary" />
+        </Box>
+    );
+
+    if (error) return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh" padding={2}>
+            <Alert severity="error" variant="filled">{error}</Alert>
+        </Box>
+    );
+
+    const { settings, items } = content;
 
     return (
         <MDBCarousel
-            showIndicators
-            interval={5000}
-            touch={true}
-            className="carousel"
+            showIndicators={settings.showIndicators}
+            interval={settings.interval}
+            touch={settings.touch}
+            className={settings.className}
         >
             {items.map((item, index) => (
                 <MDBCarouselItem
@@ -42,7 +58,7 @@ function Slider() {
                     <img
                         src={item.img}
                         className="d-block w-100 slider-image"
-                        alt={`Slide ${index + 1}`}
+                        alt={item.alt || `Slide ${index + 1}`}
                         loading="eager"
                     />
                     <div className="carousel-caption">

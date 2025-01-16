@@ -1,27 +1,40 @@
-import { Box, Stack, Typography, Card, CardContent } from '@mui/material';
-import gift from "../../assets/gift.svg";
-import Idea from "../../assets/Idea.svg";
-import laugh from "../../assets/laugh.svg";
+import { useState, useEffect } from 'react';
+import { Box, Stack, Typography, Card, CardContent, CircularProgress, Alert } from '@mui/material';
+import { fetchContent } from '../../helper/contentFetcher';
 import "./Features.css";
 
+const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/features.json";
+
 const Features = () => {
-    const features = [
-        {
-            icon: gift,
-            title: "Gifts of Happiness",
-            description: "Unleashing pure happiness in children with delightful surprise gifts"
-        },
-        {
-            icon: Idea,
-            title: "Creative Exploration",
-            description: "Enhancing the creative potential of children"
-        },
-        {
-            icon: laugh,
-            title: "Recreational Events",
-            description: "Engaging and connecting children with each other through fun events"
-        }
-    ];
+    const [content, setContent] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                const data = await fetchContent(CONTENT_URL);
+                setContent(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadContent();
+    }, []);
+
+    if (loading) return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+            <CircularProgress color="primary" />
+        </Box>
+    );
+
+    if (error) return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh" padding={2}>
+            <Alert severity="error" variant="filled">{error}</Alert>
+        </Box>
+    );
 
     return (
         <Box className="features-section">
@@ -30,7 +43,7 @@ const Features = () => {
                 spacing={4}
                 className="features-stack"
             >
-                {features.map((feature, index) => (
+                {content.features.map((feature, index) => (
                     <Box key={index} flex={1}>
                         <Card className="feature-card">
                             <CardContent>

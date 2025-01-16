@@ -1,41 +1,72 @@
 import { Box, Paper, Typography, Container } from '@mui/material';
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import './About.css';
+import { useEffect, useState } from 'react';
+import { CircularProgress, Alert } from '@mui/material';
+import { fetchContent } from '../../helper/contentFetcher';
 
+const About_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/about.json"
 const About = () => {
-    const initiatives = [
-        {
-            title: "Educational Programs",
-            description: "Providing tutoring, computer literacy classes, and scholarships for underprivileged children."
-        },
-        {
-            title: "Health Awareness",
-            description: "Organizing health camps, awareness programs, and free medical check-ups for the community."
-        },
-        {
-            title: "Environmental Care",
-            description: "Conducting tree-planting drives and promoting eco-friendly practices in the community."
-        }
-    ];
+    const [content, setContent] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                const data = await fetchContent(About_URL);
+                setContent(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadContent();
+    }, []);
+
+    if (loading) return (
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="60vh"
+        >
+            <CircularProgress color="primary" />
+        </Box>
+    );
+
+    if (error) return (
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="60vh"
+            padding={2}
+        >
+            <Alert severity="error" variant="filled">
+                {error}
+            </Alert>
+        </Box>
+    );
+    const { main, initiatives, media, support } = content;
+
 
     return (
         <Box className="about-container">
             <Container maxWidth="lg" className="content-box">
                 <Box className="title-container">
                     <Typography variant="h2" className="main-title" align="center">
-                        About Kartavya
+                        {main.title}
                     </Typography>
                     <Typography variant="h4" className="subtitle" align="center">
-                        A student-led social organization at IIT (ISM) Dhanbad
+                        {main.subTitle}
                     </Typography>
                 </Box>
 
                 <Paper elevation={0} className="description-container">
                     <Typography variant="body1" className="description-text">
-                        Kartavya is committed to promoting social welfare and community development
-                        in and around the IIT (ISM) Dhanbad campus. We strive to make a positive
-                        impact by addressing various social issues and providing a platform for
-                        meaningful community service.
+                        {main.description}
                     </Typography>
                 </Paper>
 
@@ -56,11 +87,11 @@ const About = () => {
                     <Box className="media-grid">
                         <Paper elevation={3} className="media-card">
                             <Typography variant="h5" className="card-title">
-                                Video Gallery
+                                {media.video.title}
                             </Typography>
                             <div className="video-container">
                                 <iframe
-                                    src="https://www.youtube.com/embed/TRjVbS-Gdak"
+                                    src={`https://www.youtube.com/embed/${media.video.youtubeId}`}
                                     title="YouTube video player"
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -71,12 +102,12 @@ const About = () => {
 
                         <Paper elevation={3} className="media-card">
                             <Typography variant="h5" className="card-title">
-                                Social Media
+                                {media.social.title}
                             </Typography>
                             <div className="twitter-container">
                                 <TwitterTimelineEmbed
                                     sourceType="profile"
-                                    screenName="Kartavyadhn"
+                                    screenName={media.social.twitterHandle}
                                     options={{ height: 400 }}
                                 />
                             </div>
@@ -86,12 +117,10 @@ const About = () => {
 
                 <Paper elevation={3} className="support-card">
                     <Typography variant="h5" className="card-title">
-                        Support & Recognition
+                        {support.title}
                     </Typography>
                     <Typography variant="body1" className="card-content">
-                        Kartavya is powered by generous donations from alumni, faculty members,
-                        and supporters. Our dedicated team of volunteers works tirelessly to
-                        create positive change in our community.
+                        {support.description}
                     </Typography>
                 </Paper>
             </Container>

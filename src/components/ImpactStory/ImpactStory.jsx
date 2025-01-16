@@ -1,65 +1,80 @@
-import { Container, Typography, Box, Paper } from '@mui/material';
-import logo from "../../assets/amreshmishra.webp";
-import "./ImpactStory.css";
+import { useState, useEffect } from 'react';
+import { Container, Typography, Box, Paper, CircularProgress, Alert } from '@mui/material';
 import { Link } from "react-router-dom";
+import { fetchContent } from '../../helper/contentFetcher';
+import "./ImpactStory.css";
+
+const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/impactStory.json";
 
 const ImpactStory = () => {
+    const [content, setContent] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                const data = await fetchContent(CONTENT_URL);
+                setContent(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadContent();
+    }, []);
+
+    if (loading) return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+            <CircularProgress color="primary" />
+        </Box>
+    );
+
+    if (error) return (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh" padding={2}>
+            <Alert severity="error" variant="filled">{error}</Alert>
+        </Box>
+    );
+
+    const { hero, founder, story, cta } = content;
+
     return (
         <Box className="founding-story-section">
             <Container maxWidth="lg" style={{ padding: '0 0' }}>
                 <Box className="story-header">
-                    <Typography
-                        variant="h2"
-                        className="story-title"
-                        align="center"
-                        gutterBottom
-                    >
-                        Founding Story
+                    <Typography variant="h2" className="story-title" align="center" gutterBottom>
+                        {hero.title}
                     </Typography>
-                    <Typography
-                        variant="h5"
-                        className="story-subtitle"
-                        align="center"
-                        gutterBottom
-                    >
-                        A Journey That Led to New Beginnings
+                    <Typography variant="h5" className="story-subtitle" align="center" gutterBottom>
+                        {hero.subtitle}
                     </Typography>
                 </Box>
 
                 <Paper elevation={0} className="story-content">
                     <Box className="founder-image-container">
                         <img
-                            src={logo}
-                            alt="Mr. Amresh Mishra - Founder of Kartavya"
+                            src={founder.image}
+                            alt={founder.imageAlt}
                             className="founder-image"
                         />
                     </Box>
 
                     <Box className="story-text-content">
-                        <Typography variant="body1" paragraph className="story-paragraph">
-                            Kartavya was founded by a 1999 cohort of students of IIT ISM Dhanbad
-                            led by <span className="highlight">Mr. Amresh Mishra</span>, who is an Indian Police Service
-                            (IPS) officer. IIT(ISM) Dhanbad is surrounded by slums. The children
-                            there used to gather around the hostels on campus and collect stale
-                            food. They loitered in and around campus to collect garbage.
-                        </Typography>
-
-                        <Typography variant="body1" paragraph className="story-paragraph">
-                            Mr. Amresh Mishra, along with some students of IIT(ISM) Dhanbad, decided
-                            to start educating these children. Initially, its classes were held
-                            in a temple in Lahbani Basti, Dhaiya. Later, it got its own
-                            building. This was christened Centre 1 Dhanbad.
-                        </Typography>
-
-                        <Typography variant="body1" paragraph className="story-paragraph">
-                            Initially, its target was childhood education. It expanded to address other
-                            problems, including vocational training, woman&apos;s empowerment (with a
-                            direction to remove social and economic inequalities), and health.
-                        </Typography>
+                        {story.paragraphs.map((paragraph, index) => (
+                            <Typography key={index} variant="body1" paragraph className="story-paragraph">
+                                {paragraph.highlights ?
+                                    paragraph.text.split('{founderName}').map((part, i) =>
+                                        i === 0 ? part : <><span key={i} className="highlight">{paragraph.highlights[0]}</span>{part.slice(1)}</>
+                                    )
+                                    : paragraph.text
+                                }
+                            </Typography>
+                        ))}
 
                         <Box className="cta-container">
-                            <Link to="/about" style={{ textDecoration: 'none' }}>
-                                Read More
+                            <Link to={cta.link} style={{ textDecoration: 'none' }}>
+                                {cta.text}
                             </Link>
                         </Box>
                     </Box>
