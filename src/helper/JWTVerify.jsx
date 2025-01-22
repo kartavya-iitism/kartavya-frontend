@@ -1,22 +1,27 @@
+import { jwtDecode } from 'jwt-decode';
+
 const parseJwt = (token) => {
     try {
-        return JSON.parse(atob(token.split(".")[1]));
+        return jwtDecode(token);
     } catch (err) {
-        return err;
+        console.log(err)
+        return null;
     }
 };
 
 export function AuthVerify() {
     const accessToken = localStorage.getItem("token");
-    if (accessToken) {
-        const decodedJwt = parseJwt(accessToken);
-        if (decodedJwt.exp * 1000 < Date.now()) {
-            localStorage.clear();
-            return false;
-        }
-    }
     if (!accessToken) return false;
+
+    const decodedJwt = parseJwt(accessToken);
+    if (!decodedJwt) return false;
+
+    if (decodedJwt.exp * 1000 < Date.now()) {
+        localStorage.clear();
+        return false;
+    }
+
     return true;
-};
+}
 
 export default AuthVerify;

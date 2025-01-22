@@ -9,6 +9,7 @@ import { Toast } from 'primereact/toast';
 import { Tag } from 'primereact/tag';
 import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
+import { Tooltip } from 'primereact/tooltip';
 import axios from 'axios';
 import './DonationsTable.css';
 
@@ -193,12 +194,23 @@ const DonationsTable = () => {
         );
     };
 
-    const verifiedBodyTemplate = (rowData) => (
-        <Tag
-            severity={rowData.verified ? "success" : "warning"}
-            value={rowData.verified ? "Verified" : "Pending"}
-        />
-    );
+    const verifiedBodyTemplate = (rowData) => {
+        if (!rowData?.rejected) {
+            return (
+                <Tag
+                    severity={rowData.verified ? "success" : "warning"}
+                    value={rowData.verified ? "Verified" : "Pending"}
+                />)
+        }
+        if (rowData?.rejected) {
+            return (
+                <Tag
+                    severity={"danger"}
+                    value={"Rejected"}
+                />
+            )
+        }
+    }
 
     const dateFilterTemplate = (options) => {
         return (
@@ -254,6 +266,18 @@ const DonationsTable = () => {
                     />
                 </div>
             );
+        }
+        if (rowData.rejected) {
+            return <>
+                <Tooltip target=".rejected-tag" />
+                <div
+                    className="rejected-tag p-button-link name-cell-btn"
+                    data-pr-tooltip={rowData?.rejectionReason}
+                    data-pr-position="left"
+                >
+                    Reason
+                </div>
+            </>
         }
         return null;
     };

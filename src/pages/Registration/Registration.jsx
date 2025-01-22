@@ -33,6 +33,7 @@ export default function RegisterForm() {
         username: "",
         password: "",
         contactNumber: "",
+        currentJob: "",
         address: "",
         dateOfBirth: "",
         gender: "",
@@ -122,7 +123,7 @@ export default function RegisterForm() {
                 setLoading(false);
                 setTimeout(() => {
                     navigate('/login');
-                }, 5000);
+                }, 1000);
             }
         } catch (err) {
             setLoading(false);
@@ -205,7 +206,8 @@ export default function RegisterForm() {
                 {[
                     { name: 'contactNumber', label: 'Contact Number', type: 'tel', required: true },
                     { name: 'address', label: 'Address', type: 'text', required: true, multiline: true, rows: 3 },
-                    { component: DateField, name: 'dateOfBirth', label: 'Date of Birth', required: true }
+                    { component: DateField, name: 'dateOfBirth', label: 'Date of Birth', required: true },
+                    { name: 'currentJob', label: 'Current Job', type: 'text', required: true }
                 ].map((field) => (
                     field.component ? (
                         <field.component
@@ -259,6 +261,8 @@ export default function RegisterForm() {
                     </RadioGroup>
                 </FormControl>
 
+
+
                 <FormControl component="fieldset" className="custom-textfield" fullWidth>
                     <FormLabel required>IIT ISM Passout</FormLabel>
                     <RadioGroup
@@ -281,6 +285,12 @@ export default function RegisterForm() {
                             value={formData.batch}
                             onChange={handleChange}
                             fullWidth
+                            type="number"
+                            placeholder="YYYY"
+                            inputProps={{
+                                min: 1900,
+                                max: new Date().getFullYear(),
+                            }}
                         />
 
                         <FormControl component="fieldset" className="custom-textfield" fullWidth>
@@ -300,33 +310,26 @@ export default function RegisterForm() {
 
                 {formData.kartavyaVolunteer && (
                     <FormControl component="fieldset" className="custom-textfield" fullWidth>
-                        <FormLabel>Years of Service</FormLabel>
                         <TextField
                             className="custom-textfield"
-                            label="Start Year"
-                            name="yearsOfServiceStart"
-                            type="number"
-                            value={formData.yearsOfServiceStart}
-                            onChange={handleChange}
-                            fullWidth
-                            placeholder="YYYY"
-                            inputProps={{
-                                min: 1900,
-                                max: new Date().getFullYear(),
+                            label="Years of Service"
+                            name="yearsOfService"
+                            value={formData.yearsOfService || ''}
+                            onChange={(e) => {
+                                let value = e.target.value.replace(/\D/g, '');
+                                if (value.length > 4) {
+                                    value = value.slice(0, 4) + '-' + value.slice(4, 8);
+                                }
+                                handleChange({
+                                    target: {
+                                        name: 'yearsOfService',
+                                        value: value
+                                    }
+                                });
                             }}
-                        />
-                        <TextField
-                            className="custom-textfield"
-                            label="End Year"
-                            name="yearsOfServiceEnd"
-                            type="number"
-                            value={formData.yearsOfServiceEnd}
-                            onChange={handleChange}
-                            fullWidth
-                            placeholder="YYYY"
+                            placeholder="YYYY-YYYY"
                             inputProps={{
-                                min: formData.yearsOfServiceStart || 1900,
-                                max: new Date().getFullYear(),
+                                maxLength: 9
                             }}
                         />
                     </FormControl>
@@ -391,12 +394,24 @@ export default function RegisterForm() {
                                 />
                             </>
                         ) : (
-                            <Typography variant="body1" sx={{ mb: 3, textAlign: 'center', color: '#155724' }}>
+                            <Typography variant="body1"
+                                sx={{
+                                    mb: 3,
+                                    textAlign: 'center',
+                                    color: 'var(--admin-success)'
+                                }}
+                            >
                                 Email verified successfully! Redirecting to login...
                             </Typography>
                         )}
                         {error && (
-                            <Typography variant="body2" sx={{ color: '#721c24', textAlign: 'center', mt: 2 }}>
+                            <Typography variant="body2"
+                                sx={{
+                                    color: '#dc3545',
+                                    textAlign: 'center',
+                                    mt: 2
+                                }}
+                            >
                                 {errorMessage}
                             </Typography>
                         )}
@@ -411,10 +426,10 @@ export default function RegisterForm() {
                         </Button>
                         <Button
                             onClick={handleOtpSubmit}
-                            className="dialog-button"
+                            className={`dialog-button ${otpSuccess ? 'success' : ''}`}
                             disabled={loading || otpSuccess}
                         >
-                            {loading ? 'Verifying...' : 'Verify OTP'}
+                            {loading ? 'Verifying...' : otpSuccess ? 'Verified ✓' : 'Verify OTP'}
                         </Button>
                     </DialogActions>
                 </Dialog>

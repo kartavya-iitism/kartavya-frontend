@@ -111,7 +111,7 @@ export default function DonationForm() {
         setSuccess(false);
         setError(false);
 
-        if (Number(formData.amount) > 500000) {
+        if (Number(formData.amount) > 5000) {
             setLoading(false);
             setError(true);
             setErrorMessage(content.messages.error.largeAmount);

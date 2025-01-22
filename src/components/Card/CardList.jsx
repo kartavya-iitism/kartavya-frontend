@@ -44,6 +44,7 @@ const CardList = () => {
                     key={index}
                     image={card.image}
                     title={card.title}
+                    to={card.to}
                     bg={card.backgroundColor}
                 />
             ))}

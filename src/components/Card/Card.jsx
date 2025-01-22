@@ -7,7 +7,7 @@ const Card = (props) => {
         <div className="card" style={{ background: props.bg, borderRadius: "0" }}>
             <img className="card-img" src={props.image} alt="img1" />
             <p>{props.title}</p>
-            <Link to="/donate">
+            <Link to={props.to}>
                 <button className="blue-btn">Support Us</button>
             </Link>
         </div>
@@ -16,7 +16,8 @@ const Card = (props) => {
 Card.propTypes = {
     title: PropTypes.string.isRequired,
     bg: PropTypes.string,
-    image: PropTypes.string
+    image: PropTypes.string,
+    to: PropTypes.string
 };
 
 export default Card;

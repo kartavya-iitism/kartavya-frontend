@@ -89,6 +89,73 @@
     border: 1px solid #f5c6cb;
 }
 
+.forgot-password {
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+.forgot-password-link {
+    color: var(--admin-primary) !important;
+    text-transform: none !important;
+    padding: 0 !important;
+    font-family: "Poppins", sans-serif !important;
+    font-size: 0.9rem !important;
+}
+
+.forgot-password-link:hover {
+    background: none !important;
+    text-decoration: underline;
+}
+
+.divider {
+    text-align: center;
+    position: relative;
+    margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: calc(50% - 30px);
+    height: 1px;
+    background: #ddd;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+.divider span {
+    background: white;
+    padding: 0 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+.google-button {
+    width: 100% !important;
+    padding: 10px !important;
+    border-radius: 25px !important;
+    text-transform: none !important;
+    font-family: "Poppins", sans-serif !important;
+    color: #1a4d2e !important;
+    border-color: #1a4d2e !important;
+}
+
+.google-button:hover {
+    background: rgba(26, 77, 46, 0.04) !important;
+}
+
+.google-button .MuiSvgIcon-root {
+    color: #1a4d2e !important;
+}
+
 @media screen and (max-width: 768px) {
     .login-form-container {
         padding: 20px;

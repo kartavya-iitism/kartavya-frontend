@@ -13,6 +13,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from 'axios';
 import { Typography } from '@mui/material';
 import AuthVerify from '../../helper/JWTVerify';
+import ForgotPasswordDialog from '../../components/ForgotPasswordDialog/ForgotPasswordDialog';
+import { Google } from "@mui/icons-material";
 import './Login.css'
 
 export default function LoginForm() {
@@ -26,6 +28,9 @@ export default function LoginForm() {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
+    const handleForgotPasswordOpen = () => setForgotPasswordOpen(true);
+    const handleForgotPasswordClose = () => setForgotPasswordOpen(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleChange = (evt) => {
@@ -36,7 +41,9 @@ export default function LoginForm() {
             [fieldName]: value,
         }));
     };
-
+    const handleGoogleLogin = () => {
+        window.location.href = 'http://localhost:3000/user/auth/google';
+    };
     const handleSubmit = async (evt) => {
         evt.preventDefault();
 
@@ -121,7 +128,14 @@ export default function LoginForm() {
                         onChange={handleChange}
                     />
                 </FormControl>
-
+                <div className="forgot-password">
+                    <Button
+                        onClick={handleForgotPasswordOpen}
+                        className="forgot-password-link"
+                    >
+                        Forgot Password?
+                    </Button>
+                </div>
                 <Button
                     className="submit-button"
                     onClick={handleSubmit}
@@ -129,6 +143,19 @@ export default function LoginForm() {
                     disabled={loading}
                 >
                     {loading ? 'Processing...' : 'Login'}
+                </Button>
+
+                <div className="divider">
+                    <span>or</span>
+                </div>
+
+                <Button
+                    className="google-button"
+                    variant="outlined"
+                    onClick={handleGoogleLogin}
+                    startIcon={<Google />}
+                >
+                    Continue with Google
                 </Button>
 
                 {success && <div className="status-message success-message">Login Successful</div>}
@@ -142,6 +169,10 @@ export default function LoginForm() {
                     </p>
                 </div>
             </Box>
+            <ForgotPasswordDialog
+                open={forgotPasswordOpen}
+                onClose={handleForgotPasswordClose}
+            />
         </div>
     );
 }
