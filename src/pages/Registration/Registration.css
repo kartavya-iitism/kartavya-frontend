@@ -74,6 +74,11 @@
 .MuiFormGroup-root {
     margin: 8px 0 !important;
 }
+
+.custom-textfield-2 {
+    margin: 0.5rem !important;
+}
+
 .custom-textfield {
     margin-bottom: 20px !important;
 }

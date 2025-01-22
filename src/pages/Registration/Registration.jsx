@@ -235,7 +235,7 @@ export default function RegisterForm() {
                     )
                 ))}
 
-                <FormControl style={{ marginTop: '15px' }} component="fieldset" className="custom-textfield" fullWidth>
+                <FormControl style={{ marginTop: '15px' }} component="fieldset" className="custom-textfield-2" fullWidth>
                     <FormLabel required>Gender</FormLabel>
                     <RadioGroup
                         name="gender"
@@ -248,7 +248,7 @@ export default function RegisterForm() {
                     </RadioGroup>
                 </FormControl>
 
-                <FormControl component="fieldset" className="custom-textfield" fullWidth>
+                <FormControl component="fieldset" className="custom-textfield-2" fullWidth>
                     <FormLabel required>Government Official</FormLabel>
                     <RadioGroup
                         name="governmentOfficial"
@@ -263,7 +263,7 @@ export default function RegisterForm() {
 
 
 
-                <FormControl component="fieldset" className="custom-textfield" fullWidth>
+                <FormControl component="fieldset" className="custom-textfield-2" fullWidth>
                     <FormLabel required>IIT ISM Passout</FormLabel>
                     <RadioGroup
                         name="ismPassout"
@@ -293,7 +293,7 @@ export default function RegisterForm() {
                             }}
                         />
 
-                        <FormControl component="fieldset" className="custom-textfield" fullWidth>
+                        <FormControl component="fieldset" className="custom-textfield-2" fullWidth>
                             <FormLabel>Kartavya Volunteer</FormLabel>
                             <RadioGroup
                                 name="kartavyaVolunteer"
@@ -309,7 +309,7 @@ export default function RegisterForm() {
                 )}
 
                 {formData.kartavyaVolunteer && (
-                    <FormControl component="fieldset" className="custom-textfield" fullWidth>
+                    <FormControl component="fieldset" fullWidth>
                         <TextField
                             className="custom-textfield"
                             label="Years of Service"
