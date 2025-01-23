@@ -334,6 +334,10 @@
 
 /* Status Messages */
 .status-message {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
     margin-top: 2rem;
     padding: 1rem;
     border-radius: 15px;
@@ -351,6 +355,17 @@
     color: #721c24;
 }
 
+.loading-message {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.loading-message .MuiCircularProgress-root {
+    width: 20px !important;
+    height: 20px !important;
+    color: #2e7d32 !important;
+}
 /* Animations */
 @keyframes fadeIn {
     from {

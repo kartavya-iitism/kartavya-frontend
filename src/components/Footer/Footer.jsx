@@ -93,23 +93,23 @@ export default function Footer() {
                             <h6 className="text-uppercase fw-bold mb-4">Useful links</h6>
                             <p>
                                 <span className="text-reset">
-                                    <Link to="/photos" style={{ textDecoration: "none" }}>
+                                    <Link to="/news" style={{ textDecoration: "none" }}>
                                         {" "}
-                                        Photos{" "}
+                                        Impact Stories{" "}
                                     </Link>
                                 </span>
                             </p>
                             <p>
                                 <span className="text-reset">
-                                    <Link to="/videos" style={{ textDecoration: "none" }}>
-                                        Videos
+                                    <Link to="/media" style={{ textDecoration: "none" }}>
+                                        Media
                                     </Link>
                                 </span>
                             </p>
                             <p>
                                 <span className="text-reset">
-                                    <Link to="/contact" style={{ textDecoration: "none" }}>
-                                        Get in touch{" "}
+                                    <Link to="/faqs" style={{ textDecoration: "none" }}>
+                                        FAQs{" "}
                                     </Link>
                                 </span>
                             </p>

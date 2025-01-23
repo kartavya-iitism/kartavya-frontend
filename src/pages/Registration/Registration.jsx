@@ -17,6 +17,7 @@ import {
     DialogContent,
     DialogActions,
     Typography,
+    CircularProgress
 } from '@mui/material';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AuthVerify from '../../helper/JWTVerify';
@@ -341,7 +342,14 @@ export default function RegisterForm() {
                     onClick={handleSubmit}
                     disabled={loading || success}
                 >
-                    {loading ? 'Processing...' : 'Register'}
+                    {loading ? (
+                        <>
+                            <span className="button-text">Register</span>
+                            <CircularProgress size={24} className="button-loader" />
+                        </>
+                    ) : (
+                        'Register'
+                    )}
                 </Button>
 
                 {success && (
@@ -362,8 +370,8 @@ export default function RegisterForm() {
 
                 <div className="existing-user" style={{ marginTop: '15px' }}>
                     <p>
-                        Already have an account?
-                        <a href="/login" className="login-link"> Login</a>
+                        Already have an account?{' '}
+                        <a href="/login" className="login-link">Login</a>
                     </p>
                 </div>
 
@@ -429,7 +437,16 @@ export default function RegisterForm() {
                             className={`dialog-button ${otpSuccess ? 'success' : ''}`}
                             disabled={loading || otpSuccess}
                         >
-                            {loading ? 'Verifying...' : otpSuccess ? 'Verified ✓' : 'Verify OTP'}
+                            {loading ? (
+                                <>
+                                    <span className="button-text">Verify OTP</span>
+                                    <CircularProgress size={20} className="button-loader" />
+                                </>
+                            ) : otpSuccess ? (
+                                'Verified ✓'
+                            ) : (
+                                'Verify OTP'
+                            )}
                         </Button>
                     </DialogActions>
                 </Dialog>

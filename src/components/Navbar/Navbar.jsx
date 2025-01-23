@@ -72,6 +72,9 @@ export default function App() {
                                 <MDBNavbarLink href='/work' onClick={handleNavClick}>Our Work</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
+                                <MDBNavbarLink href='/news' onClick={handleNavClick}>Impact Stories</MDBNavbarLink>
+                            </MDBNavbarItem>
+                            <MDBNavbarItem>
                                 <MDBNavbarLink href='/faqs' onClick={handleNavClick}>FAQs</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>

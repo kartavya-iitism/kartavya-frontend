@@ -9,6 +9,7 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
+import { CircularProgress } from '@mui/material';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from 'axios';
 import { Typography } from '@mui/material';
@@ -142,7 +143,14 @@ export default function LoginForm() {
                     variant="contained"
                     disabled={loading}
                 >
-                    {loading ? 'Processing...' : 'Login'}
+                    {loading ? (
+                        <>
+                            <span className="button-text">Login</span>
+                            <CircularProgress size={24} className="button-loader" />
+                        </>
+                    ) : (
+                        'Login'
+                    )}
                 </Button>
 
                 <div className="divider">
@@ -164,8 +172,8 @@ export default function LoginForm() {
 
                 <div className="existing-user" style={{ marginTop: '15px' }}>
                     <p>
-                        New User?
-                        <a href="/register" className="login-link"> Register</a>
+                        New User?{' '}
+                        <a href="/register" className="login-link">Register</a>
                     </p>
                 </div>
             </Box>

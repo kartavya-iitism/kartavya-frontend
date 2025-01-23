@@ -290,10 +290,24 @@ export default function DonationForm() {
                             className="submit-button"
                             disabled={loading}
                         >
-                            {loading ? form.submitButton.loading : form.submitButton.default}
+                            {loading ? (
+                                <>
+                                    <span className="button-text">Submit</span>
+                                    <CircularProgress size={24} className="button-loader" />
+                                </>
+                            ) : (
+                                'Complete Donation'
+                            )}
                         </Button>
-                    </div>
 
+
+                    </div>
+                    {loading && (
+                        <div className="status-message loading-message">
+                            <CircularProgress size={20} />
+                            Processing donation...
+                        </div>
+                    )}
                     {success && (
                         <div className="status-message success-message">
                             {messages.success}

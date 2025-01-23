@@ -1,6 +1,8 @@
 import CssBaseline from "@mui/material/CssBaseline"
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import './App.css'
 import LandingPage from "./pages/Landing/Landing";
 import RegisterForm from "./pages/Registration/Registration";
@@ -21,32 +23,45 @@ import DonateItem from "./pages/DonateItem/DonateItem";
 import ResetPassword from "./pages/user/ResetPassword/ResetPassword";
 import GoogleCallback from "./components/GoogleCallBack/GoogleCallBack";
 import { AuthProvider } from './helper/AuthContext';
+import NewsAchievements from "./pages/NewsAchievement/NewsAchievement";
+import Media from "./pages/Media/Media";
 
 const routes = {
   public: [
-    { path: "/", element: <LandingPage /> },
-    { path: "/register", element: <RegisterForm /> },
-    { path: "/login", element: <LoginForm /> },
-    { path: "/donate", element: <DonationForm /> },
-    { path: "/donate-item", element: <DonateItem /> },
-    { path: "/about", element: <About /> },
-    { path: "/work", element: <Works /> },
-    { path: "/contact", element: <Contact /> },
-    { path: "/faqs", element: <FAQ /> },
-    { path: "/reset-password/:token", element: <ResetPassword /> },
-    { path: "/auth/callback", element: <GoogleCallback /> },
+    { path: "/", element: <LandingPage />, title: "Home | Kartavya" },
+    { path: "/register", element: <RegisterForm />, title: "Register | Kartavya" },
+    { path: "/login", element: <LoginForm />, title: "Login | Kartavya" },
+    { path: "/donate", element: <DonationForm />, title: "Donate | Kartavya" },
+    { path: "/donate-item", element: <DonateItem />, title: "Donate Items | Kartavya" },
+    { path: "/about", element: <About />, title: "About Us | Kartavya" },
+    { path: "/work", element: <Works />, title: "Our Work | Kartavya" },
+    { path: "/contact", element: <Contact />, title: "Contact Us | Kartavya" },
+    { path: "/faqs", element: <FAQ />, title: "FAQs | Kartavya" },
+    { path: "/news", element: <NewsAchievements />, title: "News & Achievements | Kartavya" },
+    { path: "/media", element: <Media />, title: "Media Gallery | Kartavya" },
+    { path: "/reset-password/:token", element: <ResetPassword />, title: "Reset Password | Kartavya" },
+    { path: "/auth/callback", element: <GoogleCallback />, title: "Authentication | Kartavya" },
   ],
   user: [
-    { path: "/user/profile", element: <Profile /> },
-    { path: "/user/dash", element: <Dashboard /> },
+    { path: "/user/profile", element: <Profile />, title: "My Profile | Kartavya" },
+    { path: "/user/dash", element: <Dashboard />, title: "Dashboard | Kartavya" },
   ],
   admin: [
-    { path: "/admin/dash", element: <AdminDashboard /> },
-    { path: "/admin/general", element: <General /> },
+    { path: "/admin/dash", element: <AdminDashboard />, title: "Admin Dashboard | Kartavya" },
+    { path: "/admin/general", element: <General />, title: "General Settings | Kartavya" },
   ]
 };
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentRoute = [...routes.public, ...routes.user, ...routes.admin]
+      .find(route => route.path === location.pathname);
+
+    document.title = currentRoute?.title || "Kartavya";
+  }, [location]);
+
   return (
     <AuthProvider>
       <React.Fragment>

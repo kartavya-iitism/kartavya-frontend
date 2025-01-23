@@ -154,6 +154,21 @@
     transition: var(--transition) !important;
     margin-top: 20px !important;
     width: 100%;
+    position: relative !important;
+    min-height: 48px !important;
+}
+
+.submit-button .button-loader {
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    color: white !important;
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.submit-button .button-text {
+    visibility: hidden;
 }
 
 .submit-button:hover {
@@ -250,6 +265,29 @@
 .dialog-button.success {
     background-color: var(--admin-success) !important;
     pointer-events: none;
+}
+
+.dialog-button {
+    position: relative !important;
+    min-height: 40px !important;
+}
+
+.dialog-button .button-loader {
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    color: white !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.dialog-button.success {
+    background-color: var(--admin-success) !important;
+    pointer-events: none;
+}
+
+.dialog-button.success .MuiCircularProgress-root {
+    display: none;
 }
 
 @keyframes slideUp {
