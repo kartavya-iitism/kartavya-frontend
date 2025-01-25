@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Container, Typography, Paper, Stack, Button, Card, CardContent } from '@mui/material';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { PictureAsPdf, InsertDriveFile } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './Dashboard.css';
@@ -11,7 +12,8 @@ const Dashboard = () => {
         totalDonations: 0,
         childrenSponsored: 0,
         lastDonation: null,
-        recentDonations: []
+        recentDonations: [],
+        documents: []
     });
 
     const [selectedDonation, setSelectedDonation] = useState(null);
@@ -259,6 +261,83 @@ const Dashboard = () => {
                         </Dialog>
                     </Stack>
                 </Paper>
+
+                <Paper className="user-documents">
+                    <Typography variant="h4" className="section-title">
+                        Documents
+                    </Typography>
+                    <Stack
+                        direction="row"
+                        flexWrap="wrap"
+                        gap={3}
+                        className="documents-list"
+                    >
+                        {userStats.documents.map((doc, index) => (
+                            <Card
+                                key={index}
+                                sx={{
+                                    width: '33%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease',
+                                    borderRadius: '15px',
+                                    backgroundColor: '#f8f9fa',
+                                    '&:hover': {
+                                        transform: 'scale(1.02)',
+                                        boxShadow: 3
+                                    },
+                                    flex: {
+                                        xs: '0 0 100%',
+                                        sm: '0 0 48%',
+                                        md: '0 0 31%'
+                                    }
+                                }}
+                            >
+                                <CardContent>
+                                    <Box className="document-icon">
+                                        {doc.type.toLowerCase().includes('pdf') ? (
+                                            <PictureAsPdf sx={{ fontSize: 40, color: '#1a4d2e' }} />
+                                        ) : (
+                                            <InsertDriveFile sx={{ fontSize: 40, color: '#1a4d2e' }} />
+                                        )}
+                                    </Box>
+                                    <Typography variant="h6" className="document-title">
+                                        {doc.title}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {doc.description}
+                                    </Typography>
+                                    <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+                                        {new Date(doc.createdAt).toLocaleDateString('en-US', {
+                                            month: 'long',
+                                            day: 'numeric',
+                                            year: 'numeric'
+                                        })}
+                                    </Typography>
+                                    <Button
+                                        href={doc.fileUrl}
+                                        target="_blank"
+                                        variant="outlined"
+                                        size="small"
+                                        sx={{
+                                            mt: 2,
+                                            color: '#1a4d2e',
+                                            borderColor: '#1a4d2e',
+                                            '&:hover': {
+                                                borderColor: '#1a4d2e',
+                                                backgroundColor: 'rgba(26, 77, 46, 0.04)'
+                                            }
+                                        }}
+                                    >
+                                        Download
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </Stack>
+                </Paper>
+
             </Container>
         </Box >
     );

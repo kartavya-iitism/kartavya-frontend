@@ -65,11 +65,12 @@ const AddDocuments = ({ open, onClose }) => {
 
         try {
             const response = await axios.post(
-                'http://localhost:3000/api/documents',
+                'http://localhost:3000/document/upload',
                 formDataToSend,
                 {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
                 }
             );

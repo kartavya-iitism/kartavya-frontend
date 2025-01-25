@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap");
+
+.general-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    padding: 40px 0;
+    min-height: 50vh;
+}
+
+.page-title {
+    font-family: "Playfair Display", serif !important;
+    color: var(--color-primary) !important;
+    font-size: 3.5rem !important;
+    font-weight: 700 !important;
+    text-align: center;
+    margin-bottom: 30px !important;
+    position: relative;
+    animation: fadeIn 0.5s ease;
+}
+
+.page-title::after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        var(--color-accent),
+        var(--color-secondary)
+    );
+}
+
+.page-subtitle {
+    font-family: "Poppins", sans-serif !important;
+    color: var(--color-secondary) !important;
+    font-size: 1.8rem !important;
+    font-weight: 500 !important;
+    text-align: center;
+    margin-bottom: 50px !important;
+    animation: fadeIn 0.5s ease;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    animation: slideUp 0.5s ease;
+}
+
+.action-button {
+    background: var(--color-primary) !important;
+    color: white !important;
+    padding: 15px 30px !important;
+    border-radius: 25px !important;
+    font-family: "Poppins", sans-serif !important;
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(26, 77, 46, 0.2) !important;
+    min-width: 250px !important;
+}
+
+.action-button:hover {
+    background: var(--color-secondary) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(67, 122, 30, 0.3) !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .general-container {
+        padding: 60px 20px;
+    }
+
+    .page-title {
+        font-size: 2.8rem !important;
+    }
+
+    .page-subtitle {
+        font-size: 1.5rem !important;
+    }
+
+    .action-button {
+        width: 100% !important;
+        margin: 10px 0 !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .general-container {
+        padding: 40px 15px;
+    }
+
+    .page-title {
+        font-size: 2.2rem !important;
+    }
+
+    .page-subtitle {
+        font-size: 1.3rem !important;
+    }
+
+    .action-button {
+        font-size: 1rem !important;
+        padding: 12px 25px !important;
+    }
+}

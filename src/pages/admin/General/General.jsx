@@ -1,42 +1,69 @@
 import { useState } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Container, Typography, Stack } from '@mui/material';
+import { Add as AddIcon, Dashboard as DashboardIcon } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 import AddDocuments from '../../../components/AddDocuments/AddDocuments';
 import AddNewsAchievements from '../../../components/AddNewsAchievements/AddNewsAchievements';
 import './General.css';
 
 const General = () => {
-    const [openDialog, setOpenDialog] = useState(false);
-    const [openDialog2, setOpenDialog2] = useState(false);
+    const [openDocDialog, setOpenDocDialog] = useState(false);
+    const [openNewsDialog, setOpenNewsDialog] = useState(false);
 
     return (
-        <Box className="document-upload-container">
-            <Button
-                variant="contained"
-                onClick={() => setOpenDialog(true)}
-                className="add-document-button"
-            >
-                Add New Document
-            </Button>
+        <Box className="general-container">
+            <Container maxWidth="lg">
+                <Typography variant="h2" className="page-title">
+                    General Settings
+                </Typography>
+                <Typography variant="h5" className="page-subtitle">
+                    Manage Documents & News
+                </Typography>
 
-            <AddDocuments
-                open={openDialog}
-                onClose={() => setOpenDialog(false)}
-            />
-            <Button
-                variant="contained"
-                onClick={() => setOpenDialog2(true)}
-                className="add-document-button"
-            >
-                Add New Document
-            </Button>
+                <Stack
+                    direction={{ xs: 'column', md: 'row' }}
+                    spacing={4}
+                    className="action-buttons"
+                >
+                    <Button
+                        variant="contained"
+                        onClick={() => setOpenDocDialog(true)}
+                        className="action-button"
+                        startIcon={<AddIcon />}
+                    >
+                        Add New Document
+                    </Button>
 
-            <AddNewsAchievements
-                open={openDialog2}
-                onClose={() => setOpenDialog2(false)}
-            />
+                    <Button
+                        variant="contained"
+                        onClick={() => setOpenNewsDialog(true)}
+                        className="action-button"
+                        startIcon={<AddIcon />}
+                    >
+                        Add News & Achievements
+                    </Button>
+
+                    <Button
+                        component={Link}
+                        to="/admin/dash"
+                        variant="contained"
+                        className="action-button dashboard-button"
+                        startIcon={<DashboardIcon />}
+                    >
+                        Go to Dashboard
+                    </Button>
+                </Stack>
+
+                <AddDocuments
+                    open={openDocDialog}
+                    onClose={() => setOpenDocDialog(false)}
+                />
+                <AddNewsAchievements
+                    open={openNewsDialog}
+                    onClose={() => setOpenNewsDialog(false)}
+                />
+            </Container>
         </Box>
-
-
     );
 };
 
