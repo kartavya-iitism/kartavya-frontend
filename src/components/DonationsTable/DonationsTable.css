@@ -261,6 +261,26 @@
     width: 100%;
 }
 
+.action-buttons {
+    display: inline-flex !important;
+    align-items: center !important;
+    height: 40px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.action-buttons .p-button-rounded {
+    width: 32px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    padding: 0 !important;
+    margin: 0 4px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
 /* Responsive Design */
 @media screen and (max-width: 992px) {
     .admin-dashboard-container {

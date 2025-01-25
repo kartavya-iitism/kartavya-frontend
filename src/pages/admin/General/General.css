@@ -3,7 +3,7 @@
 .general-container {
     background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
     padding: 40px 0;
-    min-height: 50vh;
+    min-height: 70vh;
 }
 
 .page-title {
@@ -42,33 +42,6 @@
     animation: fadeIn 0.5s ease;
 }
 
-.action-buttons {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-    animation: slideUp 0.5s ease;
-}
-
-.action-button {
-    background: var(--color-primary) !important;
-    color: white !important;
-    padding: 15px 30px !important;
-    border-radius: 25px !important;
-    font-family: "Poppins", sans-serif !important;
-    font-size: 1.1rem !important;
-    font-weight: 500 !important;
-    text-transform: none !important;
-    transition: all 0.3s ease !important;
-    box-shadow: 0 4px 15px rgba(26, 77, 46, 0.2) !important;
-    min-width: 250px !important;
-}
-
-.action-button:hover {
-    background: var(--color-secondary) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(67, 122, 30, 0.3) !important;
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -101,11 +74,6 @@
     .page-subtitle {
         font-size: 1.5rem !important;
     }
-
-    .action-button {
-        width: 100% !important;
-        margin: 10px 0 !important;
-    }
 }
 
 @media screen and (max-width: 480px) {
@@ -119,10 +87,5 @@
 
     .page-subtitle {
         font-size: 1.3rem !important;
-    }
-
-    .action-button {
-        font-size: 1rem !important;
-        padding: 12px 25px !important;
     }
 }
