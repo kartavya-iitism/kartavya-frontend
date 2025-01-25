@@ -82,8 +82,8 @@ export default function App() {
                             </MDBNavbarItem>
                             <MDBNavbarItem>
                                 {localStorage.token ?
-                                    <MDBNavbarLink href={localStorage.role === 'admin' ? '/admin/dash' : '/user/dash'} onClick={handleNavClick} tabIndex={-1} aria-disabled='true'>
-                                        Dashboard
+                                    <MDBNavbarLink href={localStorage.role === 'admin' ? '/admin/general' : '/user/dash'} onClick={handleNavClick} tabIndex={-1} aria-disabled='true'>
+                                        {localStorage.role === 'admin' ? 'Settings' : 'Dashboard'}
                                     </MDBNavbarLink> : <></>
                                 }
                             </MDBNavbarItem>

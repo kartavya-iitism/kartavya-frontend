@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { Box, Button, Container, Typography, Stack } from '@mui/material';
-import { Add as AddIcon, Dashboard as DashboardIcon } from '@mui/icons-material';
+import {
+    Add as AddIcon,
+    Dashboard as DashboardIcon,
+    ManageAccounts as ManageIcon
+} from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import AddDocuments from '../../../components/AddDocuments/AddDocuments';
 import AddNewsAchievements from '../../../components/AddNewsAchievements/AddNewsAchievements';
@@ -41,6 +45,16 @@ const General = () => {
                         startIcon={<AddIcon />}
                     >
                         Add News & Achievements
+                    </Button>
+
+                    <Button
+                        component={Link}
+                        to="/admin/news"
+                        variant="contained"
+                        className="action-button"
+                        startIcon={<ManageIcon />}
+                    >
+                        Manage News & Achievements
                     </Button>
 
                     <Button

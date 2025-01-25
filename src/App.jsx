@@ -24,6 +24,7 @@ import ResetPassword from "./pages/user/ResetPassword/ResetPassword";
 import GoogleCallback from "./components/GoogleCallBack/GoogleCallBack";
 import { AuthProvider } from './helper/AuthContext';
 import NewsAchievements from "./pages/NewsAchievement/NewsAchievement";
+import ManageNewsAchievements from "./pages/admin/ManageNewsAchievements/ManageNewsAchievements";
 import Media from "./pages/Media/Media";
 
 const routes = {
@@ -49,6 +50,7 @@ const routes = {
   admin: [
     { path: "/admin/dash", element: <AdminDashboard />, title: "Admin Dashboard | Kartavya" },
     { path: "/admin/general", element: <General />, title: "General Settings | Kartavya" },
+    { path: "/admin/news", element: <ManageNewsAchievements />, title: "General Settings | Kartavya" },
   ]
 };
 
