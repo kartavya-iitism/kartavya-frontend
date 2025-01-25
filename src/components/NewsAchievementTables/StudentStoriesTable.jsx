@@ -6,7 +6,6 @@ import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import { FilterMatchMode } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';
-import { Calendar } from 'primereact/calendar';
 import { API_URL } from '../../config';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -21,8 +20,7 @@ export const StudentStoriesTable = ({ stories, loading, onRefetch }) => {
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         studentName: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        category: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        date: { value: null, matchMode: FilterMatchMode.DATE_IS }
+        category: { value: null, matchMode: FilterMatchMode.CONTAINS }
     });
 
     const handleDelete = async () => {
@@ -54,16 +52,6 @@ export const StudentStoriesTable = ({ stories, loading, onRefetch }) => {
     const dateBodyTemplate = (rowData) => {
         return rowData.date?.toLocaleDateString('en-IN');
     };
-
-    const dateFilterTemplate = (options) => (
-        <Calendar
-            value={options.value}
-            onChange={(e) => options.filterCallback(e.value)}
-            dateFormat="dd/mm/yy"
-            placeholder="Select Date"
-            mask="99/99/9999"
-        />
-    );
 
     const actionBodyTemplate = (rowData) => (
         <Button
@@ -157,8 +145,6 @@ export const StudentStoriesTable = ({ stories, loading, onRefetch }) => {
                         header="Date"
                         body={dateBodyTemplate}
                         sortable
-                        filter
-                        filterElement={dateFilterTemplate}
                     />
                     <Column
                         body={actionBodyTemplate}

@@ -12,6 +12,7 @@
 
 .news-management .p-tabview .p-tabview-nav {
     border: none;
+    padding: 0;
 }
 
 .news-management .p-tabview .p-tabview-nav li .p-tabview-nav-link {

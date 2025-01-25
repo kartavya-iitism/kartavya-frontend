@@ -1,26 +1,32 @@
-.profile-dialog {
-    animation: fadeIn 0.3s ease;
+:root {
+    --admin-primary: #1a4d2e;
+    --admin-secondary: #437a1e;
+    --admin-shadow: rgba(0, 0, 0, 0.1);
 }
 
-.dialog-paper {
-    border-radius: 15px !important;
-    padding: 1rem !important;
-    min-width: 400px;
+.profile-dialog .dialog-paper {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 24px var(--admin-shadow) !important;
+    overflow: hidden !important;
+    min-width: 400px !important;
+    padding: 0 !important;
 }
 
 .dialog-title {
-    color: #333 !important;
-    font-weight: 600 !important;
-    text-align: center;
-    padding-bottom: 1rem !important;
+    background: var(--admin-primary) !important;
+    color: white !important;
+    padding: 1.5rem !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 500 !important;
 }
 
 .success-title {
-    color: var(--green-light) !important;
+    background: var(--admin-primary) !important;
+    color: white !important;
 }
 
 .dialog-content {
-    padding: 0 1.5rem 1.5rem !important;
+    padding: 2rem !important;
 }
 
 .form-container {
@@ -30,154 +36,99 @@
 }
 
 .form-field .MuiOutlinedInput-root {
-    transition: all 0.3s ease;
-    min-height: 40px;
-    font-size: 16px;
-}
-
-.form-field .MuiOutlinedInput-input {
-    padding: 16px !important;
-    font-size: 16px !important;
-}
-
-.form-field .MuiInputLabel-root {
-    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+    border-radius: 8px;
 }
 
 .form-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
-    border-color: var(--green-light);
-    border-width: 2px;
+    border-color: var(--admin-primary);
 }
 
 .form-field
     .MuiOutlinedInput-root.Mui-focused
     .MuiOutlinedInput-notchedOutline {
-    border-color: var(--green-light);
-    border-width: 2px;
-}
-
-.form-field .MuiInputLabel-root.Mui-focused {
-    color: var(--green-light);
-}
-
-.switch-label {
-    margin-left: 0 !important;
-}
-
-.govt-switch.Mui-checked {
-    color: var(--green-light) !important;
-}
-
-.error-text {
-    color: #dc3545 !important;
-    font-size: 0.875rem !important;
-    margin-top: 0.5rem !important;
-    text-align: center;
-    animation: fadeIn 0.3s ease;
-}
-
-.dialog-actions {
-    padding: 1rem 1.5rem !important;
-    gap: 1rem;
-}
-
-.save-button {
-    background-color: var(--green-light) !important;
-    color: white !important;
-    padding: 0.5rem 2rem !important;
-    border-radius: 10px !important;
-    transition: all 0.3s ease !important;
-}
-
-.save-button:hover {
-    background-color: var(--green-dark) !important;
-    transform: translateY(-2px);
-}
-
-.cancel-button {
-    color: #666 !important;
-    border-radius: 10px !important;
-    padding: 0.5rem 2rem !important;
-    transition: all 0.3s ease !important;
-}
-
-.cancel-button:hover {
-    background-color: rgba(0, 0, 0, 0.05) !important;
-}
-
-.success-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    gap: 1.5rem;
-}
-
-.close-button {
-    background-color: var(--green-light) !important;
-    color: white !important;
-    padding: 0.5rem 2rem !important;
-    border-radius: 10px !important;
-    transition: all 0.3s ease !important;
-}
-
-.close-button:hover {
-    background-color: var(--green-dark) !important;
-    transform: translateY(-2px);
-}
-
-.radio-group {
-    margin: 0 !important;
+    border-color: var(--admin-primary);
 }
 
 .radio-label {
     color: rgba(0, 0, 0, 0.6) !important;
-    margin-bottom: 8px !important;
+    font-family: "Poppins", sans-serif !important;
 }
 
 .radio-button.Mui-checked {
-    color: var(--green-light) !important;
+    color: var(--admin-primary) !important;
 }
 
-.radio-button:hover {
-    background-color: rgba(var(--green-light-rgb), 0.04) !important;
+.error-text {
+    color: #dc3545 !important;
+    font-family: "Poppins", sans-serif !important;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.dialog-actions {
+    padding: 1.5rem !important;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    border-top: 1px solid #f0f0f0;
 }
 
-@media (max-width: 600px) {
-    .dialog-paper {
-        min-width: 300px;
-        margin: 1rem;
-    }
+.save-button {
+    background-color: var(--admin-primary) !important;
+    color: white !important;
+    padding: 10px 25px !important;
+    border-radius: 25px !important;
+    text-transform: none !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+    min-width: 150px !important;
+}
 
-    .dialog-title {
-        font-size: 1.3rem !important;
+.save-button:hover {
+    background-color: var(--admin-secondary) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cancel-button {
+    color: #666 !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1.5rem !important;
+    font-family: "Poppins", sans-serif !important;
+}
+
+.success-container {
+    padding: 2rem;
+    text-align: center;
+}
+
+.close-button {
+    background-color: var(--admin-primary) !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 2rem !important;
+    font-family: "Poppins", sans-serif !important;
+}
+
+@media screen and (max-width: 768px) {
+    .profile-dialog .dialog-paper {
+        min-width: 90vw !important;
+        margin: 1rem !important;
     }
 
     .dialog-content {
-        padding: 0 1rem 1rem !important;
+        padding: 1.5rem !important;
     }
 
     .dialog-actions {
         padding: 1rem !important;
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
 
     .save-button,
     .cancel-button,
     .close-button {
-        width: 100%;
-        padding: 0.8rem !important;
-        margin: 0px !important;
+        width: 100% !important;
+        margin: 0.25rem 0 !important;
     }
 }

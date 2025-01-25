@@ -104,15 +104,8 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
             {success ? (
                 <Box className="success-container">
                     <DialogTitle className="dialog-title success-title">
-                        Profile Updated Successfully
+                        Profile Updated, Reloading...
                     </DialogTitle>
-                    <Button
-                        onClick={handleClose}
-                        className="close-button"
-                        variant="contained"
-                    >
-                        Close
-                    </Button>
                 </Box>
             ) : (
                 <>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Paper, Typography, TextField, Button, Alert } from '@mui/material';
 import axios from 'axios';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 import './ResetPassword.css';
 
 const ResetPassword = () => {

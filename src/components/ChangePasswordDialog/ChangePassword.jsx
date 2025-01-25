@@ -46,7 +46,9 @@ const ChangePasswordDialog = ({ open, onClose, username }) => {
             );
             if (response.status === 200) {
                 setSuccess(true)
-
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }
         } catch (err) {
             setError(err.response.data.message);
@@ -77,15 +79,8 @@ const ChangePasswordDialog = ({ open, onClose, username }) => {
             {success ? (
                 <Box className="success-container">
                     <DialogTitle className="dialog-title success-title">
-                        Password Changed Successfully
+                        Password Changed, Reloading...
                     </DialogTitle>
-                    <Button
-                        onClick={handleClose}
-                        className="close-button"
-                        variant="contained"
-                    >
-                        Close
-                    </Button>
                 </Box>
             ) : (
                 <>
@@ -140,7 +135,7 @@ const ChangePasswordDialog = ({ open, onClose, username }) => {
                             onClick={handleChangePassword}
                             variant="contained"
                             disabled={!currentPassword || !newPassword || !confirmPassword}
-                            className="save-button"
+                            className="dialog-button"
                         >
                             Save Changes
                         </Button>

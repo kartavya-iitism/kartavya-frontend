@@ -243,6 +243,22 @@
     gap: 0.5rem;
 }
 
+.p-dialog {
+    width: 90vw !important;
+    max-width: 500px !important;
+    margin: 0 auto;
+}
+
+.p-dialog .p-dialog-header {
+    padding: 1.5rem;
+    background: var(--admin-primary);
+    color: white;
+}
+
+.p-dialog .p-dialog-content {
+    padding: 1.5rem;
+}
+
 .action-buttons {
     display: inline-flex !important;
     align-items: center !important;
@@ -282,5 +298,28 @@
     .admin-users-table .p-datatable-thead > tr > th,
     .admin-users-table .p-datatable-tbody > tr > td {
         padding: 0.75rem;
+    }
+    .p-tooltip {
+        display: none !important;
+    }
+
+    /* Alternative - show tooltip as temporary popup */
+    .p-tooltip.p-tooltip-mobile {
+        display: block !important;
+        position: fixed !important;
+        bottom: 20px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        animation: fadeOut 2s forwards;
+        animation-delay: 1.5s;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }

@@ -4,7 +4,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
 import { PictureAsPdf, InsertDriveFile } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 import './Dashboard.css';
 
 const Dashboard = () => {

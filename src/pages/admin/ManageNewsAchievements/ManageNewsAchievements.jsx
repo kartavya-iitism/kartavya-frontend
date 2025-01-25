@@ -6,7 +6,7 @@ import { MilestonesTable } from '../../../components/NewsAchievementTables/Miles
 import { UpdatesTable } from '../../../components/NewsAchievementTables/UpdatesTable';
 import AddNewsAchievements from '../../../components/AddNewsAchievements/AddNewsAchievements';
 import axios from 'axios';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 import './ManageNewsAchievements.css';
 
 const ManageNewsAchievements = () => {

@@ -18,7 +18,7 @@ import {
     TableRow,
     Link
 } from '@mui/material';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 import ChangePasswordDialog from '../../../components/ChangePasswordDialog/ChangePassword'
 import EditProfileDialog from '../../../components/EditProfileDialog/EditProfile';
 import './Profile.css'
