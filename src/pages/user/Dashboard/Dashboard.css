@@ -8,7 +8,7 @@
 
 .dashboard-container {
     background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
-    padding: 80px 0;
+    padding: 40px 0;
     min-height: 100vh;
 }
 
@@ -179,6 +179,86 @@
     color: var(--color-secondary) !important;
 }
 
+/* Add these styles */
+.donation-details-dialog {
+    animation: slideUp 0.3s ease forwards;
+}
+
+.donation-details-dialog .MuiDialog-paper {
+    border-radius: 15px !important;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+.donation-details-dialog .MuiDialogTitle-root {
+    background: var(--color-primary);
+    color: white;
+    padding: 1.5rem;
+    font-family: "Playfair Display", serif;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.donation-details-dialog .MuiDialogContent-root {
+    padding: 2rem;
+}
+
+.donation-details-dialog .donation-amount {
+    color: var(--color-primary);
+    font-size: 2rem !important;
+    font-weight: 600 !important;
+    text-align: center;
+    margin-bottom: 1.5rem !important;
+}
+
+.donation-details-dialog .donation-info {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.donation-details-dialog .rejection-reason {
+    color: #d32f2f;
+    margin-top: 1rem !important;
+    padding: 1rem;
+    background: #ffebee;
+    border-radius: 8px;
+}
+
+.donation-details-dialog .MuiDialogActions-root {
+    padding: 1.5rem;
+    border-top: 1px solid #f0f0f0;
+    gap: 1rem;
+}
+
+.donation-details-dialog .dialog-button {
+    background-color: var(--color-primary) !important;
+    color: white !important;
+    padding: 10px 25px !important;
+    border: 2px solid var(--color-primary) !important;
+    border-radius: 25px !important;
+    text-transform: none !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+    min-width: 150px !important;
+}
+
+.donation-details-dialog .cancel-button {
+    color: var(--color-primary) !important;
+    margin-top: auto;
+    border: 2px solid var(--color-primary) !important;
+    padding: 10px 25px !important;
+    border-radius: 25px !important;
+    text-transform: none !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+    min-width: 150px !important;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -253,5 +333,16 @@
     .action-button {
         width: 100%;
         margin: 5px 0 !important;
+    }
+    .donation-details-dialog .MuiDialogActions-root {
+        flex-direction: column-reverse;
+        gap: 0.75rem;
+    }
+
+    .donation-details-dialog .dialog-button,
+    .donation-details-dialog .cancel-button {
+        width: 100%;
+        margin: 0 !important;
+        padding: 12px !important;
     }
 }

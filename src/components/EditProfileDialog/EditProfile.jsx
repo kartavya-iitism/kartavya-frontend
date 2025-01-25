@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
     Dialog,
@@ -23,7 +23,8 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
         email: initialData.email,
         contactNumber: initialData.contactNumber,
         address: initialData.address,
-        isGovernmentOfficial: initialData.isGovernmentOfficial
+        isGovernmentOfficial: initialData.isGovernmentOfficial,
+        currentJob: initialData.currentJob
     });
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
@@ -36,6 +37,18 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
         }));
     };
 
+    useEffect(() => {
+        if (initialData) {
+            setFormData({
+                email: initialData.email || '',
+                contactNumber: initialData.contactNumber || '',
+                address: initialData.address || '',
+                isGovernmentOfficial: initialData.isGovernmentOfficial || false,
+                currentJob: initialData.currentJob || ''
+            });
+        }
+    }, [initialData]);
+
     const handleUpdateProfile = async () => {
         setError('');
         setSuccess(false);
@@ -43,19 +56,22 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
             console.log(formData)
             console.log(username)
             console.log(initialData)
-            // const response = await axios.put(
-            //     `http://localhost:3000/user/${username}/profile`,
-            //     formData,
-            //     {
-            //         headers: {
-            //             "Content-type": "application/json; charset=UTF-8",
-            //             "Authorization": `Bearer ${localStorage.getItem("token")}`
-            //         }
-            //     }
-            // );
-            // if (response.status === 200) {
-            //     setSuccess(true);
-            // }
+            const response = await axios.put(
+                `http://localhost:3000/user/${username}/edit`,
+                formData,
+                {
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    }
+                }
+            );
+            if (response.status === 200) {
+                setSuccess(true);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            }
         } catch (err) {
             setError(err.response?.data?.message || 'An error occurred');
         }
@@ -64,6 +80,14 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
     const handleClose = () => {
         setError('');
         setSuccess(false);
+        setFormData({
+            email: initialData?.email || '',
+            contactNumber: initialData?.contactNumber || '',
+            address: initialData?.address || '',
+            isGovernmentOfficial: initialData?.isGovernmentOfficial || false,
+            currentJob: initialData?.currentJob || ''
+        });
+
         onClose();
     };
 
@@ -113,6 +137,15 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                                 name="contactNumber"
                                 fullWidth
                                 value={formData.contactNumber}
+                                onChange={handleChange}
+                                className="form-field"
+                                variant="outlined"
+                            />
+                            <TextField
+                                label="Current Job"
+                                name="currentJob"
+                                fullWidth
+                                value={formData.currentJob}
                                 onChange={handleChange}
                                 className="form-field"
                                 variant="outlined"
@@ -183,7 +216,8 @@ EditProfileDialog.propTypes = {
         email: PropTypes.string,
         contactNumber: PropTypes.string,
         address: PropTypes.string,
-        isGovernmentOfficial: PropTypes.bool
+        isGovernmentOfficial: PropTypes.bool,
+        currentJob: PropTypes.string
     })
 };
 

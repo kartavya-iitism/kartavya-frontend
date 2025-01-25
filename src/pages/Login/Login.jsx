@@ -66,12 +66,14 @@ export default function LoginForm() {
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('user', JSON.stringify(response.data.user));
+                localStorage.setItem('role', response.data.user.role);
                 setSuccess(true);
-                if (response.data.role !== "admin") {
-                    navigate('/user/profile');
+                console.log(response.data)
+                if (response.data.user.role !== "admin") {
+                    navigate('/user/dash');
                 }
                 else {
-                    navigate('/admin/dashboard')
+                    navigate('/admin/dash')
                 }
             } else {
                 setError(true);

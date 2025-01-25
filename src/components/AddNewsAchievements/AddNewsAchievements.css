@@ -1,0 +1,83 @@
+.achievement-dialog .MuiDialog-paper {
+    border-radius: 15px !important;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+.dialog-title {
+    background: #1a4d2e;
+    color: white !important;
+    padding: 1.5rem !important;
+    font-family: "Playfair Display", serif !important;
+    font-size: 1.5rem !important;
+    text-align: center;
+}
+
+.dialog-content {
+    padding: 2rem !important;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 0 !important;
+}
+
+.custom-textfield {
+    margin: 0 0 !important;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.custom-textfield.type-selector {
+    margin-bottom: 2rem !important;
+    grid-column: 1 / -1;
+}
+
+.custom-textfield textarea {
+    grid-column: 1 / -1;
+}
+
+.dialog-actions {
+    padding: 1.5rem !important;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.submit-button:hover {
+    background-color: #2e7d32 !important;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2) !important;
+}
+
+.cancel-button {
+    margin: auto;
+}
+
+.submit-button {
+    margin: auto !important;
+}
+
+.cancel-button:hover {
+    background-color: rgba(26, 77, 46, 0.04) !important;
+}
+
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .dialog-actions {
+        flex-direction: column-reverse;
+        padding: 1rem !important;
+    }
+
+    .submit-button,
+    .cancel-button {
+        width: 100%;
+        margin: 0.5rem 0 !important;
+    }
+}

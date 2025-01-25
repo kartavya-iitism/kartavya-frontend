@@ -104,7 +104,8 @@ export default function Profile() {
                                         { label: 'Username', value: user.username },
                                         { label: 'Email', value: user.email },
                                         { label: 'Contact', value: user.contactNumber },
-                                        { label: 'Date of Birth', value: formatDate(user.dateOfBirth) }
+                                        { label: 'Date of Birth', value: formatDate(user.dateOfBirth) },
+                                        { label: 'Current Job', value: user.currentJob }
                                     ].map((detail, index) => (
                                         <Typography key={index} variant="subtitle1" className="profile-detail">
                                             {detail.label}: <strong>{detail.value}</strong>
@@ -293,7 +294,8 @@ export default function Profile() {
                         email: user?.email || '',
                         contactNumber: user?.contactNumber || '',
                         address: user?.address || '',
-                        isGovernmentOfficial: user?.isGovernmentOfficial || false
+                        isGovernmentOfficial: user?.isGovernmentOfficial || false,
+                        currentJob: user?.currentJob || ''
                     }}
                 />
                 <ChangePasswordDialog

@@ -1,13 +1,11 @@
 import { Box, Paper, Typography, Container, Chip } from '@mui/material';
-import { fetchContent } from '../../helper/contentFetcher';
 import { useEffect, useState } from 'react';
 import { School, EmojiEvents, Stars } from '@mui/icons-material';
 import { CircularProgress, Alert } from '@mui/material';
 
 import './NewsAchievement.css';
 
-const NEWS_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/news.json"
-// const NEWS_URL = "http://localhost:5000/api/news-achievements";
+const NEWS_URL = "http://localhost:3000/news/all";
 
 const NewsAchievements = () => {
     const [content, setContent] = useState(null);
@@ -17,36 +15,22 @@ const NewsAchievements = () => {
     useEffect(() => {
         const loadContent = async () => {
             try {
-                const data = await fetchContent(NEWS_URL);
+                const response = await fetch(NEWS_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log(data)
                 setContent(data);
             } catch (err) {
-                setError(err.message);
+                setError("Failed to fetch data: " + err.message);
+                console.error("Fetch error:", err);
             } finally {
                 setLoading(false);
             }
         };
         loadContent();
     }, []);
-
-
-    // useEffect(() => {
-    //     const loadContent = async () => {
-    //         try {
-    //             const response = await fetch(NEWS_URL);
-    //             if (!response.ok) {
-    //                 throw new Error(`HTTP error! status: ${response.status}`);
-    //             }
-    //             const data = await response.json();
-    //             setContent(data);
-    //         } catch (err) {
-    //             setError("Failed to fetch data: " + err.message);
-    //             console.error("Fetch error:", err);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    //     loadContent();
-    // }, []);
 
     const getCategoryIcon = (category, style) => {
         switch (category) {
@@ -71,9 +55,7 @@ const NewsAchievements = () => {
         </Box>
     );
 
-    const { news, achievements, timeline } = content;
-
-
+    const { studentStories, academicMilestones, recentUpdates } = content;
     return (
         <Box className="news-container">
             <Container maxWidth="lg" className="content-box">
@@ -89,10 +71,10 @@ const NewsAchievements = () => {
 
                 {/* Achievement Cards */}
                 <div className="news-grid">
-                    {news.map((item, index) => (
+                    {studentStories.map((item, index) => (
                         <Paper key={index} elevation={3} className="news-card">
                             <div className="news-image">
-                                <img src={item.image} alt={item.title} />
+                                <img src={item.studentImage} alt={item.title} />
                                 <Chip
                                     icon={getCategoryIcon(item.category, { color: "#ffffff" })}
                                     label={item.category}
@@ -101,9 +83,6 @@ const NewsAchievements = () => {
                             </div>
                             <div className="news-content">
                                 <div className="student-details">
-                                    <div className="student-image">
-                                        <img src={item.studentImage} alt={item.studentName} />
-                                    </div>
                                     <div className="student-info">
                                         <Typography variant="h6" className="student-name">
                                             {item.studentName}
@@ -117,7 +96,11 @@ const NewsAchievements = () => {
                                     {item.title}
                                 </Typography>
                                 <Typography variant="body2" className="achievement-date">
-                                    {item.date}
+                                    {new Date(item.date).toLocaleDateString('en-US', {
+                                        month: 'long',
+                                        day: 'numeric',
+                                        year: 'numeric'
+                                    })}
                                 </Typography>
                                 <Typography variant="body1" className="achievement-details">
                                     {item.description}
@@ -141,7 +124,7 @@ const NewsAchievements = () => {
                         Academic Milestones
                     </Typography>
                     <div className="achievements-grid">
-                        {achievements.map((achievement, index) => (
+                        {academicMilestones.map((achievement, index) => (
                             <Paper key={index} elevation={3} className="achievement-card">
                                 <div className="achievement-icon">
                                     {getCategoryIcon(achievement.category, { fontSize: '2.5rem' })}
@@ -166,10 +149,14 @@ const NewsAchievements = () => {
                         Recent Updates
                     </Typography>
                     <div className="updates-grid">
-                        {timeline.map((update, index) => (
+                        {recentUpdates.map((update, index) => (
                             <Paper key={index} elevation={3} className="update-card">
                                 <Typography variant="overline" className="update-date">
-                                    {update.date}
+                                    {new Date(update.date).toLocaleDateString('en-US', {
+                                        month: 'long',
+                                        day: 'numeric',
+                                        year: 'numeric'
+                                    })}
                                 </Typography>
                                 {update.examType && (
                                     <Chip
