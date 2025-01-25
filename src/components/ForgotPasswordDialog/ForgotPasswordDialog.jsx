@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Typography, Alert } from '@mui/material';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { API_URL } from '../../config';
 import './ForgotPasswordDialog.css';
 
 const ForgotPasswordDialog = ({ open, onClose }) => {
@@ -15,7 +16,7 @@ const ForgotPasswordDialog = ({ open, onClose }) => {
         setLoading(true);
         setError('');
         try {
-            await axios.post('http://localhost:3000/user/forgot-password', { email });
+            await axios.post(`${API_URL}/user/forgot-password`, { email });
             setSuccess(true);
         } catch (err) {
             setError(err.response?.data?.message || 'Something went wrong');

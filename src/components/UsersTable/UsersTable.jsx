@@ -9,6 +9,7 @@ import { Toast } from 'primereact/toast';
 import { Tag } from 'primereact/tag';
 import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
+import { API_URL } from '../../config';
 import axios from 'axios';
 import './UsersTable.css';
 
@@ -54,7 +55,7 @@ const UsersTable = () => {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:3000/user/getAllUsers');
+            const response = await axios.get(`${API_URL}/user/getAllUsers`);
             const processedUsers = response.data.map(user => ({
                 ...user,
                 id: user._id,
@@ -78,7 +79,7 @@ const UsersTable = () => {
     const handlePromoteUser = async () => {
         setPromoting(true);
         try {
-            await axios.put(`http://localhost:3000/user/promote/${selectedPromoteUser.id}`, {}, {
+            await axios.put(`${API_URL}/user/promote/${selectedPromoteUser.id}`, {}, {
                 headers: { Authorization: `Bearer ${localStorage.token}` }
             });
 
@@ -110,7 +111,7 @@ const UsersTable = () => {
     const handleDeleteUser = async () => {
         setDeleting(true);
         try {
-            await axios.delete(`http://localhost:3000/user/delete/${selectedDeleteUser.id}`, {
+            await axios.delete(`${API_URL}/user/delete/${selectedDeleteUser.id}`, {
                 headers: { Authorization: `Bearer ${localStorage.token}` }
             });
 
@@ -139,7 +140,7 @@ const UsersTable = () => {
     const handleDemoteUser = async () => {
         setDemoting(true);
         try {
-            await axios.put(`http://localhost:3000/user/demote/${selectedDemoteUser.id}`, {}, {
+            await axios.put(`${API_URL}/user/demote/${selectedDemoteUser.id}`, {}, {
                 headers: { Authorization: `Bearer ${localStorage.token}` }
             });
 

@@ -18,6 +18,7 @@ import {
     TableRow,
     Link
 } from '@mui/material';
+import { API_URL } from '../../config';
 import ChangePasswordDialog from '../../../components/ChangePasswordDialog/ChangePassword'
 import EditProfileDialog from '../../../components/EditProfileDialog/EditProfile';
 import './Profile.css'
@@ -61,7 +62,7 @@ export default function Profile() {
     useEffect(() => {
         setLoading(true);
         if (!AuthVerify(token)) navigate('/login');
-        axios.get(`http://localhost:3000/user/view`, {
+        axios.get(`${API_URL}/user/view`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then((res) => {

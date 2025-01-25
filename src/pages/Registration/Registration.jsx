@@ -19,6 +19,7 @@ import {
     Typography,
     CircularProgress
 } from '@mui/material';
+import { API_URL } from '../../config';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AuthVerify from '../../helper/JWTVerify';
 import { useNavigate } from 'react-router-dom';
@@ -52,6 +53,7 @@ export default function RegisterForm() {
     const [otpSuccess, setOtpSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
@@ -86,7 +88,7 @@ export default function RegisterForm() {
 
         try {
             const response = await axios.post(
-                `http://localhost:3000/user/register`,
+                `${API_URL}/user/register`,
                 ReactFormData,
                 { headers: { 'Content-Type': `multipart/form-data` } }
             );
@@ -115,7 +117,7 @@ export default function RegisterForm() {
         };
         try {
             const response = await axios.post(
-                `http://localhost:3000/user/verify`,
+                `${API_URL}/user/verify`,
                 data,
                 { headers: { "Content-type": "application/json; charset=UTF-8" } }
             );

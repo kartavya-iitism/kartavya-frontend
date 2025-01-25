@@ -6,6 +6,7 @@ import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import { FilterMatchMode } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';
+import { API_URL } from '../../config';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './Tables.css';
@@ -26,7 +27,7 @@ export const MilestonesTable = ({ milestones, loading, onRefetch }) => {
     const handleDelete = async () => {
         setDeleting(true);
         try {
-            await axios.delete(`http://localhost:3000/news/milestone/${selectedMilestone.id}`);
+            await axios.delete(`${API_URL}/news/milestone/${selectedMilestone.id}`);
             onRefetch();
             toast.current.show({
                 severity: 'success',

@@ -8,6 +8,7 @@ import axios from 'axios';
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
 import DateField from '../../components/DateField/DateField';
 import { fetchContent } from '../../helper/contentFetcher';
+import { API_URL } from '../../config';
 import './Donate.css';
 
 const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/donate.json";
@@ -128,7 +129,7 @@ export default function DonationForm() {
 
         try {
             const response = await axios.post(
-                `http://localhost:3000/donation/new`,
+                `${API_URL}/donation/new`,
                 formDataToSend,
                 {
                     headers: { 'Content-Type': 'multipart/form-data' }

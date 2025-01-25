@@ -12,6 +12,7 @@ import {
     Alert,
     CircularProgress
 } from '@mui/material';
+import { API_URL } from '../../config';
 import axios from 'axios';
 import './AddNewsAchievements.css';
 
@@ -88,7 +89,7 @@ const AddNewsAchievements = ({ open, onClose }) => {
 
         try {
             const response = await axios.post(
-                'http://localhost:3000/news/add',
+                `${API_URL}/news/add`,
                 formData,
                 {
                     headers: {

@@ -15,6 +15,7 @@ import {
     RadioGroup,
     Radio
 } from '@mui/material';
+import { API_URL } from '../../config';
 import axios from 'axios';
 import './EditProfile.css'
 
@@ -57,7 +58,7 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
             console.log(username)
             console.log(initialData)
             const response = await axios.put(
-                `http://localhost:3000/user/${username}/edit`,
+                `${API_URL}/user/${username}/edit`,
                 formData,
                 {
                     headers: {

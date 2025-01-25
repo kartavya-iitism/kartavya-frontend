@@ -4,6 +4,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
 import { PictureAsPdf, InsertDriveFile } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -25,7 +26,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user/dashboard', {
+                const response = await axios.get(`${API_URL}/user/dashboard`, {
                     headers: { Authorization: `Bearer ${localStorage.token}` }
                 });
                 console.log(response.data)

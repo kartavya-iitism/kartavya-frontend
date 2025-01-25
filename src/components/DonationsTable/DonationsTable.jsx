@@ -10,6 +10,7 @@ import { Tag } from 'primereact/tag';
 import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { Tooltip } from 'primereact/tooltip';
+import { API_URL } from '../../config';
 import axios from 'axios';
 import './DonationsTable.css';
 
@@ -53,7 +54,7 @@ const DonationsTable = () => {
     const fetchDonations = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:3000/donation/viewAllDonation');
+            const response = await axios.get(`${API_URL}/donation/viewAllDonation`);
             const donations = Array.isArray(response.data) ? response.data :
                 Array.isArray(response.data.donations) ? response.data.donations : [];
 
@@ -86,7 +87,7 @@ const DonationsTable = () => {
     const handleVerifySubmit = async () => {
         setVerifying(true);
         try {
-            await axios.put(`http://localhost:3000/donation/verify/${selectedDonationId}`, {}, {
+            await axios.put(`${API_URL}/donation/verify/${selectedDonationId}`, {}, {
                 headers: { Authorization: `Bearer ${localStorage.token}` }
             });
 
@@ -118,7 +119,7 @@ const DonationsTable = () => {
     const handleRejectSubmit = async () => {
         setRejecting(true);
         try {
-            await axios.put(`http://localhost:3000/donation/reject/${selectedRejectDonation.id}`,
+            await axios.put(`${API_URL}/donation/reject/${selectedRejectDonation.id}`,
                 { message: rejectMessage },
                 { headers: { Authorization: `Bearer ${localStorage.token}` } }
             );

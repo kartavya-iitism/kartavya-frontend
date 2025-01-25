@@ -7,6 +7,7 @@ import { Toast } from 'primereact/toast';
 import { FilterMatchMode } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
+import { API_URL } from '../../config';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './Tables.css';
@@ -27,7 +28,7 @@ export const StudentStoriesTable = ({ stories, loading, onRefetch }) => {
     const handleDelete = async () => {
         setDeleting(true);
         try {
-            await axios.delete(`http://localhost:3000/news/student-story/${selectedStory.id}`);
+            await axios.delete(`${API_URL}/news/student-story/${selectedStory.id}`);
             onRefetch()
             toast.current.show({
                 severity: 'success',

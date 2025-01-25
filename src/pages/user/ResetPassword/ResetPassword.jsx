@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Paper, Typography, TextField, Button, Alert } from '@mui/material';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import './ResetPassword.css';
 
 const ResetPassword = () => {
@@ -30,7 +31,7 @@ const ResetPassword = () => {
         setLoading(true);
         setError('');
         try {
-            await axios.post(`http://localhost:3000/user/reset-password/${token}`, {
+            await axios.post(`${API_URL}/user/reset-password/${token}`, {
                 password: formData.password
             });
             navigate('/login');

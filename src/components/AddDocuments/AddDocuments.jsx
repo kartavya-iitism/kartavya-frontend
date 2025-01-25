@@ -15,6 +15,7 @@ import {
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './AddDocuments.css';
+import { API_URL } from '../../config';
 
 const AddDocuments = ({ open, onClose }) => {
     const [formData, setFormData] = useState({
@@ -65,7 +66,7 @@ const AddDocuments = ({ open, onClose }) => {
 
         try {
             const response = await axios.post(
-                'http://localhost:3000/document/upload',
+                `${API_URL}/document/upload`,
                 formDataToSend,
                 {
                     headers: {

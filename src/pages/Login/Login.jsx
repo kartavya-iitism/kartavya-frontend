@@ -16,6 +16,7 @@ import { Typography } from '@mui/material';
 import AuthVerify from '../../helper/JWTVerify';
 import ForgotPasswordDialog from '../../components/ForgotPasswordDialog/ForgotPasswordDialog';
 import { Google } from "@mui/icons-material";
+import { API_URL } from '../../config';
 import './Login.css'
 
 export default function LoginForm() {
@@ -43,7 +44,7 @@ export default function LoginForm() {
         }));
     };
     const handleGoogleLogin = () => {
-        window.location.href = 'http://localhost:3000/user/auth/google';
+        window.location.href = `${API_URL}/user/auth/google`;
     };
     const handleSubmit = async (evt) => {
         evt.preventDefault();
@@ -54,7 +55,7 @@ export default function LoginForm() {
 
         try {
             const response = await axios.post(
-                `http://localhost:3000/user/login`,
+                `${API_URL}/user/login`,
                 formData,
                 {
                     headers: {

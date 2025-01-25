@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { fetchContent } from '../../helper/contentFetcher';
+import { API_URL } from '../../config';
 import './DonateItem.css';
 
 const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/donateItem.json";
@@ -78,7 +79,7 @@ export default function DonateItem() {
 
         try {
             const response = await axios.post(
-                'http://localhost:3000/donation/item',
+                `${API_URL}/donation/item`,
                 formDataToSend,
                 {
                     headers: { 'Content-Type': 'multipart/form-data' }

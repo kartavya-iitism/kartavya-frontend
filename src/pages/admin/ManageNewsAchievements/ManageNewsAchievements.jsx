@@ -6,6 +6,7 @@ import { MilestonesTable } from '../../../components/NewsAchievementTables/Miles
 import { UpdatesTable } from '../../../components/NewsAchievementTables/UpdatesTable';
 import AddNewsAchievements from '../../../components/AddNewsAchievements/AddNewsAchievements';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import './ManageNewsAchievements.css';
 
 const ManageNewsAchievements = () => {
@@ -21,7 +22,7 @@ const ManageNewsAchievements = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:3000/news/all');
+            const response = await axios.get(`${API_URL}/news/all`);
 
             const processedStories = response.data.studentStories.map(story => ({
                 ...story,

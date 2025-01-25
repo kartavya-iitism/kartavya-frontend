@@ -10,6 +10,7 @@ import {
     Button,
     Box,
 } from '@mui/material';
+import { API_URL } from '../../config';
 import axios from 'axios';
 import './ChangePassword.css'
 
@@ -34,7 +35,7 @@ const ChangePasswordDialog = ({ open, onClose, username }) => {
         }
         try {
             const response = await axios.put(
-                `http://localhost:3000/user/${username}/changePassword`,
+                `${API_URL}/user/${username}/changePassword`,
                 data,
                 {
                     headers: {

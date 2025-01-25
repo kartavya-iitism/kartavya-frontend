@@ -2,10 +2,11 @@ import { Box, Paper, Typography, Container, Chip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { School, EmojiEvents, Stars } from '@mui/icons-material';
 import { CircularProgress, Alert } from '@mui/material';
+import { API_URL } from '../../config';
 
 import './NewsAchievement.css';
 
-const NEWS_URL = "http://localhost:3000/news/all";
+const NEWS_URL = `${API_URL}/news/all`;
 
 const NewsAchievements = () => {
     const [content, setContent] = useState(null);
