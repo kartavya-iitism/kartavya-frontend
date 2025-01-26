@@ -1,44 +1,39 @@
-import { useState, useEffect } from 'react';
 import {
     MDBCarousel,
     MDBCarouselItem,
 } from 'mdb-react-ui-kit';
-import { Box, CircularProgress, Alert } from '@mui/material';
-import { fetchContent } from '../../helper/contentFetcher';
 import './Slider.css';
 
-const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/slider.json";
 
 function Slider() {
-    const [content, setContent] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const loadContent = async () => {
-            try {
-                const data = await fetchContent(CONTENT_URL);
-                setContent(data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+    const content = {
+        "settings": {
+            "interval": "5000",
+            "showIndicators": "true",
+            "touch": "true",
+            "className": "carousel"
+        },
+        "items": [
+            {
+                "img": "/src/assets/IMG_20240323_125518.jpg",
+                "title": "Educate a Child. Empower a Society",
+                "description": "Young readers are future leaders!",
+                "alt": "Slide 1"
+            },
+            {
+                "img": "/src/assets/image-k-3.jpg",
+                "title": "Towards an educated India",
+                "description": "Dedicated to all-round development of children with academics, sports, and culture.",
+                "alt": "Slide 2"
+            },
+            {
+                "img": "/src/assets/DSC_0105.jpg",
+                "title": "Educate and Empower Young Girls and Women",
+                "description": "The progress of a community is measured by the degree of progress of both men and women.",
+                "alt": "Slide 3"
             }
-        };
-        loadContent();
-    }, []);
-
-    if (loading) return (
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-            <CircularProgress color="primary" />
-        </Box>
-    );
-
-    if (error) return (
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh" padding={2}>
-            <Alert severity="error" variant="filled">{error}</Alert>
-        </Box>
-    );
+        ]
+    }
 
     const { settings, items } = content;
 

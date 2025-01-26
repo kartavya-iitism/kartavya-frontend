@@ -1,41 +1,27 @@
-import { useState, useEffect } from 'react';
-import { Box, Stack, Typography, Card, CardContent, CircularProgress, Alert } from '@mui/material';
-import { fetchContent } from '../../helper/contentFetcher';
+import { Box, Stack, Typography, Card, CardContent } from '@mui/material';
 import "./Features.css";
 
-const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/features.json";
 
 const Features = () => {
-    const [content, setContent] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const loadContent = async () => {
-            try {
-                const data = await fetchContent(CONTENT_URL);
-                setContent(data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+    const content = {
+        "features": [
+            {
+                "icon": "/src/assets/gift.svg",
+                "title": "Gifts of Happiness",
+                "description": "Unleashing pure happiness in children with delightful surprise gifts"
+            },
+            {
+                "icon": "/src/assets/Idea.svg",
+                "title": "Creative Exploration",
+                "description": "Enhancing the creative potential of children"
+            },
+            {
+                "icon": "/src/assets/laugh.svg",
+                "title": "Recreational Events",
+                "description": "Engaging and connecting children with each other through fun events"
             }
-        };
-        loadContent();
-    }, []);
-
-    if (loading) return (
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-            <CircularProgress color="primary" />
-        </Box>
-    );
-
-    if (error) return (
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh" padding={2}>
-            <Alert severity="error" variant="filled">{error}</Alert>
-        </Box>
-    );
-
+        ]
+    }
     return (
         <Box className="features-section">
             <Stack

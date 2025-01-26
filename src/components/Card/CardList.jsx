@@ -1,41 +1,36 @@
-import { useState, useEffect } from 'react';
-import { Box, CircularProgress, Alert } from '@mui/material';
 import Card from "./Card";
-import { fetchContent } from '../../helper/contentFetcher';
 import "./Card.css";
 
-const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/cardList.json";
 
 const CardList = () => {
-    const [content, setContent] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const loadContent = async () => {
-            try {
-                const data = await fetchContent(CONTENT_URL);
-                setContent(data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+    const content = {
+        "cards": [
+            {
+                "image": "/src/assets/book.png",
+                "title": "Providing Free Education and Evening Tutions",
+                "backgroundColor": "#92d05b",
+                "to": "/donate"
+            },
+            {
+                "image": "/src/assets/training.png",
+                "title": "Training and Providing Financial Supports",
+                "backgroundColor": "#3da76e",
+                "to": "/contact"
+            },
+            {
+                "image": "/src/assets/health.png",
+                "title": "Organising Health-camps Regularly",
+                "backgroundColor": "#0da8a7",
+                "to": "/contact"
+            },
+            {
+                "image": "/src/assets/environment.png",
+                "title": "Creating Environmental and Social Awareness",
+                "backgroundColor": "#13628c",
+                "to": "/donate-item"
             }
-        };
-        loadContent();
-    }, []);
-
-    if (loading) return (
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-            <CircularProgress color="primary" />
-        </Box>
-    );
-
-    if (error) return (
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh" padding={2}>
-            <Alert severity="error" variant="filled">{error}</Alert>
-        </Box>
-    );
+        ]
+    }
 
     return (
         <div className="cardPile">

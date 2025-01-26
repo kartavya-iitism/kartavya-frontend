@@ -3,6 +3,7 @@ import { Container, Typography, Box, Paper, CircularProgress, Alert } from '@mui
 import { Link } from "react-router-dom";
 import { fetchContent } from '../../helper/contentFetcher';
 import "./ImpactStory.css";
+import founderImg from "/src/assets/amreshmishra.webp"
 
 const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/impactStory.json";
 
@@ -54,7 +55,7 @@ const ImpactStory = () => {
                 <Paper elevation={0} className="story-content">
                     <Box className="founder-image-container">
                         <img
-                            src={founder.image}
+                            src={founderImg}
                             alt={founder.imageAlt}
                             className="founder-image"
                         />
