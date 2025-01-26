@@ -296,7 +296,15 @@ export default function Profile() {
                         contactNumber: user?.contactNumber || '',
                         address: user?.address || '',
                         isGovernmentOfficial: user?.isGovernmentOfficial || false,
-                        currentJob: user?.currentJob || ''
+                        currentJob: user?.currentJob || '',
+                        name: user?.name || '',
+                        dateOfBirth: user?.dateOfBirth || '',
+                        gender: user?.gender || '',
+                        ismPassout: user?.ismPassout || false,
+                        batch: user?.batch || '',
+                        kartavyaVolunteer: user?.kartavyaVolunteer || false,
+                        yearsOfServiceStart: user?.yearsOfServiceStart || '',
+                        yearsOfServiceEnd: user?.yearsOfServiceEnd || ''
                     }}
                 />
                 <ChangePasswordDialog

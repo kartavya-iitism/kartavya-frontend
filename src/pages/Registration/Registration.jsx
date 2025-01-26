@@ -317,16 +317,23 @@ export default function RegisterForm() {
                             className="custom-textfield"
                             label="Years of Service"
                             name="yearsOfService"
-                            value={formData.yearsOfService || ''}
+                            value={`${formData.yearsOfServiceStart}${formData.yearsOfServiceStart && formData.yearsOfServiceEnd ? '-' : ''}${formData.yearsOfServiceEnd}`}
                             onChange={(e) => {
                                 let value = e.target.value.replace(/\D/g, '');
                                 if (value.length > 4) {
                                     value = value.slice(0, 4) + '-' + value.slice(4, 8);
                                 }
+                                const [start, end] = value.split('-');
                                 handleChange({
                                     target: {
-                                        name: 'yearsOfService',
-                                        value: value
+                                        name: 'yearsOfServiceStart',
+                                        value: start || ''
+                                    }
+                                });
+                                handleChange({
+                                    target: {
+                                        name: 'yearsOfServiceEnd',
+                                        value: end || ''
                                     }
                                 });
                             }}

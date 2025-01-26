@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import DateField from '../DateField/DateField';
+
 import {
     Dialog,
     DialogActions,
@@ -21,11 +23,19 @@ import './EditProfile.css'
 
 const EditProfileDialog = ({ open, onClose, username, initialData }) => {
     const [formData, setFormData] = useState({
-        email: initialData.email,
-        contactNumber: initialData.contactNumber,
-        address: initialData.address,
-        isGovernmentOfficial: initialData.isGovernmentOfficial,
-        currentJob: initialData.currentJob
+        email: initialData?.email || '',
+        contactNumber: initialData?.contactNumber || '',
+        address: initialData?.address || '',
+        isGovernmentOfficial: initialData?.isGovernmentOfficial || false,
+        currentJob: initialData?.currentJob || '',
+        name: initialData?.name || '',
+        dateOfBirth: initialData?.dateOfBirth || '',
+        gender: initialData?.gender || '',
+        ismPassout: Boolean(initialData?.ismPassout) || false,
+        batch: initialData?.batch || '',
+        kartavyaVolunteer: Boolean(initialData?.kartavyaVolunteer) || false,
+        yearsOfServiceStart: initialData.yearsOfServiceStart || '',
+        yearsOfServiceEnd: initialData.yearsOfServiceEnd || ''
     });
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
@@ -37,18 +47,6 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
             [name]: name === 'isGovernmentOfficial' ? checked : value
         }));
     };
-
-    useEffect(() => {
-        if (initialData) {
-            setFormData({
-                email: initialData.email || '',
-                contactNumber: initialData.contactNumber || '',
-                address: initialData.address || '',
-                isGovernmentOfficial: initialData.isGovernmentOfficial || false,
-                currentJob: initialData.currentJob || ''
-            });
-        }
-    }, [initialData]);
 
     const handleUpdateProfile = async () => {
         setError('');
@@ -78,17 +76,44 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
         }
     };
 
+    useEffect(() => {
+        if (initialData) {
+            setFormData({
+                email: initialData.email || '',
+                contactNumber: initialData.contactNumber || '',
+                address: initialData.address || '',
+                isGovernmentOfficial: Boolean(initialData.isGovernmentOfficial),
+                currentJob: initialData.currentJob || '',
+                name: initialData.name || '',
+                dateOfBirth: initialData.dateOfBirth || '',
+                gender: initialData.gender || '',
+                ismPassout: Boolean(initialData.ismPassout),
+                batch: initialData.batch || '',
+                kartavyaVolunteer: Boolean(initialData.kartavyaVolunteer),
+                yearsOfServiceStart: initialData.yearsOfServiceStart || '',
+                yearsOfServiceEnd: initialData.yearsOfServiceEnd || ''
+            });
+        }
+    }, [initialData]);
+
     const handleClose = () => {
         setError('');
         setSuccess(false);
         setFormData({
-            email: initialData?.email || '',
-            contactNumber: initialData?.contactNumber || '',
-            address: initialData?.address || '',
-            isGovernmentOfficial: initialData?.isGovernmentOfficial || false,
-            currentJob: initialData?.currentJob || ''
+            email: initialData.email || '',
+            contactNumber: initialData.contactNumber || '',
+            address: initialData.address || '',
+            isGovernmentOfficial: Boolean(initialData.isGovernmentOfficial),
+            currentJob: initialData.currentJob || '',
+            name: initialData.name || '',
+            dateOfBirth: initialData.dateOfBirth || '',
+            gender: initialData.gender || '',
+            ismPassout: Boolean(initialData.ismPassout),
+            batch: initialData.batch || '',
+            kartavyaVolunteer: Boolean(initialData.kartavyaVolunteer),
+            yearsOfServiceStart: initialData.yearsOfServiceStart || '',
+            yearsOfServiceEnd: initialData.yearsOfServiceEnd || ''
         });
-
         onClose();
     };
 
@@ -109,13 +134,19 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                 </Box>
             ) : (
                 <>
-                    <DialogTitle className="dialog-title">
-                        Edit Profile
-                    </DialogTitle>
+                    <DialogTitle className="dialog-title">Edit Profile</DialogTitle>
                     <DialogContent className="dialog-content">
                         <Box className="form-container">
                             <TextField
-                                style={{ marginTop: "10px" }}
+                                label="Name"
+                                name="name"
+                                fullWidth
+                                value={formData.name}
+                                onChange={handleChange}
+                                className="form-field"
+                            />
+
+                            <TextField
                                 label="Email"
                                 type="email"
                                 name="email"
@@ -123,8 +154,28 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                                 value={formData.email}
                                 onChange={handleChange}
                                 className="form-field"
-                                variant="outlined"
                             />
+
+                            <DateField
+                                name="dateOfBirth"
+                                label="Date of Birth"
+                                value={formData.dateOfBirth}
+                                onChange={handleChange}
+                            />
+
+                            <FormControl component="fieldset" fullWidth>
+                                <FormLabel className='radio-label'>Gender</FormLabel>
+                                <RadioGroup
+                                    name="gender"
+                                    value={formData.gender}
+                                    onChange={handleChange}
+                                    row
+                                >
+                                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                                </RadioGroup>
+                            </FormControl>
+
                             <TextField
                                 label="Contact Number"
                                 type="tel"
@@ -133,8 +184,8 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                                 value={formData.contactNumber}
                                 onChange={handleChange}
                                 className="form-field"
-                                variant="outlined"
                             />
+
                             <TextField
                                 label="Current Job"
                                 name="currentJob"
@@ -142,8 +193,8 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                                 value={formData.currentJob}
                                 onChange={handleChange}
                                 className="form-field"
-                                variant="outlined"
                             />
+
                             <TextField
                                 label="Address"
                                 name="address"
@@ -153,27 +204,104 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                                 value={formData.address}
                                 onChange={handleChange}
                                 className="form-field"
-                                variant="outlined"
                             />
-                            <FormControl component="fieldset" className="custom-textfield" fullWidth>
-                                <FormLabel className='radio-label' required>Government Official</FormLabel>
+
+                            <FormControl component="fieldset" fullWidth>
+                                <FormLabel className='radio-label'>Government Official</FormLabel>
                                 <RadioGroup
-                                    className='radio-group'
                                     name="isGovernmentOfficial"
                                     value={formData.isGovernmentOfficial.toString()}
-                                    onChange={(e) => {
-                                        const { name, value } = e.target;
-                                        setFormData(prev => ({
-                                            ...prev,
-                                            [name]: value === 'true'
-                                        }));
-                                    }}
+                                    onChange={(e) => handleChange({
+                                        target: {
+                                            name: 'isGovernmentOfficial',
+                                            value: e.target.value === 'true'
+                                        }
+                                    })}
                                     row
                                 >
                                     <FormControlLabel value="true" control={<Radio />} label="Yes" />
                                     <FormControlLabel value="false" control={<Radio />} label="No" />
                                 </RadioGroup>
                             </FormControl>
+
+                            <FormControl component="fieldset" fullWidth>
+                                <FormLabel className='radio-label'>IIT ISM Passout</FormLabel>
+                                <RadioGroup
+                                    name="ismPassout"
+                                    value={String(Boolean(formData.ismPassout))}
+                                    onChange={(e) => handleChange({
+                                        target: {
+                                            name: 'ismPassout',
+                                            value: e.target.value === 'true'
+                                        }
+                                    })}
+                                    row
+                                >
+                                    <FormControlLabel value="true" control={<Radio />} label="Yes" />
+                                    <FormControlLabel value="false" control={<Radio />} label="No" />
+                                </RadioGroup>
+                            </FormControl>
+
+                            {formData.ismPassout && (
+                                <>
+                                    <TextField
+                                        label="Batch"
+                                        name="batch"
+                                        type="number"
+                                        fullWidth
+                                        value={formData.batch}
+                                        onChange={handleChange}
+                                        className="form-field"
+                                        placeholder="YYYY"
+                                    />
+
+                                    <FormControl component="fieldset" fullWidth>
+                                        <FormLabel className='radio-label'>Kartavya Volunteer</FormLabel>
+                                        <RadioGroup
+                                            name="kartavyaVolunteer"
+                                            value={formData.kartavyaVolunteer.toString()}
+                                            onChange={(e) => handleChange({
+                                                target: {
+                                                    name: 'kartavyaVolunteer',
+                                                    value: e.target.value === 'true'
+                                                }
+                                            })}
+                                            row
+                                        >
+                                            <FormControlLabel value="true" control={<Radio />} label="Yes" />
+                                            <FormControlLabel value="false" control={<Radio />} label="No" />
+                                        </RadioGroup>
+                                    </FormControl>
+
+                                    {formData.kartavyaVolunteer && (
+                                        <FormControl component="fieldset" fullWidth>
+                                            <TextField
+                                                className="form-field"
+                                                label="Years of Service"
+                                                name="yearsOfService"
+                                                value={`${formData.yearsOfServiceStart}${formData.yearsOfServiceStart && formData.yearsOfServiceEnd ? '-' : ''}${formData.yearsOfServiceEnd}`}
+                                                onChange={(e) => {
+                                                    let value = e.target.value.replace(/\D/g, '');
+                                                    if (value.length > 4) {
+                                                        value = value.slice(0, 4) + '-' + value.slice(4, 8);
+                                                    }
+                                                    const [start, end] = value.split('-');
+                                                    setFormData(prev => ({
+                                                        ...prev,
+                                                        yearsOfServiceStart: start || '',
+                                                        yearsOfServiceEnd: end || ''
+                                                    }));
+                                                }}
+                                                placeholder="YYYY-YYYY"
+                                                inputProps={{
+                                                    maxLength: 9
+                                                }}
+                                            />
+                                        </FormControl>
+                                    )}
+                                </>
+                            )}
+
                             {error && (
                                 <Typography className="error-text">
                                     {error}
@@ -182,10 +310,7 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                         </Box>
                     </DialogContent>
                     <DialogActions className="dialog-actions">
-                        <Button
-                            onClick={handleClose}
-                            className="cancel-button"
-                        >
+                        <Button onClick={handleClose} className="cancel-button">
                             Cancel
                         </Button>
                         <Button
@@ -211,8 +336,19 @@ EditProfileDialog.propTypes = {
         contactNumber: PropTypes.string,
         address: PropTypes.string,
         isGovernmentOfficial: PropTypes.bool,
-        currentJob: PropTypes.string
-    })
+        currentJob: PropTypes.string,
+        name: PropTypes.string,
+        dateOfBirth: PropTypes.string,
+        gender: PropTypes.oneOf(['male', 'female']),
+        ismPassout: PropTypes.bool,
+        batch: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number
+        ]),
+        kartavyaVolunteer: PropTypes.bool,
+        yearsOfServiceStart: PropTypes.string,
+        yearsOfServiceEnd: PropTypes.string
+    }).isRequired
 };
 
 export default EditProfileDialog;
