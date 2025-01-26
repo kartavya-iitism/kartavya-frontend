@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
     MDBNavbar,
     MDBContainer,
@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 export default function App() {
     const [openNavNoTogglerThird, setOpenNavNoTogglerThird] = useState(false);
     const navigate = useNavigate();
+    const navRef = useRef(null);
 
     const handleLogout = () => {
         localStorage.clear();
@@ -25,14 +26,38 @@ export default function App() {
         window.location.reload();
     }
 
-    const handleNavClick = () => {
-        setOpenNavNoTogglerThird(false);
-    }
-
     const handleNavigate = (path) => {
         setOpenNavNoTogglerThird(false);
         navigate(path);
     }
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (openNavNoTogglerThird) {
+                setOpenNavNoTogglerThird(false);
+            }
+        };
+
+        const handleClickOutside = (event) => {
+            // Check if click is outside navbar and menu is open
+            if (navRef.current &&
+                !navRef.current.contains(event.target) &&
+                openNavNoTogglerThird) {
+                setOpenNavNoTogglerThird(false);
+            }
+        };
+
+        // Only add listeners if menu is open
+        if (openNavNoTogglerThird) {
+            window.addEventListener('scroll', handleScroll);
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [openNavNoTogglerThird]);
 
     return (
         <>
@@ -54,35 +79,38 @@ export default function App() {
                         aria-expanded='false'
                         aria-label='Toggle navigation'
                         style={{ 'color': '#24a845' }}
-                        onClick={() => setOpenNavNoTogglerThird(!openNavNoTogglerThird)}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setOpenNavNoTogglerThird(!openNavNoTogglerThird);
+                        }}
                     >
                         <MDBIcon icon='bars' fas />
                     </MDBNavbarToggler>
                     <MDBCollapse navbar open={openNavNoTogglerThird} className="flex-grow-0">
                         <MDBNavbarNav className="justify-content-lg-end justify-content-center align-items-center text-center">
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/' onClick={handleNavClick}>
+                                <MDBNavbarLink href='/' onClick={() => handleNavigate('/')}>
                                     Home
                                 </MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/about' onClick={handleNavClick}>About Us</MDBNavbarLink>
+                                <MDBNavbarLink href='/about' onClick={() => handleNavigate('/about')}>About Us</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/work' onClick={handleNavClick}>Our Work</MDBNavbarLink>
+                                <MDBNavbarLink href='/work' onClick={() => handleNavigate('/work')}>Our Work</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/news' onClick={handleNavClick}>Impact Stories</MDBNavbarLink>
+                                <MDBNavbarLink href='/news' onClick={() => handleNavigate('/news')}>Impact Stories</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/faqs' onClick={handleNavClick}>FAQs</MDBNavbarLink>
+                                <MDBNavbarLink href='/faqs' onClick={() => handleNavigate('/faqs')}>FAQs</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/contact' onClick={handleNavClick}>Contact Us</MDBNavbarLink>
+                                <MDBNavbarLink href='/contact' onClick={() => handleNavigate('/contact')}>Contact Us</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
                                 {localStorage.token ?
-                                    <MDBNavbarLink href={localStorage.role === 'admin' ? '/admin/general' : '/user/dash'} onClick={handleNavClick} tabIndex={-1} aria-disabled='true'>
+                                    <MDBNavbarLink href={localStorage.role === 'admin' ? '/admin/general' : '/user/dash'} onClick={() => handleNavigate(localStorage.role === 'admin' ? '/admin/general' : '/user/dash')} tabIndex={-1} aria-disabled='true'>
                                         {localStorage.role === 'admin' ? 'Settings' : 'Dashboard'}
                                     </MDBNavbarLink> : <></>
                                 }

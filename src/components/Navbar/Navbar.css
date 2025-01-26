@@ -102,13 +102,6 @@
 }
 
 @media (max-width: 991px) {
-    .navbar-nav {
-        padding: 20px 0;
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 10px;
-        box-shadow: var(--shadow);
-    }
-
     .navbar-nav .nav-link {
         margin: 10px 0;
         text-align: center;

@@ -26,6 +26,7 @@ import { AuthProvider } from './helper/AuthContext';
 import NewsAchievements from "./pages/NewsAchievement/NewsAchievement";
 import ManageNewsAchievements from "./pages/admin/ManageNewsAchievements/ManageNewsAchievements";
 import Media from "./pages/Media/Media";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 const routes = {
   public: [
@@ -68,6 +69,7 @@ function App() {
     <AuthProvider>
       <React.Fragment>
         <CssBaseline />
+        <ScrollToTop />
         <Navbar />
         <Routes>
           {routes.public.map(({ path, element }) => (
