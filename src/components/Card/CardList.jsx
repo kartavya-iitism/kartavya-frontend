@@ -1,30 +1,33 @@
 import Card from "./Card";
 import "./Card.css";
-
+import book from "../../assets/book.png"
+import training from "../../assets/training.png"
+import health from "../../assets/health.png"
+import environment from "../../assets/environment.png"
 
 const CardList = () => {
     const content = {
         "cards": [
             {
-                "image": "/src/assets/book.png",
+                "image": book,
                 "title": "Providing Free Education and Evening Tutions",
                 "backgroundColor": "#92d05b",
                 "to": "/donate"
             },
             {
-                "image": "/src/assets/training.png",
+                "image": training,
                 "title": "Training and Providing Financial Supports",
                 "backgroundColor": "#3da76e",
                 "to": "/contact"
             },
             {
-                "image": "/src/assets/health.png",
+                "image": health,
                 "title": "Organising Health-camps Regularly",
                 "backgroundColor": "#0da8a7",
                 "to": "/contact"
             },
             {
-                "image": "/src/assets/environment.png",
+                "image": environment,
                 "title": "Creating Environmental and Social Awareness",
                 "backgroundColor": "#13628c",
                 "to": "/donate-item"

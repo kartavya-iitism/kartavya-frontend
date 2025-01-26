@@ -3,6 +3,7 @@ import { Box, Paper, Typography, Container, CircularProgress, Alert } from '@mui
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import CardList from "../../components/Card/CardList";
 import { fetchContent } from '../../helper/contentFetcher';
+import { Timeline } from 'react-twitter-widgets';
 import "./works.css";
 
 const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/works.json";
@@ -11,6 +12,8 @@ const Works = () => {
     const [content, setContent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [twitterLoaded, setTwitterLoaded] = useState(false);
+    const [twitterError, setTwitterError] = useState(null);
 
     useEffect(() => {
         const loadContent = async () => {
@@ -88,10 +91,20 @@ const Works = () => {
                                     {media.social.title}
                                 </Typography>
                                 <div className="twitter-container">
-                                    <TwitterTimelineEmbed
-                                        sourceType="profile"
-                                        screenName={media.social.twitterHandle}
-                                        options={media.social.twitterOptions}
+                                    <Timeline
+                                        dataSource={{
+                                            sourceType: 'profile',
+                                            screenName: media.social.twitterHandle
+                                        }}
+                                        options={{
+                                            height: '400',
+                                            ...media.social.twitterOptions
+                                        }}
+                                        onLoad={() => setTwitterLoaded(true)}
+                                        onError={(error) => setTwitterError(error)}
+                                        renderError={() => (
+                                            <p>Could not load timeline</p>
+                                        )}
                                     />
                                 </div>
                             </Paper>

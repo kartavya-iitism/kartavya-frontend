@@ -1,22 +1,25 @@
 import { Box, Stack, Typography, Card, CardContent } from '@mui/material';
 import "./Features.css";
+import gift from "../../assets/gift.svg"
+import idea from "../../assets/Idea.svg"
+import laugh from "../../assets/laugh.svg"
 
 
 const Features = () => {
     const content = {
         "features": [
             {
-                "icon": "/src/assets/gift.svg",
+                "icon": gift,
                 "title": "Gifts of Happiness",
                 "description": "Unleashing pure happiness in children with delightful surprise gifts"
             },
             {
-                "icon": "/src/assets/Idea.svg",
+                "icon": idea,
                 "title": "Creative Exploration",
                 "description": "Enhancing the creative potential of children"
             },
             {
-                "icon": "/src/assets/laugh.svg",
+                "icon": laugh,
                 "title": "Recreational Events",
                 "description": "Engaging and connecting children with each other through fun events"
             }

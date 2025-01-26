@@ -1,5 +1,4 @@
 import { Box, Paper, Typography, Container } from '@mui/material';
-import { TwitterTimelineEmbed } from "react-twitter-embed";
 import './About.css';
 import { useEffect, useState } from 'react';
 import { CircularProgress, Alert } from '@mui/material';
@@ -96,19 +95,6 @@ const About = () => {
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
-                                />
-                            </div>
-                        </Paper>
-
-                        <Paper elevation={3} className="media-card">
-                            <Typography variant="h5" className="card-title">
-                                {media.social.title}
-                            </Typography>
-                            <div className="twitter-container">
-                                <TwitterTimelineEmbed
-                                    sourceType="profile"
-                                    screenName={media.social.twitterHandle}
-                                    options={{ height: 400 }}
                                 />
                             </div>
                         </Paper>

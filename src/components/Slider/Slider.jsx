@@ -3,6 +3,9 @@ import {
     MDBCarouselItem,
 } from 'mdb-react-ui-kit';
 import './Slider.css';
+import slide1 from '../../assets/IMG_20240323_125518.jpg';
+import slide2 from '../../assets/image-k-3.jpg';
+import slide3 from '../../assets/DSC_0105.jpg';
 
 
 function Slider() {
@@ -15,19 +18,19 @@ function Slider() {
         },
         "items": [
             {
-                "img": "/src/assets/IMG_20240323_125518.jpg",
+                "img": slide1,
                 "title": "Educate a Child. Empower a Society",
                 "description": "Young readers are future leaders!",
                 "alt": "Slide 1"
             },
             {
-                "img": "/src/assets/image-k-3.jpg",
+                "img": slide2,
                 "title": "Towards an educated India",
                 "description": "Dedicated to all-round development of children with academics, sports, and culture.",
                 "alt": "Slide 2"
             },
             {
-                "img": "/src/assets/DSC_0105.jpg",
+                "img": slide3,
                 "title": "Educate and Empower Young Girls and Women",
                 "description": "The progress of a community is measured by the degree of progress of both men and women.",
                 "alt": "Slide 3"

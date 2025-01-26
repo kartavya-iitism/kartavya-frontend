@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import {
     MDBNavbar,
     MDBContainer,
@@ -18,7 +18,6 @@ import { useNavigate } from "react-router-dom";
 export default function App() {
     const [openNavNoTogglerThird, setOpenNavNoTogglerThird] = useState(false);
     const navigate = useNavigate();
-    const navRef = useRef(null);
 
     const handleLogout = () => {
         localStorage.clear();
@@ -31,33 +30,7 @@ export default function App() {
         navigate(path);
     }
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if (openNavNoTogglerThird) {
-                setOpenNavNoTogglerThird(false);
-            }
-        };
 
-        const handleClickOutside = (event) => {
-            // Check if click is outside navbar and menu is open
-            if (navRef.current &&
-                !navRef.current.contains(event.target) &&
-                openNavNoTogglerThird) {
-                setOpenNavNoTogglerThird(false);
-            }
-        };
-
-        // Only add listeners if menu is open
-        if (openNavNoTogglerThird) {
-            window.addEventListener('scroll', handleScroll);
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [openNavNoTogglerThird]);
 
     return (
         <>
