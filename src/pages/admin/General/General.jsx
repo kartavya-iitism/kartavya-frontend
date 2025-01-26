@@ -3,7 +3,8 @@ import { Box, Button, Container, Typography, Stack } from '@mui/material';
 import {
     Add as AddIcon,
     Dashboard as DashboardIcon,
-    ManageAccounts as ManageIcon
+    ManageAccounts as ManageIcon,
+    Home as HomeIcon
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import AddDocuments from '../../../components/AddDocuments/AddDocuments';
@@ -65,6 +66,16 @@ const General = () => {
                         startIcon={<DashboardIcon />}
                     >
                         Go to Dashboard
+                    </Button>
+
+                    <Button
+                        component={Link}
+                        to="/"
+                        variant="contained"
+                        className="action-button home-button"
+                        startIcon={<HomeIcon />}
+                    >
+                        Go to Home
                     </Button>
                 </Stack>
 
