@@ -9,6 +9,7 @@ import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
 import DateField from '../../components/DateField/DateField';
 import { fetchContent } from '../../helper/contentFetcher';
 import { API_URL } from '../../config';
+import qr from "../../assets/qr.png"
 import './Donate.css';
 
 const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/donate.json";
@@ -212,7 +213,7 @@ export default function DonationForm() {
                             <Typography variant="h6" className="qr-title">
                                 {payment.qr.title}
                             </Typography>
-                            <img src={QRCode} alt={payment.qr.alt} className="qr-code" />
+                            <img src={qr} alt={payment.qr.alt} className="qr-code" />
                         </div>
                     </Box>
                 </Paper>
