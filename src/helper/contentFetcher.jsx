@@ -10,7 +10,6 @@ export const fetchContent = async (url) => {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         cache.set(url, data);
-        cache.clear()
         return data;
     } catch (error) {
         console.error('Error fetching content:', error);
