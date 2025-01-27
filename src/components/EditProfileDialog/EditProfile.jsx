@@ -26,7 +26,7 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
         email: initialData?.email || '',
         contactNumber: initialData?.contactNumber || '',
         address: initialData?.address || '',
-        isGovernmentOfficial: initialData?.isGovernmentOfficial || false,
+        governmentOfficial: Boolean(initialData?.governmentOfficial) || false,
         currentJob: initialData?.currentJob || '',
         name: initialData?.name || '',
         dateOfBirth: initialData?.dateOfBirth || '',
@@ -41,10 +41,10 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
     const [error, setError] = useState('');
 
     const handleChange = (e) => {
-        const { name, value, checked } = e.target;
+        const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: name === 'isGovernmentOfficial' ? checked : value
+            [name]: value
         }));
     };
 
@@ -82,7 +82,7 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                 email: initialData.email || '',
                 contactNumber: initialData.contactNumber || '',
                 address: initialData.address || '',
-                isGovernmentOfficial: Boolean(initialData.isGovernmentOfficial),
+                governmentOfficial: Boolean(initialData.governmentOfficial),
                 currentJob: initialData.currentJob || '',
                 name: initialData.name || '',
                 dateOfBirth: initialData.dateOfBirth || '',
@@ -103,7 +103,7 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
             email: initialData.email || '',
             contactNumber: initialData.contactNumber || '',
             address: initialData.address || '',
-            isGovernmentOfficial: Boolean(initialData.isGovernmentOfficial),
+            governmentOfficial: Boolean(initialData.governmentOfficial),
             currentJob: initialData.currentJob || '',
             name: initialData.name || '',
             dateOfBirth: initialData.dateOfBirth || '',
@@ -209,11 +209,11 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                             <FormControl component="fieldset" fullWidth>
                                 <FormLabel className='radio-label'>Government Official</FormLabel>
                                 <RadioGroup
-                                    name="isGovernmentOfficial"
-                                    value={formData.isGovernmentOfficial.toString()}
+                                    name="governmentOfficial"
+                                    value={String(Boolean(formData.governmentOfficial))}
                                     onChange={(e) => handleChange({
                                         target: {
-                                            name: 'isGovernmentOfficial',
+                                            name: 'governmentOfficial',
                                             value: e.target.value === 'true'
                                         }
                                     })}
@@ -335,7 +335,7 @@ EditProfileDialog.propTypes = {
         email: PropTypes.string,
         contactNumber: PropTypes.string,
         address: PropTypes.string,
-        isGovernmentOfficial: PropTypes.bool,
+        governmentOfficial: PropTypes.bool,
         currentJob: PropTypes.string,
         name: PropTypes.string,
         dateOfBirth: PropTypes.string,

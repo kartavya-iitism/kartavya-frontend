@@ -1,139 +1,93 @@
 :root {
-    --color-primary: #1a4d2e;
-    --color-secondary: #437a1e;
-    --color-accent: #86c540;
-    --shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
-    --transition: all 0.3s ease;
-}
-
-.confirm-dialog {
-    animation: fadeIn 0.3s ease;
+    --admin-primary: #1a4d2e;
+    --admin-secondary: #437a1e;
+    --admin-shadow: rgba(0, 0, 0, 0.1);
 }
 
 .confirm-dialog .MuiPaper-root {
-    border-radius: 15px !important;
-    padding: 2rem !important;
-    min-width: 400px;
-    background: white !important;
-    border-top: 5px solid var(--color-secondary) !important;
-    box-shadow: var(--shadow) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 24px var(--admin-shadow) !important;
+    overflow: hidden !important;
+    min-width: 400px !important;
+    padding: 0 !important;
 }
 
 .confirm-dialog .dialog-title {
-    font-family: "Playfair Display", serif !important;
-    color: var(--color-primary) !important;
-    font-size: 2.2rem !important;
-    font-weight: 600 !important;
-    text-align: center;
-    margin-bottom: 30px !important;
-    position: relative;
-}
-
-.confirm-dialog .dialog-title::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    background: linear-gradient(
-        90deg,
-        var(--color-accent),
-        var(--color-secondary)
-    );
+    background: var(--admin-primary) !important;
+    color: white !important;
+    padding: 1.5rem !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 500 !important;
 }
 
 .confirm-dialog .dialog-content {
-    padding: 0 1.5rem 1.5rem !important;
+    padding: 2rem !important;
 }
 
 .confirm-dialog .dialog-content .MuiTypography-body1 {
     font-family: "Poppins", sans-serif !important;
     margin-bottom: 15px !important;
     color: #4a4a4a !important;
-    font-size: 1.1rem !important;
-    line-height: 1.6 !important;
-}
-
-.confirm-dialog .dialog-content strong {
-    font-family: "Playfair Display", serif !important;
-    color: var(--color-primary) !important;
-    font-weight: 600 !important;
-    margin-right: 8px !important;
 }
 
 .confirm-dialog .total-amount {
     margin-top: 25px !important;
     padding-top: 25px !important;
-    border-top: 2px solid var(--color-primary);
-    font-family: "Poppins", sans-serif !important;
-    color: var(--color-secondary) !important;
-    font-size: 1.5rem !important;
+    border-top: 1px solid #f0f0f0;
+    color: var(--admin-primary) !important;
 }
 
 .confirm-dialog .dialog-actions {
     padding: 1.5rem !important;
-    gap: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    border-top: 1px solid #f0f0f0;
 }
 
 .confirm-dialog .confirm-button {
-    background-color: var(--color-secondary) !important;
+    background-color: var(--admin-primary) !important;
     color: white !important;
-    padding: 12px 30px !important;
+    padding: 10px 25px !important;
     border-radius: 25px !important;
-    font-family: "Poppins", sans-serif !important;
-    font-size: 1.1rem !important;
     text-transform: none !important;
-    transition: var(--transition) !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+    min-width: 150px !important;
 }
 
 .confirm-dialog .confirm-button:hover {
-    background-color: var(--color-secondary) !important;
+    background-color: var(--admin-primary) !important;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .confirm-dialog .cancel-button {
     color: #666 !important;
+    padding: 0.5rem 1.5rem !important;
     font-family: "Poppins", sans-serif !important;
-    font-size: 1.1rem !important;
-    padding: 12px 30px !important;
-    border-radius: 25px !important;
-    text-transform: none !important;
-    transition: var(--transition) !important;
 }
 
-.confirm-dialog .cancel-button:hover {
-    background-color: rgba(0, 0, 0, 0.05) !important;
-    transform: translateY(-2px);
-}
-
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .confirm-dialog .MuiPaper-root {
-        min-width: 300px;
-        margin: 1rem;
-        padding: 1.5rem !important;
-    }
-
-    .confirm-dialog .dialog-title {
-        padding: 5px 0 5px 0;
-        font-size: 2.2rem !important;
+        min-width: 90vw !important;
+        margin: 1rem !important;
     }
 
     .confirm-dialog .dialog-content {
-        padding: 0 1rem 1rem !important;
+        padding: 1.5rem !important;
     }
 
     .confirm-dialog .dialog-actions {
         padding: 1rem !important;
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
 
     .confirm-dialog .confirm-button,
     .confirm-dialog .cancel-button {
-        width: 100%;
-        padding: 0.8rem !important;
-        margin: 0px !important;
+        width: 100% !important;
+        margin: 0.25rem 0 !important;
     }
 }

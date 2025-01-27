@@ -32,7 +32,12 @@ const DonationsTable = () => {
     const [selectedRejectDonation, setSelectedRejectDonation] = useState(null);
     const [rejectMessage, setRejectMessage] = useState('');
     const [rejecting, setRejecting] = useState(false);
-
+    const [receiptDialog, setReceiptDialog] = useState(false);
+    const [selectedReceipt, setSelectedReceipt] = useState(null);
+    const [selectedDonations, setSelectedDonations] = useState([]);
+    const [bulkDeleteDialog, setBulkDeleteDialog] = useState(false);
+    const [bulkDeleting, setBulkDeleting] = useState(false);
+    const [bulkDeleteReason, setBulkDeleteReason] = useState('');
 
     // Filters
     const [filters, setFilters] = useState({
@@ -45,6 +50,40 @@ const DonationsTable = () => {
         verified: { value: null, matchMode: FilterMatchMode.EQUALS }
     });
 
+
+    const handleBulkDelete = async () => {
+        setBulkDeleting(true);
+        try {
+            await axios.delete(`${API_URL}/donation/bulk-delete`, {
+                data: {
+                    donationIds: selectedDonations.map(d => d.id),
+                    reason: bulkDeleteReason
+                },
+                headers: { Authorization: `Bearer ${localStorage.token}` }
+            });
+
+            setDonations(donations.filter(d => !selectedDonations.map(sd => sd.id).includes(d.id)));
+            toast.current.show({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Selected donations deleted successfully',
+                life: 3000
+            });
+        } catch (error) {
+            console.error('Bulk delete error:', error);
+            toast.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to delete selected donations',
+                life: 3000
+            });
+        } finally {
+            setBulkDeleting(false);
+            setBulkDeleteDialog(false);
+            setSelectedDonations([]);
+            setBulkDeleteReason('');
+        }
+    };
 
     // Fetch donations
     useEffect(() => {
@@ -78,6 +117,8 @@ const DonationsTable = () => {
             setLoading(false);
         }
     };
+
+
 
     const handleVerifyClick = (donationId) => {
         setSelectedDonationId(donationId);
@@ -187,13 +228,97 @@ const DonationsTable = () => {
 
         return (
             <Button
-                icon="pi pi-download"
+                icon="pi pi-eye"
                 className="p-button-rounded p-button-text"
-                onClick={() => window.open(rowData.recieptUrl, '_blank')}
-                tooltip="Download Receipt"
+                onClick={() => {
+                    setSelectedReceipt(rowData.recieptUrl);
+                    setReceiptDialog(true);
+                }}
+                tooltip="View Receipt"
+                tooltipOptions={{ position: 'left' }}
             />
         );
     };
+
+    const renderReceiptDialog = () => (
+        <Dialog
+            visible={receiptDialog}
+            onHide={() => setReceiptDialog(false)}
+            header="Donation Receipt"
+            modal
+            className="receipt-dialog"
+            maximizable
+            draggable={false}
+            resizable={false}
+        >
+            <div className="receipt-container">
+                {selectedReceipt && (
+                    <>
+                        <iframe
+                            src={selectedReceipt}
+                            title="Receipt Preview"
+                            allowFullScreen
+                        />
+                        <div className="receipt-actions">
+                            <Button
+                                label="Open in New Tab"
+                                icon="pi pi-external-link"
+                                onClick={() => window.open(selectedReceipt, '_blank')}
+                                className="p-button-secondary"
+                            />
+                            <Button
+                                label="Download"
+                                icon="pi pi-download"
+                                onClick={() => window.open(selectedReceipt, '_blank', 'download')}
+                                className="p-button-primary"
+                            />
+                        </div>
+                    </>
+                )}
+            </div>
+        </Dialog>
+    );
+
+    const renderBulkDeleteDialog = () => (
+        <Dialog
+            visible={bulkDeleteDialog}
+            onHide={() => setBulkDeleteDialog(false)}
+            header="Confirm Bulk Delete"
+            modal
+            footer={
+                <div>
+                    <Button
+                        label="Cancel"
+                        icon="pi pi-times"
+                        onClick={() => setBulkDeleteDialog(false)}
+                        className="p-button-text"
+                    />
+                    <Button
+                        label="Delete All"
+                        icon="pi pi-trash"
+                        onClick={handleBulkDelete}
+                        loading={bulkDeleting}
+                        className="p-button-danger"
+                        autoFocus
+                    />
+                </div>
+            }
+        >
+            <p>Are you sure you want to delete {selectedDonations.length} donations?</p>
+            <div className="p-fluid mt-3">
+                <div className="p-field">
+                    <label htmlFor="bulkDeleteReason">Reason (Optional)</label>
+                    <InputText
+                        id="bulkDeleteReason"
+                        value={bulkDeleteReason}
+                        onChange={(e) => setBulkDeleteReason(e.target.value)}
+                        className="w-full"
+                    />
+                </div>
+            </div>
+        </Dialog>
+    );
+
 
     const verifiedBodyTemplate = (rowData) => {
         if (!rowData?.rejected) {
@@ -362,6 +487,8 @@ const DonationsTable = () => {
             <div className="admin-table-card">
                 <DataTable
                     value={donations}
+                    selection={selectedDonations}
+                    onSelectionChange={(e) => setSelectedDonations(e.value)}
                     paginator
                     rows={10}
                     dataKey="id"
@@ -374,18 +501,32 @@ const DonationsTable = () => {
                     header={
                         <div className="admin-table-header">
                             <h2>All Donations</h2>
-                            <InputText
-                                placeholder="Global Search..."
-                                onInput={(e) =>
-                                    setFilters({
-                                        ...filters,
-                                        global: { value: e.target.value, matchMode: FilterMatchMode.CONTAINS }
-                                    })
-                                }
-                            />
+                            <div className="header-actions">
+                                {selectedDonations.length > 0 && (
+                                    <Button
+                                        icon="pi pi-trash"
+                                        className="p-button-danger mr-2"
+                                        onClick={() => setBulkDeleteDialog(true)}
+                                        label={`Delete Selected (${selectedDonations.length})`}
+                                    />
+                                )}
+                                <InputText
+                                    placeholder="Global Search..."
+                                    onInput={(e) =>
+                                        setFilters({
+                                            ...filters,
+                                            global: { value: e.target.value, matchMode: FilterMatchMode.CONTAINS }
+                                        })
+                                    }
+                                />
+                            </div>
                         </div>
                     }
                 >
+                    <Column
+                        selectionMode="multiple"
+                        headerStyle={{ width: '3rem' }}
+                    />
                     <Column
                         field="name"
                         header="Name"
@@ -463,6 +604,8 @@ const DonationsTable = () => {
             </div >
             {renderUserDialog()}
             {renderRejectDialog()}
+            {renderReceiptDialog()}
+            {renderBulkDeleteDialog()}
         </>
     );
 };

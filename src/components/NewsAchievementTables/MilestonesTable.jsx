@@ -27,7 +27,12 @@ export const MilestonesTable = ({ milestones, loading, onRefetch }) => {
     const handleDelete = async () => {
         setDeleting(true);
         try {
-            await axios.delete(`${API_URL}/news/milestone/${selectedMilestone.id}`);
+            await axios.delete(
+                `${API_URL}/news/delete/milestone/${selectedMilestone.id}`,
+                {
+                    headers: { Authorization: `Bearer ${localStorage.token}` }
+                }
+            );
             onRefetch();
             toast.current.show({
                 severity: 'success',
@@ -59,6 +64,7 @@ export const MilestonesTable = ({ milestones, loading, onRefetch }) => {
                 setDeleteDialog(true);
             }}
             tooltip="Delete Milestone"
+            tooltipOptions={{ position: 'left' }}
         />
     );
 

@@ -281,6 +281,42 @@
     justify-content: center !important;
 }
 
+.receipt-dialog {
+    width: 95vw !important;
+    max-width: 1200px !important;
+    height: 90vh !important;
+}
+
+.receipt-dialog .p-dialog-content {
+    height: calc(90vh - 120px) !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+.receipt-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.receipt-container iframe {
+    flex: 1;
+    width: 100%;
+    height: calc(100% - 60px) !important;
+    border: none;
+}
+
+.receipt-actions {
+    height: 60px;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    border-top: 1px solid #f0f0f0;
+    background: #fff;
+}
+
 /* Responsive Design */
 @media screen and (max-width: 992px) {
     .admin-dashboard-container {
@@ -314,6 +350,23 @@
     .admin-donations-table .p-datatable-tbody > tr > td {
         padding: 0.75rem;
     }
+
+    .receipt-dialog {
+        width: 100vw !important;
+        height: 100vh !important;
+        margin: 0;
+        max-height: none !important;
+    }
+
+    .receipt-dialog .p-dialog-content {
+        height: calc(100vh - 120px) !important;
+    }
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 }
 
 @media screen and (max-width: 480px) {
@@ -323,5 +376,14 @@
 
     .admin-user-details p {
         font-size: 1rem;
+    }
+    .header-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .header-actions .p-button,
+    .header-actions .p-inputtext {
+        width: 100%;
     }
 }

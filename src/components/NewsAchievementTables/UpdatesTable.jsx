@@ -26,7 +26,12 @@ export const UpdatesTable = ({ updates, loading, onRefetch }) => {
     const handleDelete = async () => {
         setDeleting(true);
         try {
-            await axios.delete(`${API_URL}/news/update/${selectedUpdate.id}`);
+            await axios.delete(
+                `${API_URL}/news/delete/update/${selectedUpdate.id}`,
+                {
+                    headers: { Authorization: `Bearer ${localStorage.token}` }
+                }
+            );
             onRefetch();
             toast.current.show({
                 severity: 'success',
@@ -62,6 +67,7 @@ export const UpdatesTable = ({ updates, loading, onRefetch }) => {
                 setDeleteDialog(true);
             }}
             tooltip="Delete Update"
+            tooltipOptions={{ position: 'left' }}
         />
     );
 

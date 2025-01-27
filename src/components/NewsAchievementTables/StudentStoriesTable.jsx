@@ -26,7 +26,12 @@ export const StudentStoriesTable = ({ stories, loading, onRefetch }) => {
     const handleDelete = async () => {
         setDeleting(true);
         try {
-            await axios.delete(`${API_URL}/news/student-story/${selectedStory.id}`);
+            await axios.delete(
+                `${API_URL}/news/delete/story/${selectedStory.id}`,
+                {
+                    headers: { Authorization: `Bearer ${localStorage.token}` }
+                }
+            );
             onRefetch()
             toast.current.show({
                 severity: 'success',
@@ -62,6 +67,7 @@ export const StudentStoriesTable = ({ stories, loading, onRefetch }) => {
                 setDeleteDialog(true);
             }}
             tooltip="Delete Story"
+            tooltipOptions={{ position: 'left' }}
         />
     );
 

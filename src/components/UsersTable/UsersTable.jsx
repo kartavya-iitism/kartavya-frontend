@@ -12,6 +12,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { API_URL } from '../../config';
 import axios from 'axios';
 import './UsersTable.css';
+import { InputTextarea } from 'primereact/inputtextarea';
 
 const UsersTable = () => {
     const [users, setUsers] = useState([]);
@@ -28,7 +29,10 @@ const UsersTable = () => {
     const [selectedDemoteUser, setSelectedDemoteUser] = useState(null);
     const [deleting, setDeleting] = useState(false);
     const [demoting, setDemoting] = useState(false);
-
+    const [selectedUsers, setSelectedUsers] = useState([]);
+    const [emailDialog, setEmailDialog] = useState(false);
+    const [emailData, setEmailData] = useState({ subject: '', message: '' });
+    const [sending, setSending] = useState(false);
 
     const roleOptions = [
         { label: 'Admin', value: 'admin' },
@@ -38,6 +42,40 @@ const UsersTable = () => {
         { label: 'Verified', value: true },
         { label: 'Pending', value: false }
     ];
+
+
+    const handleSendEmail = async (users) => {
+        setSending(true);
+        try {
+            const emails = Array.isArray(users) ? users.map(u => u.email) : [users.email];
+            await axios.post(`${API_URL}/user/send-mails`, {
+                users: emails,
+                subject: emailData.subject,
+                message: emailData.message
+            }, {
+                headers: { Authorization: `Bearer ${localStorage.token}` }
+            });
+
+            toast.current.show({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Email sent successfully',
+                life: 3000
+            });
+        } catch (error) {
+            console.log(error)
+            toast.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to send email',
+                life: 3000
+            });
+        } finally {
+            setSending(false);
+            setEmailDialog(false);
+            setEmailData({ subject: '', message: '' });
+        }
+    };
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -55,16 +93,25 @@ const UsersTable = () => {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${API_URL}/user/getAllUsers`);
-            const processedUsers = response.data.map(user => ({
+            const response = await axios.get(`${API_URL}/user/getAllUsers`, {
+                headers: { Authorization: `Bearer ${localStorage.token}` }
+            });
+
+            // Handle different response structures
+            const users = Array.isArray(response.data) ? response.data :
+                Array.isArray(response.data.users) ? response.data.users : [];
+
+            const processedUsers = users.map(user => ({
                 ...user,
                 id: user._id,
                 dateOfRegistration: new Date(user.dateOfRegistration),
                 dateOfBirth: user.dateOfBirth ? new Date(user.dateOfBirth) : null
             }));
+
             setUsers(processedUsers);
         } catch (error) {
             console.error('Fetch error:', error);
+            console.log('Response structure:', error.response?.data);
             toast.current?.show({
                 severity: 'error',
                 summary: 'Error',
@@ -192,6 +239,16 @@ const UsersTable = () => {
                         tooltip="Delete User"
                         tooltipOptions={{ position: 'left' }}
                     />
+                    <Button
+                        icon="pi pi-envelope"
+                        className="p-button-rounded p-button-success p-button-text"
+                        onClick={() => {
+                            setSelectedUsers([rowData]);
+                            setEmailDialog(true);
+                        }}
+                        tooltip="Send Email"
+                        tooltipOptions={{ position: 'left' }}
+                    />
                 </div>
             );
         }
@@ -217,9 +274,63 @@ const UsersTable = () => {
                     tooltip="Delete User"
                     tooltipOptions={{ position: 'left' }}
                 />
+                <Button
+                    icon="pi pi-envelope"
+                    className="p-button-rounded p-button-success p-button-text"
+                    onClick={() => {
+                        setSelectedUsers([rowData]);
+                        setEmailDialog(true);
+                    }}
+                    tooltip="Send Email"
+                    tooltipOptions={{ position: 'left' }}
+                />
             </div>
         );
     };
+
+    const renderEmailDialog = () => (
+        <Dialog
+            visible={emailDialog}
+            onHide={() => setEmailDialog(false)}
+            header="Send Email"
+            modal
+            className="email-dialog"
+            footer={
+                <div>
+                    <Button
+                        label="Cancel"
+                        icon="pi pi-times"
+                        onClick={() => setEmailDialog(false)}
+                        className="p-button-text"
+                    />
+                    <Button
+                        label="Send"
+                        icon="pi pi-send"
+                        onClick={() => handleSendEmail(selectedUsers)}
+                        loading={sending}
+                        className="p-button-success"
+                        autoFocus
+                    />
+                </div>
+            }
+        >
+            <div className="email-form">
+                <InputText
+                    placeholder="Subject"
+                    value={emailData.subject}
+                    onChange={(e) => setEmailData(prev => ({ ...prev, subject: e.target.value }))}
+                    className="w-full mb-3"
+                />
+                <InputTextarea
+                    placeholder="Message"
+                    value={emailData.message}
+                    onChange={(e) => setEmailData(prev => ({ ...prev, message: e.target.value }))}
+                    rows={5}
+                    className="w-full"
+                />
+            </div>
+        </Dialog>
+    );
 
     const handleViewDetails = (user) => {
         setSelectedUser(user);
@@ -443,6 +554,8 @@ const UsersTable = () => {
             <div className="admin-table-card">
                 <DataTable
                     value={users}
+                    selection={selectedUsers}
+                    onSelectionChange={(e) => setSelectedUsers(e.value)}
                     paginator
                     rows={10}
                     dataKey="id"
@@ -455,18 +568,32 @@ const UsersTable = () => {
                     header={
                         <div className="admin-table-header">
                             <h2>All Users</h2>
-                            <InputText
-                                placeholder="Global Search..."
-                                onInput={(e) =>
-                                    setFilters({
-                                        ...filters,
-                                        global: { value: e.target.value, matchMode: FilterMatchMode.CONTAINS }
-                                    })
-                                }
-                            />
+                            <div className="header-actions">
+                                {selectedUsers.length > 0 && (
+                                    <Button
+                                        icon="pi pi-envelope"
+                                        className="p-button-success mr-2"
+                                        onClick={() => setEmailDialog(true)}
+                                        label={`Send Email (${selectedUsers.length})`}
+                                    />
+                                )}
+                                <InputText
+                                    placeholder="Global Search..."
+                                    onInput={(e) =>
+                                        setFilters({
+                                            ...filters,
+                                            global: { value: e.target.value, matchMode: FilterMatchMode.CONTAINS }
+                                        })
+                                    }
+                                />
+                            </div>
                         </div>
                     }
                 >
+                    <Column
+                        selectionMode="multiple"
+                        headerStyle={{ width: '3rem' }}
+                    />
                     <Column
                         field="name"
                         header="Name"
@@ -539,6 +666,7 @@ const UsersTable = () => {
             {renderPromoteDialog()}
             {renderDeleteDialog()}
             {renderDemoteDialog()}
+            {renderEmailDialog()}
         </>
     );
 };

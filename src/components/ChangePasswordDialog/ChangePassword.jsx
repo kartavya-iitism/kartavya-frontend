@@ -88,7 +88,7 @@ const ChangePasswordDialog = ({ open, onClose, username }) => {
                         Change Password
                     </DialogTitle>
                     <DialogContent className="dialog-content">
-                        <Box className="form-container">
+                        <Box className="form-container change-password-form">
                             <TextField
                                 label="Current Password"
                                 type="password"
@@ -107,6 +107,7 @@ const ChangePasswordDialog = ({ open, onClose, username }) => {
                                 onChange={(e) => setNewPassword(e.target.value)}
                                 className="password-field"
                                 variant="outlined"
+                                style={{ marginTop: '20px' }}
                             />
                             <TextField
                                 label="Confirm New Password"
@@ -116,6 +117,7 @@ const ChangePasswordDialog = ({ open, onClose, username }) => {
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 className="password-field"
                                 variant="outlined"
+                                style={{ marginTop: '20px' }}
                             />
                             {error && (
                                 <Typography className="error-text">
