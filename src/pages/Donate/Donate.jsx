@@ -3,7 +3,6 @@ import {
     Box, Paper, Typography, Card, CardContent, TextField, Button,
     CircularProgress, Alert
 } from '@mui/material';
-import QRCode from '../../assets/qrcode.png';
 import axios from 'axios';
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
 import DateField from '../../components/DateField/DateField';
@@ -35,6 +34,10 @@ export default function DonationForm() {
     const [errorMessage, setErrorMessage] = useState('');
     const [fileName, setFileName] = useState('');
     const today = new Date().toISOString().split('T')[0];
+    const DONATION_LIMITS = {
+        LOGGED_IN: 500000,
+        GUEST: 5000
+    };
 
     useEffect(() => {
         const loadContent = async () => {
@@ -113,10 +116,17 @@ export default function DonationForm() {
         setSuccess(false);
         setError(false);
 
-        if (Number(formData.amount) > 5000) {
+        if (!localStorage.token && Number(formData.amount) > DONATION_LIMITS.GUEST) {
             setLoading(false);
             setError(true);
-            setErrorMessage(content.messages.error.largeAmount);
+            setErrorMessage('Guest users can only donate up to ₹5,000. Please login to donate more.');
+            return;
+        }
+
+        if (localStorage.token && Number(formData.amount) > DONATION_LIMITS.LOGGED_IN) {
+            setLoading(false);
+            setError(true);
+            setErrorMessage('Maximum donation amount is ₹5,00,000.');
             return;
         }
 
