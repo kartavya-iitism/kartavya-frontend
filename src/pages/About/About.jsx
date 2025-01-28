@@ -42,6 +42,21 @@ const About = () => {
     const [selectedForDelete, setSelectedForDelete] = useState(null);
     const [deleting, setDeleting] = useState(false);
 
+    const formatDate = (dateString) => {
+        try {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            });
+        } catch (err) {
+            console.log(err)
+            console.error('Invalid date format:', dateString);
+            return dateString;
+        }
+    };
+
     useEffect(() => {
         const loadContent = async () => {
             try {
@@ -252,7 +267,7 @@ const About = () => {
                                                 <div className="media-metadata">
                                                     <CalendarTodayIcon fontSize="small" />
                                                     <Typography variant="body2" className="media-date">
-                                                        {photo.date}
+                                                        {formatDate(photo.date)}
                                                     </Typography>
                                                 </div>
                                                 <div className="tags-container">
