@@ -25,7 +25,6 @@ import GoogleCallback from "./components/GoogleCallBack/GoogleCallBack";
 import { AuthProvider } from './helper/AuthContext';
 import NewsAchievements from "./pages/NewsAchievement/NewsAchievement";
 import ManageNewsAchievements from "./pages/admin/ManageNewsAchievements/ManageNewsAchievements";
-import Media from "./pages/Media/Media";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 const routes = {
@@ -40,7 +39,6 @@ const routes = {
     { path: "/contact", element: <Contact />, title: "Contact Us | Kartavya" },
     { path: "/faqs", element: <FAQ />, title: "FAQs | Kartavya" },
     { path: "/news", element: <NewsAchievements />, title: "News & Achievements | Kartavya" },
-    { path: "/media", element: <Media />, title: "Media Gallery | Kartavya" },
     { path: "/reset-password/:token", element: <ResetPassword />, title: "Reset Password | Kartavya" },
     { path: "/auth/callback", element: <GoogleCallback />, title: "Authentication | Kartavya" },
   ],

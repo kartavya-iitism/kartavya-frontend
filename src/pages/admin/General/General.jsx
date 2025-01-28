@@ -4,25 +4,29 @@ import {
     Add as AddIcon,
     Dashboard as DashboardIcon,
     ManageAccounts as ManageIcon,
-    Home as HomeIcon
+    Home as HomeIcon,
+    Image as ImageIcon
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import AddDocuments from '../../../components/AddDocuments/AddDocuments';
 import AddNewsAchievements from '../../../components/AddNewsAchievements/AddNewsAchievements';
+import AddMedia from '../../../components/AddMedia/AddMedia';
 import './General.css';
 
 const General = () => {
     const [openDocDialog, setOpenDocDialog] = useState(false);
     const [openNewsDialog, setOpenNewsDialog] = useState(false);
+    const [openMediaDialog, setOpenMediaDialog] = useState(false);
 
     return (
+
         <Box className="general-container">
             <Container maxWidth="lg">
                 <Typography variant="h2" className="page-title">
                     General Settings
                 </Typography>
                 <Typography variant="h5" className="page-subtitle">
-                    Manage Documents & News
+                    Manage Documents, News & Media
                 </Typography>
 
                 <Stack
@@ -32,13 +36,21 @@ const General = () => {
                 >
                     <Button
                         variant="contained"
+                        onClick={() => setOpenMediaDialog(true)}
+                        className="action-button"
+                        startIcon={<ImageIcon />}
+                    >
+                        Add Media
+                    </Button>
+
+                    <Button
+                        variant="contained"
                         onClick={() => setOpenDocDialog(true)}
                         className="action-button"
                         startIcon={<AddIcon />}
                     >
                         Add New Document
                     </Button>
-
                     <Button
                         variant="contained"
                         onClick={() => setOpenNewsDialog(true)}
@@ -79,6 +91,10 @@ const General = () => {
                     </Button>
                 </Stack>
 
+                <AddMedia
+                    open={openMediaDialog}
+                    onClose={() => setOpenMediaDialog(false)}
+                />
                 <AddDocuments
                     open={openDocDialog}
                     onClose={() => setOpenDocDialog(false)}
@@ -89,6 +105,7 @@ const General = () => {
                 />
             </Container>
         </Box>
+
     );
 };
 
