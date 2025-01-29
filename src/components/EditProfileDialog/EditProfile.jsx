@@ -8,14 +8,15 @@ import {
     DialogContent,
     DialogTitle,
     TextField,
-    Typography,
     Button,
     Box,
     FormControlLabel,
     FormControl,
     FormLabel,
     RadioGroup,
-    Radio
+    Radio,
+    Alert,
+    CircularProgress
 } from '@mui/material';
 import { API_URL } from '../../config';
 import axios from 'axios';
@@ -39,6 +40,7 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
     });
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -51,10 +53,8 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
     const handleUpdateProfile = async () => {
         setError('');
         setSuccess(false);
+        setLoading(true);
         try {
-            console.log(formData)
-            console.log(username)
-            console.log(initialData)
             const response = await axios.put(
                 `${API_URL}/user/${username}/edit`,
                 formData,
@@ -72,7 +72,9 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                 }, 1500);
             }
         } catch (err) {
-            setError(err.response?.data?.message || 'An error occurred');
+            setError(err.response?.data?.message || 'An error occurred while updating profile');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -303,9 +305,13 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                             )}
 
                             {error && (
-                                <Typography className="error-text">
+                                <Alert
+                                    severity="error"
+                                    className="error-alert"
+                                    sx={{ mb: 2 }}
+                                >
                                     {error}
-                                </Typography>
+                                </Alert>
                             )}
                         </Box>
                     </DialogContent>
@@ -316,9 +322,14 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                         <Button
                             onClick={handleUpdateProfile}
                             variant="contained"
-                            className="save-button"
+                            className="submit-button"
+                            disabled={loading}
                         >
-                            Save Changes
+                            {loading ? (
+                                <>
+                                    <CircularProgress size={24} color="inherit" sx={{ mr: 1 }} />
+                                </>
+                            ) : 'Save Changes'}
                         </Button>
                     </DialogActions>
                 </>

@@ -277,7 +277,7 @@ const AddMedia = ({ open, onClose }) => {
                     className="submit-button"
                     disabled={loading}
                 >
-                    {loading ? <CircularProgress size={24} /> : 'Upload Media'}
+                    {loading ? <CircularProgress color='white' size={24} /> : 'Upload Media'}
                 </Button>
             </DialogActions>
         </Dialog>

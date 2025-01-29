@@ -6,9 +6,10 @@ import {
     DialogContent,
     DialogTitle,
     TextField,
-    Typography,
     Button,
     Box,
+    CircularProgress,
+    Alert
 } from '@mui/material';
 import { API_URL } from '../../config';
 import axios from 'axios';
@@ -19,14 +20,22 @@ const ChangePasswordDialog = ({ open, onClose, username }) => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
 
     const handleChangePassword = async () => {
         setError('');
         setSuccess(false)
+        setLoading(true)
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            setError('Please fill in all fields');
+            setLoading(false);
+            return;
+        }
         if (newPassword !== confirmPassword) {
-            setError('Passwords do not match!');
+            setError('New passwords do not match');
+            setLoading(false);
             return;
         }
         const data = {
@@ -46,12 +55,18 @@ const ChangePasswordDialog = ({ open, onClose, username }) => {
             );
             if (response.status === 200) {
                 setSuccess(true)
+                setLoading(false)
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
             }
         } catch (err) {
-            setError(err.response.data.message);
+            setLoading(false)
+            console.log(err)
+            setError(
+                err.response?.data?.message ||
+                'An error occurred while changing password. Please try again.'
+            );
         }
 
 
@@ -120,9 +135,13 @@ const ChangePasswordDialog = ({ open, onClose, username }) => {
                                 style={{ marginTop: '20px' }}
                             />
                             {error && (
-                                <Typography className="error-text">
+                                <Alert
+                                    severity="error"
+                                    className="error-alert"
+                                    sx={{ mb: 2 }}
+                                >
                                     {error}
-                                </Typography>
+                                </Alert>
                             )}
                         </Box>
                     </DialogContent>
@@ -136,10 +155,10 @@ const ChangePasswordDialog = ({ open, onClose, username }) => {
                         <Button
                             onClick={handleChangePassword}
                             variant="contained"
-                            disabled={!currentPassword || !newPassword || !confirmPassword}
-                            className="dialog-button"
+                            disabled={!currentPassword || !newPassword || !confirmPassword || loading}
+                            className="submit-button"
                         >
-                            Save Changes
+                            {loading ? <CircularProgress color='white' size={24} /> : 'Save Changes'}
                         </Button>
                     </DialogActions>
                 </>

@@ -181,7 +181,7 @@ const AddDocuments = ({ open, onClose }) => {
                     className="submit-button"
                     disabled={loading || !file}
                 >
-                    {loading ? <CircularProgress size={24} /> : 'Upload Document'}
+                    {loading ? <CircularProgress color='white' size={24} /> : 'Upload Document'}
                 </Button>
             </DialogActions>
         </Dialog>

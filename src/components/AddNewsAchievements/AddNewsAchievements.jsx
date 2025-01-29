@@ -335,7 +335,7 @@ const AddNewsAchievements = ({ open, onClose }) => {
                     className="submit-button"
                     disabled={loading || !formType}
                 >
-                    {loading ? <CircularProgress size={24} /> : 'Add Content'}
+                    {loading ? <CircularProgress color='white' size={24} /> : 'Add Content'}
                 </Button>
             </DialogActions>
         </Dialog>

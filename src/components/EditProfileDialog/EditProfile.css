@@ -121,6 +121,26 @@
     gap: 1.5rem;
 }
 
+.error-alert {
+    margin-bottom: 16px !important;
+    border-radius: 8px !important;
+    font-family: "Poppins", sans-serif !important;
+    font-size: 0.875rem !important;
+}
+
+.error-alert .MuiAlert-message {
+    padding: 8px 0 !important;
+}
+
+.error-alert .MuiAlert-icon {
+    color: #f44336 !important;
+}
+
+.submit-button {
+    position: relative !important;
+    min-width: 120px !important;
+}
+
 @media screen and (max-width: 768px) {
     .form-container {
         grid-template-columns: 1fr;
