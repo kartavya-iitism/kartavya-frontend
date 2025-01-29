@@ -7,6 +7,7 @@ import { LocationOn, Email, Phone } from '@mui/icons-material';
 import axios from 'axios';
 import { fetchContent } from '../../helper/contentFetcher';
 import './Contact.css';
+import { API_URL } from '../../config';
 
 const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/contact.json";
 
@@ -19,6 +20,7 @@ const Contact = () => {
     });
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
         const loadContent = async () => {
@@ -46,7 +48,7 @@ const Contact = () => {
         </Box>
     );
 
-    const { hero, contactInfo, form, map, alerts, api } = content;
+    const { hero, contactInfo, form, map, alerts } = content;
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,15 +56,18 @@ const Contact = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSubmitting(true);
         try {
-            const response = await axios.post(api.endpoint, formData);
-            if (response.status === 200) {
+            const response = await axios.post(`${API_URL}/contact/submit`, formData);
+            if (response.status === 201) {
                 setSuccess(true);
                 setFormData({ name: '', email: '', subject: '', message: '' });
             }
         } catch (err) {
-            console.log(err)
+            console.log(err);
             setError(true);
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -127,14 +132,21 @@ const Contact = () => {
                                         multiline={field.type === 'textarea'}
                                         rows={field.rows}
                                         margin="normal"
+                                        disabled={submitting}
                                     />
                                 ))}
                                 <Button
                                     type="submit"
                                     variant="contained"
                                     className="submit-button"
+                                    disabled={submitting}
                                 >
-                                    {form.submitButton}
+                                    {submitting ? (
+                                        <>
+                                            <CircularProgress size={20} color="inherit" sx={{ mr: 1 }} />
+                                            Submitting...
+                                        </>
+                                    ) : form.submitButton}
                                 </Button>
                             </form>
                         </Paper>

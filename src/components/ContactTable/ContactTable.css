@@ -1,0 +1,179 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+    --admin-primary: #1a4d2e;
+    --admin-secondary: #437a1e;
+    --admin-accent: #86c540;
+    --admin-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Table Container */
+.admin-table-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px var(--admin-shadow);
+    padding: 1.5rem;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Table Header */
+.admin-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.admin-table-header h2 {
+    font-family: "Playfair Display", serif;
+    color: var(--admin-primary);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* DataTable Styles */
+.p-datatable .p-datatable-header {
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    background: var(--admin-primary);
+    color: white;
+    padding: 0.8rem 1rem;
+    line-height: 1.2;
+    font-weight: 500;
+    border: none;
+    font-family: "Poppins", sans-serif;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+    transition: background-color 0.3s ease;
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+    background: rgba(26, 77, 46, 0.05);
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.8rem 1.2rem;
+    line-height: 1.2;
+    border-color: #f0f0f0;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: inline-flex !important;
+    align-items: center !important;
+    height: 40px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.action-buttons .p-button-rounded {
+    width: 32px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    padding: 0 !important;
+    margin: 0 4px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Header Actions */
+.header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Dialog Styles */
+.p-dialog {
+    width: 90vw !important;
+    max-width: 500px !important;
+    margin: 0 auto;
+}
+
+.p-dialog .p-dialog-header {
+    padding: 1.5rem;
+    background: var(--admin-primary);
+    color: white;
+    font-family: "Playfair Display", serif;
+}
+
+.p-dialog .p-dialog-content {
+    padding: 1.5rem;
+    font-family: "Poppins", sans-serif;
+}
+
+.p-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 1.5rem;
+}
+
+/* Email Form */
+.email-dialog {
+    min-width: 400px;
+}
+
+.email-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.email-form .p-inputtext {
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+}
+
+.status-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+
+.p-tooltip {
+    max-width: 250px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .header-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .header-actions .p-button,
+    .header-actions .p-inputtext {
+        width: 100%;
+    }
+
+    .admin-table-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .admin-table-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .p-datatable .p-datatable-thead > tr > th,
+    .p-datatable .p-datatable-tbody > tr > td {
+        padding: 0.75rem;
+    }
+
+    .p-dialog {
+        min-width: 90vw;
+    }
+}

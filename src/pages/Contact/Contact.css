@@ -147,12 +147,19 @@
     text-transform: none !important;
     transition: all 0.3s ease !important;
     margin-top: 20px !important;
+    position: relative;
+    min-width: 120px;
 }
 
 .submit-button:hover {
     background-color: #437a1e !important;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button:disabled {
+    background-color: rgba(26, 77, 46, 0.7) !important;
+    cursor: not-allowed;
 }
 
 @media screen and (max-width: 768px) {
