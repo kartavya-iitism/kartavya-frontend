@@ -18,6 +18,7 @@ import {
     TableRow,
     Link
 } from '@mui/material';
+import OtpDialog from '../../../components/OtpDialog/OtpDialog';
 import { API_URL } from '../../../config';
 import ChangePasswordDialog from '../../../components/ChangePasswordDialog/ChangePassword'
 import EditProfileDialog from '../../../components/EditProfileDialog/EditProfile';
@@ -30,6 +31,7 @@ export default function Profile() {
     const [errorMessage, setErrorMessage] = useState('');
     const [dialogOpen, setDialogOpen] = useState(false);
     const [editProfileDialogOpen, setEditProfileDialogOpen] = useState(false);
+    const [initialLoad, setInitialLoad] = useState(true);
 
     const handleOpenDialog = () => {
         setDialogOpen(true);
@@ -58,7 +60,7 @@ export default function Profile() {
             year: 'numeric',
         }).format(date);
     };
-
+    const [showOtpDialog, setShowOtpDialog] = useState(false);
     useEffect(() => {
         setLoading(true);
         if (!AuthVerify(token)) navigate('/login');
@@ -69,15 +71,23 @@ export default function Profile() {
                 setUser(res.data)
                 console.log(res.data)
                 setLoading(false)
+                setInitialLoad(false);
             })
             .catch((err) => {
                 console.error(err)
                 setError(true)
                 setLoading(false)
                 setErrorMessage(err.message)
+                setInitialLoad(false);
             });
         //
     }, [])
+
+    useEffect(() => {
+        if (!initialLoad && !loading && user?.username) {
+            setShowOtpDialog(!user.isVerified);
+        }
+    }, [user, initialLoad, loading]);
 
     return (
         <Box className="profile-container">
@@ -319,6 +329,16 @@ export default function Profile() {
                 />
 
             </Box>
+            <OtpDialog
+                open={showOtpDialog && !loading && !initialLoad && user?.username && !user.isVerified}
+                onClose={() => user?.isVerified && setShowOtpDialog(false)}
+                username={user?.username}
+                onSuccess={() => {
+                    setUser({ ...user, isVerified: true });
+                    setShowOtpDialog(false);
+                }}
+                forceVerification={true}
+            />
         </Box>
     );
 }

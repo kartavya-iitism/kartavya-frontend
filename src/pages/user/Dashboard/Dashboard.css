@@ -211,6 +211,21 @@
     margin-bottom: 1.5rem !important;
 }
 
+.error-alert {
+    margin-bottom: 16px !important;
+    border-radius: 8px !important;
+    font-family: "Poppins", sans-serif !important;
+    font-size: 0.875rem !important;
+}
+
+.error-alert .MuiAlert-message {
+    padding: 8px 0 !important;
+}
+
+.error-alert .MuiAlert-icon {
+    color: #f44336 !important;
+}
+
 .donation-details-dialog .donation-info {
     background: #f8f9fa;
     padding: 1.5rem;

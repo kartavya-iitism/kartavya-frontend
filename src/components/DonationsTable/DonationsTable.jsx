@@ -93,7 +93,14 @@ const DonationsTable = () => {
     const fetchDonations = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${API_URL}/donation/viewAllDonation`);
+            const response = await axios.get(`${API_URL}/donation/viewAllDonation`,
+                {
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            );
             const donations = Array.isArray(response.data) ? response.data :
                 Array.isArray(response.data.donations) ? response.data.donations : [];
 

@@ -12,10 +12,6 @@ import {
     Radio,
     FormControlLabel,
     Button,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
     Typography,
     CircularProgress
 } from '@mui/material';
@@ -26,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DateField from '../../components/DateField/DateField';
 import './Registration.css';
+import OtpDialog from '../../components/OtpDialog/OtpDialog';
 
 export default function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -46,11 +43,9 @@ export default function RegisterForm() {
         yearsOfServiceStart: "",
         yearsOfServiceEnd: ""
     });
-    const [otpEmail, setOtpEmail] = useState("");
     const [profilePicture, setProfilePicture] = useState();
     const [success, setSuccess] = useState(false);
     const [otpDialogOpen, setOtpDialogOpen] = useState(false);
-    const [otpSuccess, setOtpSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
@@ -107,36 +102,8 @@ export default function RegisterForm() {
         }
     };
 
-    const handleOtpSubmit = async () => {
-        setLoading(true);
-        setOtpSuccess(false);
-        setError(false);
-        const data = {
-            username: formData.username,
-            otpEmail: otpEmail
-        };
-        try {
-            const response = await axios.post(
-                `${API_URL}/user/verify`,
-                data,
-                { headers: { "Content-type": "application/json; charset=UTF-8" } }
-            );
-            if (response.status === 200) {
-                setOtpSuccess(true);
-                setLoading(false);
-                setTimeout(() => {
-                    navigate('/login');
-                }, 1000);
-            }
-        } catch (err) {
-            setLoading(false);
-            setError(true);
-            setErrorMessage(err.response ? err.response.data.error : "Verification failed");
-        }
-    };
     const handleOtpDialogClose = () => {
         setOtpDialogOpen(false);
-        setOtpEmail("");
     };
 
     useEffect(() => {
@@ -384,81 +351,12 @@ export default function RegisterForm() {
                     </p>
                 </div>
 
-                <Dialog
+                <OtpDialog
                     open={otpDialogOpen}
                     onClose={handleOtpDialogClose}
-                    className="otp-dialog"
-                >
-                    <DialogTitle>
-                        Verify Your Email
-                    </DialogTitle>
-                    <DialogContent>
-                        {!otpSuccess ? (
-                            <>
-                                <Typography variant="body1" sx={{ mb: 3, textAlign: 'center' }}>
-                                    Please enter the OTP sent to your email address
-                                </Typography>
-                                <TextField
-                                    required
-                                    className="custom-textfield"
-                                    label="Enter OTP"
-                                    name="otpEmail"
-                                    value={otpEmail}
-                                    onChange={(e) => setOtpEmail(e.target.value)}
-                                    fullWidth
-                                    autoFocus
-                                    placeholder="Enter 6-digit OTP"
-                                />
-                            </>
-                        ) : (
-                            <Typography variant="body1"
-                                sx={{
-                                    mb: 3,
-                                    textAlign: 'center',
-                                    color: 'var(--admin-success)'
-                                }}
-                            >
-                                Email verified successfully! Redirecting to login...
-                            </Typography>
-                        )}
-                        {error && (
-                            <Typography variant="body2"
-                                sx={{
-                                    color: '#dc3545',
-                                    textAlign: 'center',
-                                    mt: 2
-                                }}
-                            >
-                                {errorMessage}
-                            </Typography>
-                        )}
-                    </DialogContent>
-                    <DialogActions>
-                        <Button
-                            onClick={handleOtpDialogClose}
-                            className="cancel-button"
-                            disabled={otpSuccess}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            onClick={handleOtpSubmit}
-                            className={`dialog-button ${otpSuccess ? 'success' : ''}`}
-                            disabled={loading || otpSuccess}
-                        >
-                            {loading ? (
-                                <>
-                                    <span className="button-text">Verify OTP</span>
-                                    <CircularProgress size={20} className="button-loader" />
-                                </>
-                            ) : otpSuccess ? (
-                                'Verified ✓'
-                            ) : (
-                                'Verify OTP'
-                            )}
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                    username={formData.username}
+                    redirectUrl="/login"
+                />
             </Box>
         </div>
     );

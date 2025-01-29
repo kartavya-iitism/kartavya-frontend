@@ -70,7 +70,12 @@ export default function LoginForm() {
                 setSuccess(true);
                 console.log(response.data)
                 if (response.data.user.role !== "admin") {
-                    navigate('/user/dash');
+                    if (response.data.user.isVerified) {
+                        navigate('/user/dash');
+                    }
+                    else {
+                        navigate('/user/profile');
+                    }
                 }
                 else {
                     navigate('/admin/general')

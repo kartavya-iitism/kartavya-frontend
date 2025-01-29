@@ -1,0 +1,20 @@
+.success-message {
+    color: var(--admin-success);
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.error-message {
+    color: #dc3545;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.submit-button {
+    background-color: var(--admin-primary) !important;
+    color: white !important;
+}
+
+.submit-button:disabled {
+    background-color: rgba(26, 77, 46, 0.7) !important;
+}
