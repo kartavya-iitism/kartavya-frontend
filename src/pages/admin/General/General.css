@@ -1,70 +1,182 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap");
 
-.general-container {
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
-    padding: 40px 0;
-    min-height: 90vh;
+:root {
+    --admin-primary: #1a4d2e;
+    --admin-secondary: #437a1e;
+    --admin-accent: #86c540;
+    --admin-shadow: rgba(0, 0, 0, 0.1);
 }
 
+.general-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    min-height: 100vh;
+    padding: 40px 0;
+}
+
+/* Section Spacing */
+.header-section {
+    margin-bottom: 40px;
+}
+
+.action-section {
+    margin-bottom: 60px;
+}
+
+.content-section {
+    margin-bottom: 40px;
+}
+
+/* Typography */
 .page-title {
     font-family: "Playfair Display", serif !important;
-    color: var(--color-primary) !important;
+    color: var(--admin-primary) !important;
     font-size: 3.5rem !important;
     font-weight: 700 !important;
     text-align: center;
-    margin-bottom: 30px !important;
-    position: relative;
-    animation: fadeIn 0.5s ease;
-}
-
-.page-title::after {
-    content: "";
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 4px;
-    background: linear-gradient(
-        90deg,
-        var(--color-accent),
-        var(--color-secondary)
-    );
+    margin-bottom: 20px !important;
 }
 
 .page-subtitle {
     font-family: "Poppins", sans-serif !important;
-    color: var(--color-secondary) !important;
+    color: var(--admin-secondary) !important;
     font-size: 1.8rem !important;
     font-weight: 500 !important;
     text-align: center;
-    margin-bottom: 50px !important;
-    animation: fadeIn 0.5s ease;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.section-title {
+    font-family: "Playfair Display", serif !important;
+    color: var(--admin-primary) !important;
+    font-size: 1.8rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 25px !important;
+    padding-bottom: 15px !important;
+    border-bottom: 2px solid #eee !important;
 }
 
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Add these updated styles */
+.action-buttons-gen {
+    /* margin-bottom: 80px !important; */
+    position: relative !important;
+    z-index: 1 !important;
 }
 
+.action-section {
+    margin-top: 40px !important;
+    position: relative !important;
+    z-index: 0 !important;
+}
+
+.stats-paper,
+.actions-paper {
+    margin-top: 20px !important;
+    position: relative !important;
+}
+
+/* Update container padding */
+.general-container {
+    padding: 40px 20px !important;
+}
+
+/* Ensure proper stacking */
+.MuiContainer-root {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Action Buttons */
+.action-button {
+    background-color: var(--admin-primary) !important;
+    color: white !important;
+    padding: 15px 25px !important;
+    border-radius: 10px !important;
+    font-family: "Poppins", sans-serif !important;
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px var(--admin-shadow) !important;
+}
+
+.action-button:hover {
+    background-color: var(--admin-secondary) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--admin-shadow) !important;
+}
+
+/* Stats Section */
+.stats-paper,
+.actions-paper {
+    padding: 30px !important;
+    border-radius: 15px !important;
+    height: 100% !important;
+    background: white !important;
+    border-top: 5px solid var(--admin-primary) !important;
+}
+
+.stat-card {
+    padding: 25px !important;
+    text-align: center !important;
+    border-radius: 12px !important;
+    background: #f8f9fa !important;
+    transition: all 0.3s ease !important;
+    height: 100% !important;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px var(--admin-shadow) !important;
+}
+
+.stat-icon {
+    color: var(--admin-primary) !important;
+    margin-bottom: 15px !important;
+}
+
+.stat-icon svg {
+    font-size: 2.5rem !important;
+}
+
+.stat-card .MuiTypography-h4 {
+    color: var(--admin-primary) !important;
+    font-family: "Playfair Display", serif !important;
+    font-weight: 700 !important;
+    font-size: 2.2rem !important;
+    margin-bottom: 10px !important;
+}
+
+.stat-card .MuiTypography-body2 {
+    color: var(--admin-secondary) !important;
+    font-family: "Poppins", sans-serif !important;
+    font-size: 1rem !important;
+}
+
+/* Quick Actions */
+.actions-paper .MuiListItem-root {
+    padding: 15px !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    margin-bottom: 8px !important;
+}
+
+.actions-paper .MuiListItem-root:hover {
+    background-color: rgba(26, 77, 46, 0.04) !important;
+}
+
+.actions-paper .MuiListItemIcon-root {
+    color: var(--admin-primary) !important;
+}
+
+.actions-paper .MuiListItemText-primary {
+    font-family: "Poppins", sans-serif !important;
+    color: #4a4a4a !important;
+    font-size: 1.1rem !important;
+}
+
+/* Responsive Design */
 @media screen and (max-width: 768px) {
     .general-container {
-        padding: 60px 20px;
+        padding: 20px;
     }
 
     .page-title {
@@ -74,18 +186,26 @@
     .page-subtitle {
         font-size: 1.5rem !important;
     }
-}
 
-@media screen and (max-width: 480px) {
-    .general-container {
-        padding: 40px 15px;
+    .section-title {
+        font-size: 1.5rem !important;
     }
 
-    .page-title {
-        font-size: 2.2rem !important;
+    .action-button {
+        padding: 12px 20px !important;
+        font-size: 1rem !important;
     }
 
-    .page-subtitle {
-        font-size: 1.3rem !important;
+    .stats-paper,
+    .actions-paper {
+        padding: 20px !important;
+    }
+
+    .stat-card {
+        padding: 20px !important;
+    }
+
+    .stat-card .MuiTypography-h4 {
+        font-size: 1.8rem !important;
     }
 }

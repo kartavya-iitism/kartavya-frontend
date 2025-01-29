@@ -1,4 +1,3 @@
-// LoginForm.js
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -74,7 +73,7 @@ export default function LoginForm() {
                     navigate('/user/dash');
                 }
                 else {
-                    navigate('/admin/dash')
+                    navigate('/admin/general')
                 }
             } else {
                 setError(true);
@@ -90,7 +89,7 @@ export default function LoginForm() {
     const token = localStorage.getItem('token');
     useEffect(() => {
         setLoading(true);
-        if (AuthVerify(token)) navigate('/profile');
+        if (AuthVerify(token)) navigate('/user/profile');
         setLoading(false);
     }, []);
 

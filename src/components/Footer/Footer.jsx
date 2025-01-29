@@ -101,8 +101,8 @@ export default function Footer() {
                             </p>
                             <p>
                                 <span className="text-reset">
-                                    <Link to="/media" style={{ textDecoration: "none" }}>
-                                        Media
+                                    <Link to="/about" style={{ textDecoration: "none" }}>
+                                        About
                                     </Link>
                                 </span>
                             </p>
