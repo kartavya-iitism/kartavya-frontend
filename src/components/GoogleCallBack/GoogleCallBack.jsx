@@ -30,7 +30,7 @@ const GoogleCallback = () => {
                 const decodedToken = jwtDecode(token);
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(decodedToken));
-
+                localStorage.setItem('role', decodedToken.role);
                 await login(token);
 
                 if (mounted) {
