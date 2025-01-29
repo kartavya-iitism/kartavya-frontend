@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Typography, Alert } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Typography, Alert, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { API_URL } from '../../config';
@@ -44,29 +44,41 @@ const ForgotPasswordDialog = ({ open, onClose }) => {
                             fullWidth
                             autoFocus
                         />
+                        {error && (
+                            <Alert
+                                severity="error"
+                                className="error-alert"
+                            >
+                                {error}
+                            </Alert>
+                        )}
                     </>
                 ) : (
-                    <Typography variant="body1" sx={{ color: 'var(--admin-success)' }}>
+                    <Alert
+                        severity="success"
+                        className="success-alert"
+                        style={{ marginBottom: '1rem' }}
+                    >
                         Password reset instructions have been sent to your email.
-                    </Typography>
-                )}
-                {error && (
-                    <Alert severity="error" sx={{ mt: 2 }}>
-                        {error}
                     </Alert>
                 )}
             </DialogContent>
-            <DialogActions>
+            <DialogActions className="dialog-actions">
                 <Button onClick={onClose} className="cancel-button">
                     Cancel
                 </Button>
                 {!success && (
                     <Button
                         onClick={handleSubmit}
-                        className="dialog-button"
+                        variant="contained"
+                        className="submit-button"
                         disabled={loading || !email}
                     >
-                        {loading ? 'Sending...' : 'Send Reset Link'}
+                        {loading ? (
+                            <>
+                                <CircularProgress size={24} color="inherit" sx={{ mr: 1 }} />
+                            </>
+                        ) : 'Send Reset Link'}
                     </Button>
                 )}
             </DialogActions>

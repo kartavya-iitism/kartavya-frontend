@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button, CircularProgress } from '@mui/material';
 import PropTypes from 'prop-types';
 import './ConfirmDialog.css';
 
@@ -52,10 +52,15 @@ const ConfirmDialog = ({ open, onClose, onConfirm, formData, loading }) => {
                 <Button
                     onClick={onConfirm}
                     variant="contained"
-                    className="confirm-button"
+                    className="submit-button"
                     disabled={loading}
                 >
-                    {loading ? 'Processing...' : 'Confirm Donation'}
+                    {loading ? (
+                        <>
+                            <CircularProgress size={20} color="inherit" sx={{ mr: 1 }} />
+                            Sending...
+                        </>
+                    ) : 'Confirm Donation'}
                 </Button>
             </DialogActions>
         </Dialog>

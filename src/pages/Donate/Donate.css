@@ -484,13 +484,6 @@
         padding: 1rem !important;
         flex-direction: column;
     }
-
-    .confirm-dialog .confirm-button,
-    .confirm-dialog .cancel-button {
-        width: 100%;
-        padding: 0.8rem !important;
-        margin: 0px !important;
-    }
 }
 
 @media (max-width: 480px) {

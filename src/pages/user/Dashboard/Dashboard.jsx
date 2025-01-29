@@ -240,22 +240,22 @@ const Dashboard = () => {
                                             )}
                                         </div>
                                     </DialogContent>
-                                    <DialogActions>
-                                        {selectedDonation.recieptUrl && (
-                                            <Button
-                                                href={selectedDonation.recieptUrl}
-                                                target="_blank"
-                                                className="receipt-button dialog-button"
-                                            >
-                                                View Receipt
-                                            </Button>
-                                        )}
+                                    <DialogActions className="dialog-actions">
                                         <Button
                                             onClick={handleCloseDialog}
                                             className="cancel-button"
                                         >
                                             Close
                                         </Button>
+                                        {selectedDonation.recieptUrl && (
+                                            <Button
+                                                href={selectedDonation.recieptUrl}
+                                                target="_blank"
+                                                className="submit-button"
+                                            >
+                                                View Receipt
+                                            </Button>
+                                        )}
                                     </DialogActions>
                                 </>
                             )}
