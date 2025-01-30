@@ -30,6 +30,7 @@ const ContactTable = () => {
         name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         email: { value: null, matchMode: FilterMatchMode.CONTAINS },
         status: { value: null, matchMode: FilterMatchMode.EQUALS },
+        contactNumber: { value: null, matchMode: FilterMatchMode.CONTAINS },
         date: { value: null, matchMode: FilterMatchMode.DATE_IS }
     });
 
@@ -230,6 +231,13 @@ const ContactTable = () => {
                     <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
                     <Column field="name" header="Name" sortable filter />
                     <Column field="email" header="Email" sortable filter />
+                    <Column
+                        field="contactNumber"
+                        header="Contact"
+                        sortable
+                        filter
+                        body={(rowData) => rowData.contactNumber || '-'}
+                    />
                     <Column field="subject" header="Subject" sortable filter />
                     <Column field="message" header="Message" />
                     <Column

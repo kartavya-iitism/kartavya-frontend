@@ -16,7 +16,7 @@ const Contact = () => {
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState(null);
     const [formData, setFormData] = useState({
-        name: '', email: '', subject: '', message: ''
+        name: '', email: '', subject: '', message: '', contactNumber: ''
     });
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -61,7 +61,7 @@ const Contact = () => {
             const response = await axios.post(`${API_URL}/contact/submit`, formData);
             if (response.status === 201) {
                 setSuccess(true);
-                setFormData({ name: '', email: '', subject: '', message: '' });
+                setFormData({ name: '', email: '', subject: '', message: '', contactNumber: '' });
             }
         } catch (err) {
             console.log(err);
@@ -144,7 +144,6 @@ const Contact = () => {
                                     {submitting ? (
                                         <>
                                             <CircularProgress size={20} color="inherit" sx={{ mr: 1 }} />
-                                            Submitting...
                                         </>
                                     ) : form.submitButton}
                                 </Button>

@@ -90,7 +90,8 @@ const UsersTable = () => {
         yearsOfServiceStart: { value: null, matchMode: FilterMatchMode.BETWEEN },
         totalDonation: { value: null, matchMode: FilterMatchMode.BETWEEN },
         lastDonationDate: { value: null, matchMode: FilterMatchMode.DATE_IS },
-        yearsOfServiceEnd: { value: null, matchMode: FilterMatchMode.BETWEEN }
+        yearsOfServiceEnd: { value: null, matchMode: FilterMatchMode.BETWEEN },
+        activity: { value: null, matchMode: FilterMatchMode.EQUALS },
     });
     const booleanOptions = [
         { label: 'Yes', value: true },
