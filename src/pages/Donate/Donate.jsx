@@ -35,7 +35,7 @@ export default function DonationForm() {
     const [fileName, setFileName] = useState('');
     const today = new Date().toISOString().split('T')[0];
     const DONATION_LIMITS = {
-        LOGGED_IN: 500000,
+        LOGGED_IN: 100000000,
         GUEST: 5000
     };
 

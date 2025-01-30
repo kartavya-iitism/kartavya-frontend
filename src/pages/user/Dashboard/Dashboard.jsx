@@ -12,8 +12,12 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
-    Alert
+    Alert,
+    IconButton,
+    CircularProgress
 } from '@mui/material';
+
+import { DeleteOutlineOutlined as DeleteIcon } from '@mui/icons-material';
 import { PictureAsPdf, InsertDriveFile } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -34,7 +38,10 @@ const Dashboard = () => {
     const [error, setError] = useState('');
     const handleOpenDialog = (donation) => setSelectedDonation(donation);
     const handleCloseDialog = () => setSelectedDonation(null);
-
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [deleteDialog, setDeleteDialog] = useState(false);
+    const [selectedForDelete, setSelectedForDelete] = useState(null);
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -45,6 +52,7 @@ const Dashboard = () => {
                 });
                 console.log(response.data)
                 setUserStats(response.data);
+                setIsAdmin(localStorage.role === 'admin');
             } catch (error) {
                 setError(error.response.data.message === '' ? 'Error Fetching Data' : error.response.data.message);
             } finally {
@@ -54,6 +62,63 @@ const Dashboard = () => {
 
         fetchDashboardData();
     }, []);
+
+    const handleDeleteDocument = async () => {
+        setDeleting(true);
+        try {
+            await axios.delete(`${API_URL}/document/${selectedForDelete}`, {
+                headers: { Authorization: `Bearer ${localStorage.token}` }
+            });
+            setUserStats(prev => ({
+                ...prev,
+                documents: prev.documents.filter(doc => doc._id !== selectedForDelete)
+            }));
+            setDeleteDialog(false);
+            setSelectedForDelete(null);
+        } catch (error) {
+            console.error('Delete error:', error);
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    const renderDeleteDialog = () => (
+        <Dialog
+            open={deleteDialog}
+            onClose={() => {
+                setDeleteDialog(false);
+                setSelectedForDelete(null);
+            }}
+            className="password-dialog"
+            PaperProps={{
+                className: "dialog-paper"
+            }}
+        >
+            <DialogTitle className='dialog-title'>Confirm Delete</DialogTitle>
+            <DialogContent className="dialog-content">
+                Are you sure you want to delete this Document?
+            </DialogContent>
+            <DialogActions className="dialog-actions">
+                <Button
+                    onClick={() => {
+                        setDeleteDialog(false);
+                        setSelectedForDelete(null);
+                    }}
+                    className="cancel-button"
+                >
+                    Cancel
+                </Button>
+                <Button
+                    onClick={handleDeleteDocument}
+                    color="error"
+                    disabled={deleting}
+                    className="submit-button"
+                >
+                    {deleting ? <CircularProgress size={24} /> : 'Delete'}
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
 
     const getStatusTextColor = (donation) => {
         if (donation.verified) return '#2e7d32';  // Material-UI green[800]
@@ -302,6 +367,7 @@ const Dashboard = () => {
                                         key={index}
                                         sx={{
                                             width: '33%',
+                                            position: 'relative',
                                             display: 'flex',
                                             flexDirection: 'column',
                                             cursor: 'pointer',
@@ -319,6 +385,18 @@ const Dashboard = () => {
                                             }
                                         }}
                                     >
+                                        {isAdmin && (
+                                            <IconButton
+                                                className="delete-button"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setSelectedForDelete(doc._id);
+                                                    setDeleteDialog(true);
+                                                }}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        )}
                                         <CardContent>
                                             <Box className="document-icon">
                                                 {doc.type.toLowerCase().includes('pdf') ? (
@@ -365,7 +443,9 @@ const Dashboard = () => {
 
                     </>
                 }
+
             </Container>
+            {renderDeleteDialog()}
         </Box >
     );
 };

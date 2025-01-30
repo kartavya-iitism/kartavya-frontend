@@ -36,7 +36,7 @@ export default function App() {
         <>
             <MDBNavbar sticky expand='lg' bgColor='light' style={{ "--mdb-bg-opacity": "0.9", 'backdropFilter': 'blur(2px)' }} >
                 <MDBContainer fluid className="d-flex justify-content-between">
-                    <MDBNavbarBrand href='#' className="flex-shrink-0">
+                    <MDBNavbarBrand href='/' onClick={() => handleNavigate('/')} className="flex-shrink-0">
                         <img
                             src={logo}
                             height='110'

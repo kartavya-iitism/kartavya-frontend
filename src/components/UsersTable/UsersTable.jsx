@@ -80,11 +80,22 @@ const UsersTable = () => {
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        email: { value: null, matchMode: FilterMatchMode.CONTAINS },
         role: { value: null, matchMode: FilterMatchMode.EQUALS },
         isVerified: { value: null, matchMode: FilterMatchMode.EQUALS },
-        dateOfRegistration: { value: null, matchMode: FilterMatchMode.DATE_IS }
+        dateOfRegistration: { value: null, matchMode: FilterMatchMode.DATE_IS },
+        governmentOfficial: { value: null, matchMode: FilterMatchMode.EQUALS },
+        ismPassout: { value: null, matchMode: FilterMatchMode.EQUALS },
+        batch: { value: null, matchMode: FilterMatchMode.BETWEEN },
+        kartavyaVolunteer: { value: null, matchMode: FilterMatchMode.EQUALS },
+        yearsOfServiceStart: { value: null, matchMode: FilterMatchMode.BETWEEN },
+        totalDonation: { value: null, matchMode: FilterMatchMode.BETWEEN },
+        lastDonationDate: { value: null, matchMode: FilterMatchMode.DATE_IS },
+        yearsOfServiceEnd: { value: null, matchMode: FilterMatchMode.BETWEEN }
     });
+    const booleanOptions = [
+        { label: 'Yes', value: true },
+        { label: 'No', value: false }
+    ];
 
     useEffect(() => {
         fetchUsers();
@@ -215,6 +226,49 @@ const UsersTable = () => {
         }
     };
 
+    const lastDonationDateTemplate = (rowData) => {
+        return rowData.lastDonationDate
+            ? new Date(rowData.lastDonationDate).toLocaleDateString('en-IN')
+            : '-';
+    };
+
+    const activityBodyTemplate = (rowData) => {
+        const lastDonation = rowData.lastDonationDate ? new Date(rowData.lastDonationDate) : null;
+        const yearAgo = new Date();
+        yearAgo.setDate(yearAgo.getDate() - 365);
+
+        const isActive = lastDonation && lastDonation > yearAgo;
+
+        return (
+            <div className="activity-tag-wrapper">
+                <Tag
+                    severity={isActive ? "success" : "danger"}
+                    value={isActive ? "Active" : "Inactive"}
+                />
+            </div>
+        );
+    };
+
+    const booleanBodyTemplate = (rowData, field) => (
+        <Tag
+            severity={rowData[field] ? "success" : "danger"}
+            value={rowData[field] ? "Yes" : "No"}
+        />
+    );
+
+    const batchBodyTemplate = (rowData) => {
+        if (!rowData.ismPassout) return '-';
+        return rowData.batch;
+    };
+
+    const amountBodyTemplate = (rowData) => {
+        return (
+            <div>
+                ₹{(rowData.totalDonation || 0).toLocaleString('en-IN')}
+            </div>
+        );
+    };
+
     const actionBodyTemplate = (rowData) => {
         if (rowData.role === 'admin') {
             return (
@@ -340,21 +394,12 @@ const UsersTable = () => {
     // Template functions
     const nameBodyTemplate = (rowData) => (
         <div className="name-cell-wrapper">
-            {rowData.role === 'admin' ? (
-                <Button
-                    className="p-button-link name-cell-btn"
-                    disabled
-                >
-                    {rowData.name}
-                </Button>
-            ) : (
-                <Button
-                    className="p-button-link name-cell-btn"
-                    onClick={() => handleViewDetails(rowData)}
-                >
-                    {rowData.name}
-                </Button>
-            )}
+            <Button
+                className="p-button-link name-cell-btn"
+                onClick={() => handleViewDetails(rowData)}
+            >
+                {rowData.name}
+            </Button>
         </div>
     );
 
@@ -422,6 +467,7 @@ const UsersTable = () => {
                     <div className="user-details-list">
                         <p><strong>Username:</strong> {selectedUser.username}</p>
                         <p><strong>Email:</strong> {selectedUser.email}</p>
+                        <p><strong>Total Donation:</strong> ₹{(selectedUser.totalDonation).toLocaleString('en-IN')}</p>
                         <p><strong>Contact:</strong> {selectedUser.contactNumber}</p>
                         {selectedUser.address && (
                             <p><strong>Address:</strong> {selectedUser.address}</p>
@@ -433,23 +479,14 @@ const UsersTable = () => {
                             <p><strong>Gender:</strong> {selectedUser.gender}</p>
                         )}
                         <p><strong>Verified:</strong> {selectedUser.isVerified ? 'Yes' : 'No'}</p>
-                        {selectedUser.governmentOfficial && (
-                            <p><strong>Government Official:</strong> Yes</p>
-                        )}
+                        <p><strong>Government Official:</strong> {selectedUser.governmentOfficial ? 'Yes' : 'No'}</p>
+                        <p><strong>ISM Passout:</strong> {selectedUser.ismPassout ? 'Yes' : 'No'}</p>
                         {selectedUser.ismPassout && (
-                            <>
-                                <p><strong>ISM Passout:</strong> Yes</p>
-                                <p><strong>Batch:</strong> {selectedUser.batch}</p>
-                            </>
+                            <p><strong>Batch:</strong> {selectedUser.batch}</p>
                         )}
+                        <p><strong>Kartavya Volunteer:</strong>  {selectedUser.kartavyaVolunteer ? 'Yes' : 'No'}</p>
                         {selectedUser.kartavyaVolunteer && (
-                            <>
-                                <p><strong>Kartavya Volunteer:</strong> Yes</p>
-                                <p><strong>Service Period:</strong> {selectedUser.yearsOfServiceStart} - {selectedUser.yearsOfServiceEnd}</p>
-                            </>
-                        )}
-                        {selectedUser.typeOfSponsor && (
-                            <p><strong>Sponsor Type:</strong> {selectedUser.typeOfSponsor}</p>
+                            <p><strong>Service Period:</strong> {selectedUser.yearsOfServiceStart} - {selectedUser.yearsOfServiceEnd}</p>
                         )}
                         <p><strong>Sponsored Students:</strong> {selectedUser.sponsoredStudents?.length || 0}</p>
                         <p><strong>Donations Made:</strong> {selectedUser.donations?.length || 0}</p>
@@ -602,14 +639,13 @@ const UsersTable = () => {
                         filter
                     />
                     <Column
-                        field="contactNumber"
-                        header="Contact"
-                    />
-                    <Column
-                        field="email"
-                        header="Email"
+                        field="totalDonation"
+                        header="Total Donation"
+                        body={amountBodyTemplate}
                         sortable
                         filter
+                        dataType="numeric"
+                        filterPlaceholder="Search by amount"
                     />
                     <Column
                         field="dateOfRegistration"
@@ -619,6 +655,34 @@ const UsersTable = () => {
                         filter
                         dataType="date"
                         filterElement={dateFilterTemplate}
+                    />
+                    <Column
+                        field="lastDonationDate"
+                        header="Last Donation"
+                        body={lastDonationDateTemplate}
+                        sortable
+                        filter
+                        dataType="date"
+                        filterElement={dateFilterTemplate}
+                    />
+                    <Column
+                        field="activity"
+                        header="Activity"
+                        body={activityBodyTemplate}
+                        sortable
+                        filter
+                        filterElement={(options) => (
+                            <Dropdown
+                                value={options.value}
+                                options={[
+                                    { label: 'Active', value: true },
+                                    { label: 'Inactive', value: false }
+                                ]}
+                                onChange={(e) => options.filterCallback(e.value)}
+                                placeholder="Select Status"
+                                className="p-column-filter"
+                            />
+                        )}
                     />
                     <Column
                         field="role"
@@ -635,6 +699,84 @@ const UsersTable = () => {
                                 className="p-column-filter"
                             />
                         )}
+                    />
+                    <Column
+                        field="governmentOfficial"
+                        header="Govt. Off."
+                        body={(rowData) => booleanBodyTemplate(rowData, 'governmentOfficial')}
+                        sortable
+                        filter
+                        filterElement={(options) => (
+                            <Dropdown
+                                value={options.value}
+                                options={booleanOptions}
+                                onChange={(e) => options.filterCallback(e.value)}
+                                placeholder="Select"
+                                className="p-column-filter"
+                            />
+                        )}
+                    />
+
+                    <Column
+                        field="ismPassout"
+                        header="ISM"
+                        body={(rowData) => booleanBodyTemplate(rowData, 'ismPassout')}
+                        sortable
+                        filter
+                        filterElement={(options) => (
+                            <Dropdown
+                                value={options.value}
+                                options={booleanOptions}
+                                onChange={(e) => options.filterCallback(e.value)}
+                                placeholder="Select"
+                                className="p-column-filter"
+                            />
+                        )}
+                    />
+
+                    <Column
+                        field="batch"
+                        header="Batch"
+                        body={batchBodyTemplate}
+                        sortable
+                        filter
+                        dataType="numeric"
+                    />
+
+                    <Column
+                        field="kartavyaVolunteer"
+                        header="Kartavya"
+                        body={(rowData) => booleanBodyTemplate(rowData, 'kartavyaVolunteer')}
+                        sortable
+                        filter
+                        filterElement={(options) => (
+                            <Dropdown
+                                value={options.value}
+                                options={booleanOptions}
+                                onChange={(e) => options.filterCallback(e.value)}
+                                placeholder="Select"
+                                className="p-column-filter"
+                            />
+                        )}
+                    />
+
+                    <Column
+                        field="yearsOfServiceStart"
+                        header="Start"
+                        body={(rowData) => rowData.kartavyaVolunteer ? rowData.yearsOfServiceStart : '-'}
+                        sortable
+                        filter
+                        dataType="numeric"
+                        filterPlaceholder="Search Start Year"
+                    />
+                    <Column
+                        field="yearsOfServiceEnd"
+                        header="End"
+                        body={(rowData) => rowData.kartavyaVolunteer ? rowData.yearsOfServiceEnd : '-'}
+                        sortable
+                        filter
+                        dataType="numeric"
+                        filterPlaceholder="Search End Year"
                     />
                     <Column
                         field="isVerified"

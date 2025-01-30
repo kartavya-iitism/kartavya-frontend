@@ -222,6 +222,11 @@
     gap: 0.5rem;
 }
 
+.activity-tag-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
 .action-buttons .p-button-rounded {
     width: 2.5rem;
     height: 2.5rem;

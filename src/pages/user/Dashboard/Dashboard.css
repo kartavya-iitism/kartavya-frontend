@@ -218,6 +218,25 @@
     font-size: 0.875rem !important;
 }
 
+.dialog-content {
+    font-family: "Poppins", sans-serif !important;
+    margin-bottom: 15px !important;
+    color: #4a4a4a !important;
+}
+.delete-button {
+    position: absolute !important;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    color: #d32f2f !important;
+}
+
+.delete-button:hover {
+    background-color: rgba(255, 255, 255, 1) !important;
+    color: #b71c1c !important;
+}
+
 .error-alert .MuiAlert-message {
     padding: 8px 0 !important;
 }

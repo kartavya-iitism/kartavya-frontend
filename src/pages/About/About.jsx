@@ -15,12 +15,12 @@ import {
     Paper,
     Tab,
     Tabs,
-    Typography
+    Typography,
+    Button
 } from '@mui/material';
 import { DeleteOutlineOutlined as DeleteIcon } from '@mui/icons-material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import CloseIcon from '@mui/icons-material/Close';
-import { Button } from 'primereact/button';
 import { fetchContent } from '../../helper/contentFetcher';
 import { API_URL } from '../../config';
 import './About.css';
@@ -105,25 +105,31 @@ const About = () => {
             setDeleting(false);
         }
     };
+    const handleCloseDeleteDialog = async () => {
+        setDeleteDialog(false);
+        setTimeout(() => {
+            setSelectedForDelete(null);
+        }, 100);
+        setDeleting(false);
+    };
 
     const renderDeleteDialog = () => (
         <Dialog
             open={deleteDialog}
-            onClose={() => {
-                setDeleteDialog(false);
-                setSelectedForDelete(null);
+            onClose={handleCloseDeleteDialog}
+            className="password-dialog"
+            PaperProps={{
+                className: "dialog-paper"
             }}
         >
-            <DialogTitle>Confirm Delete</DialogTitle>
-            <DialogContent>
+            <DialogTitle className='dialog-title'>Confirm Delete</DialogTitle>
+            <DialogContent className="dialog-content">
                 Are you sure you want to delete this {selectedForDelete?.type || 'media'}?
             </DialogContent>
-            <DialogActions>
+            <DialogActions className="dialog-actions">
                 <Button
-                    onClick={() => {
-                        setDeleteDialog(false);
-                        setSelectedForDelete(null);
-                    }}
+                    onClick={handleCloseDeleteDialog}
+                    className="cancel-button"
                 >
                     Cancel
                 </Button>
@@ -131,6 +137,7 @@ const About = () => {
                     onClick={handleDelete}
                     color="error"
                     disabled={deleting}
+                    className="submit-button"
                 >
                     {deleting ? <CircularProgress size={24} /> : 'Delete'}
                 </Button>
@@ -222,7 +229,7 @@ const About = () => {
                         <Alert severity="warning">{mediaError}</Alert>
                     ) : (
                         <>
-                            <Typography variant="h2" className="section-title" align="center">
+                            <Typography variant="h3" className="section-title" align="center">
                                 Our Gallery
                             </Typography>
                             <Tabs
