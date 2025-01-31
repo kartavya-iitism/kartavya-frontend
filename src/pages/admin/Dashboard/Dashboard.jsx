@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { TabView, TabPanel } from 'primereact/tabview';
-import DonationsTable from '../../../components/DonationsTable/DonationsTable';
-import UsersTable from '../../../components/UsersTable/UsersTable';
-import ContactTable from '../../../components/ContactTable/ContactTable';
+import DonationsTable from '../../../components/Tables/DonationsTable/DonationsTable';
+import UsersTable from '../../../components/Tables/UsersTable/UsersTable';
+import ContactTable from '../../../components/Tables/ContactTable/ContactTable';
 import './Dashboard.css';
 
 const AdminDashboard = () => {

@@ -17,7 +17,7 @@ import {
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './AddMedia.css';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 
 const AddMedia = ({ open, onClose }) => {
     const [formData, setFormData] = useState({

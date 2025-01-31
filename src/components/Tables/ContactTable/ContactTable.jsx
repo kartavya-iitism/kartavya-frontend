@@ -8,7 +8,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { Tag } from 'primereact/tag';
 import { FilterMatchMode } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 import { Tooltip } from 'primereact/tooltip';
 import axios from 'axios';
 import './ContactTable.css';

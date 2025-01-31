@@ -6,28 +6,29 @@ import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import { FilterMatchMode } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './Tables.css';
 
-export const UpdatesTable = ({ updates, loading, onRefetch }) => {
+export const MilestonesTable = ({ milestones, loading, onRefetch }) => {
     const [deleteDialog, setDeleteDialog] = useState(false);
-    const [selectedUpdate, setSelectedUpdate] = useState(null);
+    const [selectedMilestone, setSelectedMilestone] = useState(null);
     const [deleting, setDeleting] = useState(false);
     const toast = useRef(null);
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        examType: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        category: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         title: { value: null, matchMode: FilterMatchMode.CONTAINS }
     });
+
 
     const handleDelete = async () => {
         setDeleting(true);
         try {
             await axios.delete(
-                `${API_URL}/news/delete/update/${selectedUpdate.id}`,
+                `${API_URL}/news/delete/milestone/${selectedMilestone.id}`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.token}` }
                 }
@@ -36,26 +37,22 @@ export const UpdatesTable = ({ updates, loading, onRefetch }) => {
             toast.current.show({
                 severity: 'success',
                 summary: 'Success',
-                detail: 'Update deleted successfully',
+                detail: 'Milestone deleted successfully',
                 life: 3000
             });
         } catch (error) {
-            console.error(error);
+            console.log(error)
             toast.current.show({
                 severity: 'error',
                 summary: 'Error',
-                detail: 'Failed to delete update',
+                detail: 'Failed to delete milestone',
                 life: 3000
             });
         } finally {
             setDeleting(false);
             setDeleteDialog(false);
-            setSelectedUpdate(null);
+            setSelectedMilestone(null);
         }
-    };
-
-    const dateBodyTemplate = (rowData) => {
-        return rowData.date.toLocaleDateString('en-IN');
     };
 
     const actionBodyTemplate = (rowData) => (
@@ -63,10 +60,10 @@ export const UpdatesTable = ({ updates, loading, onRefetch }) => {
             icon="pi pi-trash"
             className="p-button-rounded p-button-danger p-button-text"
             onClick={() => {
-                setSelectedUpdate(rowData);
+                setSelectedMilestone(rowData);
                 setDeleteDialog(true);
             }}
-            tooltip="Delete Update"
+            tooltip="Delete Milestone"
             tooltipOptions={{ position: 'left' }}
         />
     );
@@ -96,7 +93,7 @@ export const UpdatesTable = ({ updates, loading, onRefetch }) => {
                 </div>
             }
         >
-            <p>Are you sure you want to delete this update?</p>
+            <p>Are you sure you want to delete this milestone?</p>
         </Dialog>
     );
 
@@ -105,7 +102,7 @@ export const UpdatesTable = ({ updates, loading, onRefetch }) => {
             <Toast ref={toast} />
             <div className="admin-table-card">
                 <DataTable
-                    value={updates}
+                    value={milestones}
                     paginator
                     rows={10}
                     dataKey="id"
@@ -115,7 +112,7 @@ export const UpdatesTable = ({ updates, loading, onRefetch }) => {
                     responsiveLayout="scroll"
                     header={
                         <div className="admin-table-header">
-                            <h2>Recent Updates</h2>
+                            <h2>Academic Milestones</h2>
                             <InputText
                                 placeholder="Global Search..."
                                 onInput={(e) =>
@@ -129,16 +126,15 @@ export const UpdatesTable = ({ updates, loading, onRefetch }) => {
                     }
                 >
                     <Column
-                        field="date"
-                        header="Date"
-                        body={dateBodyTemplate}
-                        sortable
-                    />
-                    <Column
-                        field="examType"
-                        header="Exam Type"
+                        field="category"
+                        header="Category"
                         sortable
                         filter
+                    />
+                    <Column
+                        field="number"
+                        header="Number"
+                        sortable
                     />
                     <Column
                         field="title"
@@ -163,12 +159,13 @@ export const UpdatesTable = ({ updates, loading, onRefetch }) => {
     );
 };
 
-UpdatesTable.propTypes = {
-    updates: PropTypes.arrayOf(
+
+MilestonesTable.propTypes = {
+    milestones: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string.isRequired,
-            date: PropTypes.instanceOf(Date).isRequired,
-            examType: PropTypes.string.isRequired,
+            category: PropTypes.string.isRequired,
+            number: PropTypes.number.isRequired,
             title: PropTypes.string.isRequired,
             description: PropTypes.string.isRequired,
             createdAt: PropTypes.instanceOf(Date).isRequired

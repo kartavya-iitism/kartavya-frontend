@@ -22,7 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DateField from '../../components/DateField/DateField';
 import './Registration.css';
-import OtpDialog from '../../components/OtpDialog/OtpDialog';
+import OtpDialog from '../../components/Dialogs/OtpDialog/OtpDialog';
 
 export default function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false);

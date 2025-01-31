@@ -15,7 +15,7 @@ import {
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './AddDocuments.css';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 
 const AddDocuments = ({ open, onClose }) => {
     const [formData, setFormData] = useState({

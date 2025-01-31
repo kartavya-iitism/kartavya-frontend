@@ -12,7 +12,7 @@ import {
     Alert,
     CircularProgress
 } from '@mui/material';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 import axios from 'axios';
 import './AddNewsAchievements.css';
 

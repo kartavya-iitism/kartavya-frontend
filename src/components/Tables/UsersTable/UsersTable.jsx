@@ -9,7 +9,7 @@ import { Toast } from 'primereact/toast';
 import { Tag } from 'primereact/tag';
 import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 import axios from 'axios';
 import './UsersTable.css';
 import { InputTextarea } from 'primereact/inputtextarea';

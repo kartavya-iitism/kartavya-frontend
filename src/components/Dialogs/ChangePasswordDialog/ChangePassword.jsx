@@ -11,7 +11,7 @@ import {
     CircularProgress,
     Alert
 } from '@mui/material';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 import axios from 'axios';
 import './ChangePassword.css'
 

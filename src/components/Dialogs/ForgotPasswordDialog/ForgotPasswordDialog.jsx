@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Typography, Alert, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 import './ForgotPasswordDialog.css';
 
 const ForgotPasswordDialog = ({ open, onClose }) => {

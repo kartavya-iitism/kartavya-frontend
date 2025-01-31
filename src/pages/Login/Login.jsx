@@ -13,7 +13,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from 'axios';
 import { Typography } from '@mui/material';
 import AuthVerify from '../../helper/JWTVerify';
-import ForgotPasswordDialog from '../../components/ForgotPasswordDialog/ForgotPasswordDialog';
+import ForgotPasswordDialog from '../../components/Dialogs/ForgotPasswordDialog/ForgotPasswordDialog';
 import { Google } from "@mui/icons-material";
 import { API_URL } from '../../config';
 import './Login.css'

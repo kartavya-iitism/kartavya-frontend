@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import DateField from '../DateField/DateField';
+import DateField from '../../DateField/DateField';
 
 import {
     Dialog,
@@ -18,7 +18,7 @@ import {
     Alert,
     CircularProgress
 } from '@mui/material';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 import axios from 'axios';
 import './EditProfile.css'
 

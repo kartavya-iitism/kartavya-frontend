@@ -18,10 +18,10 @@ import {
     TableRow,
     Link
 } from '@mui/material';
-import OtpDialog from '../../../components/OtpDialog/OtpDialog';
+import OtpDialog from '../../../components/Dialogs/OtpDialog/OtpDialog';
 import { API_URL } from '../../../config';
-import ChangePasswordDialog from '../../../components/ChangePasswordDialog/ChangePassword'
-import EditProfileDialog from '../../../components/EditProfileDialog/EditProfile';
+import ChangePasswordDialog from '../../../components/Dialogs/ChangePasswordDialog/ChangePassword'
+import EditProfileDialog from '../../../components/Dialogs/EditProfileDialog/EditProfile';
 import './Profile.css'
 
 export default function Profile() {

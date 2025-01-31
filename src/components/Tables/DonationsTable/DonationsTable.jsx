@@ -10,7 +10,7 @@ import { Tag } from 'primereact/tag';
 import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { Tooltip } from 'primereact/tooltip';
-import { API_URL } from '../../config';
+import { API_URL } from '../../../config';
 import axios from 'axios';
 import './DonationsTable.css';
 

@@ -22,9 +22,9 @@ import {
     Person as PersonIcon,
     Settings as SettingsIcon
 } from '@mui/icons-material';
-import AddDocuments from '../../../components/AddDocuments/AddDocuments';
-import AddNewsAchievements from '../../../components/AddNewsAchievements/AddNewsAchievements';
-import AddMedia from '../../../components/AddMedia/AddMedia';
+import AddDocuments from '../../../components/Dialogs/AddDocuments/AddDocuments';
+import AddNewsAchievements from '../../../components/Dialogs/AddNewsAchievements/AddNewsAchievements';
+import AddMedia from '../../../components/Dialogs/AddMedia/AddMedia';
 import './General.css';
 
 const General = () => {

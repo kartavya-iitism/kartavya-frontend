@@ -4,7 +4,7 @@ import {
     CircularProgress, Alert
 } from '@mui/material';
 import axios from 'axios';
-import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
+import ConfirmDialog from '../../components/Dialogs/ConfirmDialog/ConfirmDialog';
 import DateField from '../../components/DateField/DateField';
 import { fetchContent } from '../../helper/contentFetcher';
 import { API_URL } from '../../config';

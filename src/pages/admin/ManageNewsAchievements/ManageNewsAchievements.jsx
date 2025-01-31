@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { TabView, TabPanel } from 'primereact/tabview';
-import { StudentStoriesTable } from '../../../components/NewsAchievementTables/StudentStoriesTable';
+import { StudentStoriesTable } from '../../../components/Tables/NewsAchievementTables/StudentStoriesTable';
 import { Button } from 'primereact/button';
-import { MilestonesTable } from '../../../components/NewsAchievementTables/MilestonesTable';
-import { UpdatesTable } from '../../../components/NewsAchievementTables/UpdatesTable';
-import AddNewsAchievements from '../../../components/AddNewsAchievements/AddNewsAchievements';
+import { MilestonesTable } from '../../../components/Tables/NewsAchievementTables/MilestonesTable';
+import { UpdatesTable } from '../../../components/Tables/NewsAchievementTables/UpdatesTable';
+import AddNewsAchievements from '../../../components/Dialogs/AddNewsAchievements/AddNewsAchievements';
 import axios from 'axios';
 import { API_URL } from '../../../config';
 import './ManageNewsAchievements.css';
