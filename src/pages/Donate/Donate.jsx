@@ -233,7 +233,7 @@ export default function DonationForm() {
                         {form.title}
                     </Typography>
 
-                    <div className="form-grid">
+                    <div className="form-grid-donate">
                         {[
                             { name: 'name', label: 'Name', type: 'text', required: true },
                             { name: 'email', label: 'Email', type: 'email', required: true },

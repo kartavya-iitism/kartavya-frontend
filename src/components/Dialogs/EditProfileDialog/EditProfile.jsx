@@ -24,7 +24,6 @@ import './EditProfile.css'
 
 const EditProfileDialog = ({ open, onClose, username, initialData }) => {
     const [formData, setFormData] = useState({
-        email: initialData?.email || '',
         contactNumber: initialData?.contactNumber || '',
         address: initialData?.address || '',
         governmentOfficial: Boolean(initialData?.governmentOfficial) || false,
@@ -81,7 +80,6 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
     useEffect(() => {
         if (initialData) {
             setFormData({
-                email: initialData.email || '',
                 contactNumber: initialData.contactNumber || '',
                 address: initialData.address || '',
                 governmentOfficial: Boolean(initialData.governmentOfficial),
@@ -102,7 +100,6 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
         setError('');
         setSuccess(false);
         setFormData({
-            email: initialData.email || '',
             contactNumber: initialData.contactNumber || '',
             address: initialData.address || '',
             governmentOfficial: Boolean(initialData.governmentOfficial),
@@ -148,39 +145,17 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                                 className="form-field"
                             />
 
-                            <TextField
-                                label="Email"
-                                type="email"
-                                name="email"
+                            <DateField
+                                name="dateOfBirth"
+                                label="Date of Birth"
                                 fullWidth
-                                value={formData.email}
+                                value={formData.dateOfBirth}
                                 onChange={handleChange}
                                 className="form-field"
                             />
 
-                            <DateField
-                                name="dateOfBirth"
-                                label="Date of Birth"
-                                value={formData.dateOfBirth}
-                                onChange={handleChange}
-                            />
-
-                            <FormControl component="fieldset" fullWidth>
-                                <FormLabel className='radio-label'>Gender</FormLabel>
-                                <RadioGroup
-                                    name="gender"
-                                    value={formData.gender}
-                                    onChange={handleChange}
-                                    row
-                                >
-                                    <FormControlLabel value="male" control={<Radio />} label="Male" />
-                                    <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                </RadioGroup>
-                            </FormControl>
-
                             <TextField
                                 label="Contact Number"
-                                type="tel"
                                 name="contactNumber"
                                 fullWidth
                                 value={formData.contactNumber}
@@ -207,6 +182,20 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                                 onChange={handleChange}
                                 className="form-field"
                             />
+
+                            <FormControl component="fieldset" fullWidth>
+                                <FormLabel className='radio-label'>Gender</FormLabel>
+                                <RadioGroup
+                                    name="gender"
+                                    value={formData.gender}
+                                    onChange={handleChange}
+                                    row
+                                >
+                                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                                </RadioGroup>
+                            </FormControl>
+
 
                             <FormControl component="fieldset" fullWidth>
                                 <FormLabel className='radio-label'>Government Official</FormLabel>
@@ -343,7 +332,6 @@ EditProfileDialog.propTypes = {
     username: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
     initialData: PropTypes.shape({
-        email: PropTypes.string,
         contactNumber: PropTypes.string,
         address: PropTypes.string,
         governmentOfficial: PropTypes.bool,

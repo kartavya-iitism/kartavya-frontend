@@ -284,7 +284,7 @@
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12) !important;
 }
 
-.form-grid {
+.form-grid-donate {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.7rem;
@@ -449,7 +449,7 @@
         margin-bottom: -0.5rem;
     }
 
-    .form-grid {
+    .form-grid-donate {
         grid-template-columns: 1fr;
         gap: 0;
     }
