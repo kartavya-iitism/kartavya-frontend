@@ -1,0 +1,18 @@
+.email-field {
+    margin-bottom: 16px !important;
+}
+
+.email-field .MuiOutlinedInput-root {
+    font-family: "Poppins", sans-serif;
+    border-radius: 8px;
+}
+
+.email-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: var(--admin-primary);
+}
+
+.email-field
+    .MuiOutlinedInput-root.Mui-focused
+    .MuiOutlinedInput-notchedOutline {
+    border-color: var(--admin-primary);
+}

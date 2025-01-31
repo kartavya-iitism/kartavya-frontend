@@ -22,6 +22,7 @@ import OtpDialog from '../../../components/Dialogs/OtpDialog/OtpDialog';
 import { API_URL } from '../../../config';
 import ChangePasswordDialog from '../../../components/Dialogs/ChangePasswordDialog/ChangePassword'
 import EditProfileDialog from '../../../components/Dialogs/EditProfileDialog/EditProfile';
+import ChangeEmailDialog from '../../../components/Dialogs/ChangeEmailDialog/ChangeEmailDialog';
 import './Profile.css'
 
 export default function Profile() {
@@ -32,6 +33,7 @@ export default function Profile() {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [editProfileDialogOpen, setEditProfileDialogOpen] = useState(false);
     const [initialLoad, setInitialLoad] = useState(true);
+    const [emailDialogOpen, setEmailDialogOpen] = useState(false);
 
     const handleOpenDialog = () => {
         setDialogOpen(true);
@@ -48,6 +50,8 @@ export default function Profile() {
     const handleCloseEditDialog = () => {
         setEditProfileDialogOpen(false);
     };
+    const handleOpenEmailDialog = () => setEmailDialogOpen(true);
+    const handleCloseEmailDialog = () => setEmailDialogOpen(false);
 
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
@@ -113,7 +117,42 @@ export default function Profile() {
                                     </Typography>
                                     {[
                                         { label: 'Username', value: user.username },
-                                        { label: 'Email', value: user.email },
+                                        {
+                                            label: 'Email',
+                                            value: (
+                                                <Stack
+                                                    direction="row"
+                                                    spacing={1}
+                                                    alignItems="center"
+                                                    sx={{ display: 'inline-flex' }}
+                                                >
+                                                    {user.email}
+                                                    {user.isVerified && (
+                                                        <Button
+                                                            variant="outlined"
+                                                            size="small"
+                                                            className="change-email-button"
+                                                            onClick={handleOpenEmailDialog}
+                                                            sx={{
+                                                                fontSize: '0.75rem',
+                                                                padding: '2px 8px',
+                                                                minWidth: 'auto',
+                                                                height: '24px',
+                                                                marginLeft: '10px !important',
+                                                                color: '#1a4d2e',
+                                                                borderColor: '#1a4d2e',
+                                                                '&:hover': {
+                                                                    borderColor: '#1a4d2e',
+                                                                    backgroundColor: 'rgba(26, 77, 46, 0.04)'
+                                                                }
+                                                            }}
+                                                        >
+                                                            Change
+                                                        </Button>
+                                                    )}
+                                                </Stack>
+                                            )
+                                        },
                                         { label: 'Contact', value: user.contactNumber },
                                         { label: 'Date of Birth', value: formatDate(user.dateOfBirth) },
                                         { label: 'Current Job', value: user.currentJob }
@@ -338,6 +377,11 @@ export default function Profile() {
                     setShowOtpDialog(false);
                 }}
                 forceVerification={true}
+            />
+            <ChangeEmailDialog
+                open={emailDialogOpen}
+                onClose={handleCloseEmailDialog}
+                username={user?.username || ''}
             />
         </Box>
     );
