@@ -98,96 +98,127 @@ export default function LoginForm() {
         setLoading(false);
     }, []);
 
+
     return (
-        <div className="login-form-container">
-            <Box
-                className="form-box"
-                component="form"
-                noValidate
-                autoComplete="off"
-                onSubmit={handleSubmit}
-            >
-                <Typography variant="h1" className="form-title section-title">
-                    Login
-                </Typography>
-                <TextField
-                    required
-                    className="custom-textfield"
-                    label="Username"
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    fullWidth
-                />
-                <FormControl className="custom-textfield login-textfield" variant="outlined" fullWidth>
-                    <InputLabel required>Password</InputLabel>
-                    <OutlinedInput
-                        type={showPassword ? 'text' : 'password'}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton onClick={handleClickShowPassword} edge="end">
-                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                        label="Password"
-                        value={formData.password}
-                        name="password"
+        <Box className="split-login-container">
+            <Box className="login-left">
+                <Box className="welcome-section">
+                    <Typography variant="h2" className="welcome-title">
+                        Welcome Back!
+                    </Typography>
+                    <Typography variant="subtitle1" className="welcome-subtitle">
+                        Continue your journey of making a difference
+                    </Typography>
+                </Box>
+                <Box className="form-box" component="form" noValidate autoComplete="off" onSubmit={handleSubmit}>
+                    <Typography variant="h1" className="form-title section-title">
+                        Login
+                    </Typography>
+                    <TextField
+                        required
+                        className="custom-textfield"
+                        label="Username"
+                        name="username"
+                        value={formData.username}
                         onChange={handleChange}
+                        fullWidth
                     />
-                </FormControl>
-                <div className="forgot-password">
+                    <FormControl className="custom-textfield login-textfield" variant="outlined" fullWidth>
+                        <InputLabel required>Password</InputLabel>
+                        <OutlinedInput
+                            type={showPassword ? 'text' : 'password'}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton onClick={handleClickShowPassword} edge="end">
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                            label="Password"
+                            value={formData.password}
+                            name="password"
+                            onChange={handleChange}
+                        />
+                    </FormControl>
+                    <div className="forgot-password">
+                        <Button
+                            onClick={handleForgotPasswordOpen}
+                            className="forgot-password-link"
+                        >
+                            Forgot Password?
+                        </Button>
+                    </div>
                     <Button
-                        onClick={handleForgotPasswordOpen}
-                        className="forgot-password-link"
+                        className="submit-button"
+                        onClick={handleSubmit}
+                        variant="contained"
+                        disabled={loading}
                     >
-                        Forgot Password?
+                        {loading ? (
+                            <>
+                                <span className="button-text">Login</span>
+                                <CircularProgress size={24} className="button-loader" />
+                            </>
+                        ) : (
+                            'Login'
+                        )}
                     </Button>
-                </div>
-                <Button
-                    className="submit-button"
-                    onClick={handleSubmit}
-                    variant="contained"
-                    disabled={loading}
-                >
-                    {loading ? (
-                        <>
-                            <span className="button-text">Login</span>
-                            <CircularProgress size={24} className="button-loader" />
-                        </>
-                    ) : (
-                        'Login'
-                    )}
-                </Button>
 
-                <div className="divider">
-                    <span>or</span>
-                </div>
+                    <div className="divider">
+                        <span>or</span>
+                    </div>
 
-                <Button
-                    className="google-button"
-                    variant="outlined"
-                    onClick={handleGoogleLogin}
-                    startIcon={<Google />}
-                >
-                    Continue with Google
-                </Button>
+                    <Button
+                        className="google-button"
+                        variant="outlined"
+                        onClick={handleGoogleLogin}
+                        startIcon={<Google />}
+                    >
+                        Continue with Google
+                    </Button>
 
-                {success && <div className="status-message success-message">Login Successful</div>}
-                {error && <div className="status-message error-message">{errorMessage}</div>}
-                {loading && <div className="status-message loading-message">Please Wait...</div>}
+                    {success && <div className="status-message success-message">Login Successful</div>}
+                    {error && <div className="status-message error-message">{errorMessage}</div>}
+                    {loading && <div className="status-message loading-message">Please Wait...</div>}
+                </Box>
+            </Box>
 
-                <div className="existing-user" style={{ marginTop: '15px' }}>
-                    <p>
-                        New User?{' '}
-                        <a href="/register" className="login-link">Register</a>
-                    </p>
-                </div>
+            <Box className="login-right">
+                <Box className="cta-container">
+                    <Typography variant="h3" className="cta-title">
+                        New to Kartavya?
+                    </Typography>
+                    <Typography variant="body1" className="cta-description">
+                        Join us in our mission to empower through education
+                    </Typography>
+                    <Button
+                        component="a"
+                        href="/register"
+                        variant="contained"
+                        className="cta-button register-button"
+                    >
+                        Register Now
+                    </Button>
+                    <Typography variant="h3" className="cta-title" sx={{ mt: 4 }}>
+                        Want to Make a Difference?
+                    </Typography>
+                    <Typography variant="body1" className="cta-description">
+                        Your contribution can change lives
+                    </Typography>
+                    <Button
+                        component="a"
+                        href="/donate"
+                        variant="contained"
+                        className="cta-button donate-button"
+                    >
+                        Donate Now
+                    </Button>
+                </Box>
             </Box>
             <ForgotPasswordDialog
                 open={forgotPasswordOpen}
                 onClose={handleForgotPasswordClose}
             />
-        </div>
+        </Box>
     );
 }
