@@ -1,42 +1,54 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import PropTypes from 'prop-types';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(() => {
-        const token = localStorage.getItem('token');
-        const storedUser = localStorage.getItem('user');
-        if (token && storedUser) {
-            try {
-                return JSON.parse(storedUser);
-            } catch {
-                return null;
+    useEffect(() => {
+        const checkToken = () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const decoded = jwtDecode(token);
+                    if (decoded.exp * 1000 < Date.now()) {
+                        localStorage.clear();
+                        window.location.href = '/';
+                    }
+                } catch {
+                    localStorage.clear();
+                    window.location.href = '/';
+                }
             }
-        }
-        return null;
-    });
+        };
+        checkToken();
+        const interval = setInterval(checkToken, 60000);
+        return () => clearInterval(interval);
+    }, []);
 
-    const login = async (token) => {
+    const [user, setUser] = useState(null);
+
+    const login = async (token, userData) => {
         try {
-            const decoded = jwtDecode(token);
-            setUser(decoded);
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(userData));
+            localStorage.setItem('role', userData.role);
+            setUser(userData);
             return true;
-        } catch (err) {
-            console.error('Login error:', err);
+        } catch (error) {
+            console.error('Login error:', error);
             return false;
         }
     };
 
     const logout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        localStorage.clear();
         setUser(null);
+        window.location.href = '/';
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ login, logout, user }}>
             {children}
         </AuthContext.Provider>
     );
