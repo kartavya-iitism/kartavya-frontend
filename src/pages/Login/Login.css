@@ -113,6 +113,10 @@
     }
 }
 
+.login-form {
+    width: 70% !important;
+}
+
 .form-box {
     width: 98%;
     max-width: 600px;
@@ -274,9 +278,18 @@
     font-size: 1.5rem !important;
 }
 
+@media screen and (max-width: 1270px) {
+    .login-form {
+        width: 98% !important;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .login-form-container {
         padding: 20px;
+    }
+    .login-form {
+        width: 98% !important;
     }
 
     .form-box {

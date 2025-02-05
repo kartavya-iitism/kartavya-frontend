@@ -110,7 +110,7 @@ export default function LoginForm() {
                         Continue your journey of making a difference
                     </Typography>
                 </Box>
-                <Box className="form-box" component="form" noValidate autoComplete="off" onSubmit={handleSubmit}>
+                <Box className="form-box login-form" component="form" noValidate autoComplete="off" onSubmit={handleSubmit}>
                     <Typography variant="h1" className="form-title section-title">
                         Login
                     </Typography>
