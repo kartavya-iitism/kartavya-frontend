@@ -20,23 +20,26 @@ const GoogleCallback = () => {
             setIsProcessing(true);
 
             try {
-                const searchParams = new URLSearchParams(location.search);
-                const token = searchParams.get('token');
+                const params = new URLSearchParams(location.search);
+                const token = params.get('token');
+                const user = JSON.parse(params.get('user'));
 
                 if (!token) {
                     throw new Error('Token is missing');
                 }
-
+                console.log(token)
+                console.log(JSON.stringify(user))
                 const decodedToken = jwtDecode(token);
                 localStorage.setItem('token', token);
-                localStorage.setItem('user', JSON.stringify(decodedToken));
-                localStorage.setItem('role', decodedToken.role);
-                await login(token);
+                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('role', user.role);
+                await login(token, user);
 
                 if (mounted) {
                     navigate(decodedToken.role === 'admin' ? '/admin/dash' : '/user/profile', { replace: true });
                 }
             } catch (err) {
+                console.log(err)
                 console.error('Authentication Error:', err.message);
                 if (mounted) {
                     setError(err.message);
