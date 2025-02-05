@@ -147,6 +147,30 @@
     word-break: break-word;
 }
 
+.status-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.p-tag {
+    cursor: pointer;
+}
+
+.resolved-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.resolved-date {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.status-container .p-tag {
+    text-transform: capitalize;
+}
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .header-actions {

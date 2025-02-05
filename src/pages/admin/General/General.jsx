@@ -15,13 +15,13 @@ import {
 import {
     Add as AddIcon,
     Backup as BackupIcon,
-    Dashboard as DashboardIcon,
     Home as HomeIcon,
     Image as ImageIcon,
     ManageAccounts as ManageIcon,
     Person as PersonIcon,
     Settings as SettingsIcon
 } from '@mui/icons-material';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddDocuments from '../../../components/Dialogs/AddDocuments/AddDocuments';
 import AddNewsAchievements from '../../../components/Dialogs/AddNewsAchievements/AddNewsAchievements';
 import AddMedia from '../../../components/Dialogs/AddMedia/AddMedia';
@@ -59,8 +59,8 @@ const General = () => {
             to: "/admin/news"
         },
         {
-            title: "Go to Dashboard",
-            icon: <DashboardIcon />,
+            title: "Core Data Management Panel",
+            icon: <ManageAccountsIcon />,
             to: "/admin/dash"
         },
         {

@@ -86,11 +86,10 @@ const UsersTable = () => {
         governmentOfficial: { value: null, matchMode: FilterMatchMode.EQUALS },
         ismPassout: { value: null, matchMode: FilterMatchMode.EQUALS },
         batch: { value: null, matchMode: FilterMatchMode.BETWEEN },
+        currentJob: { value: null, matchMode: FilterMatchMode.CONTAINS },
         kartavyaVolunteer: { value: null, matchMode: FilterMatchMode.EQUALS },
-        yearsOfServiceStart: { value: null, matchMode: FilterMatchMode.BETWEEN },
         totalDonation: { value: null, matchMode: FilterMatchMode.BETWEEN },
         lastDonationDate: { value: null, matchMode: FilterMatchMode.DATE_IS },
-        yearsOfServiceEnd: { value: null, matchMode: FilterMatchMode.BETWEEN },
         activity: { value: null, matchMode: FilterMatchMode.EQUALS },
     });
     const booleanOptions = [
@@ -667,6 +666,14 @@ const UsersTable = () => {
                         filterElement={dateFilterTemplate}
                     />
                     <Column
+                        field="currentJob"
+                        header="Current Job"
+                        sortable
+                        filter
+                        filterPlaceholder="Search job..."
+                        body={(rowData) => rowData.currentJob || '-'}
+                    />
+                    <Column
                         field="activity"
                         header="Activity"
                         body={activityBodyTemplate}
@@ -759,25 +766,6 @@ const UsersTable = () => {
                                 className="p-column-filter"
                             />
                         )}
-                    />
-
-                    <Column
-                        field="yearsOfServiceStart"
-                        header="Start"
-                        body={(rowData) => rowData.kartavyaVolunteer ? rowData.yearsOfServiceStart : '-'}
-                        sortable
-                        filter
-                        dataType="numeric"
-                        filterPlaceholder="Search Start Year"
-                    />
-                    <Column
-                        field="yearsOfServiceEnd"
-                        header="End"
-                        body={(rowData) => rowData.kartavyaVolunteer ? rowData.yearsOfServiceEnd : '-'}
-                        sortable
-                        filter
-                        dataType="numeric"
-                        filterPlaceholder="Search End Year"
                     />
                     <Column
                         field="isVerified"

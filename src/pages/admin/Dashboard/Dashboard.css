@@ -10,7 +10,7 @@
 .admin-dashboard-container {
     background-color: white !important;
     padding: 40px 20px;
-    min-height: auto;
+    min-height: 80vh;
     font-family: "Poppins", sans-serif;
 }
 
@@ -273,6 +273,21 @@
     background-color: var(--admin-secondary) !important;
     box-shadow: 0 4px 15px rgba(26, 77, 46, 0.2) !important;
     transform: translateY(-2px);
+}
+
+.warning-content {
+    padding: 1rem;
+    line-height: 1.6;
+}
+
+.warning-content ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.warning-content li {
+    margin: 0.5rem 0;
+    color: #555;
 }
 
 @media screen and (max-width: 992px) {

@@ -24,6 +24,12 @@ const ContactTable = () => {
     const [sending, setSending] = useState(false);
     const [emailData, setEmailData] = useState({ subject: '', message: '' });
     const toast = useRef(null);
+    const [statusDialog, setStatusDialog] = useState(false);
+    const [selectedStatusContact, setSelectedStatusContact] = useState(null);
+    const [statusData, setStatusData] = useState({ status: '', resolutionNotes: '' });
+    const [updatingStatus, setUpdatingStatus] = useState(false);
+
+    const validStatuses = ['pending', 'in-progress', 'resolved', 'closed'];
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -48,11 +54,11 @@ const ContactTable = () => {
                 ...contact,
                 id: contact._id,
                 date: new Date(contact.date),
-                status: contact.isResponded ? 'Responded' : 'Pending',
-                response: contact.response || ''
+                resolvedAt: contact.resolvedAt ? new Date(contact.resolvedAt) : null,
+                status: contact.status || 'pending'
             })));
         } catch (error) {
-            console.log(error)
+            console.error(error);
             toast.current.show({
                 severity: 'error',
                 summary: 'Error',
@@ -65,7 +71,13 @@ const ContactTable = () => {
     };
 
     const statusBodyTemplate = (rowData) => {
-        const severity = rowData.status === 'Responded' ? 'success' : 'warning';
+        const severityMap = {
+            'pending': 'warning',
+            'in-progress': 'info',
+            'resolved': 'success',
+            'closed': 'danger'
+        };
+
         const tooltipId = `status-tooltip-${rowData.id}`;
 
         return (
@@ -73,20 +85,32 @@ const ContactTable = () => {
                 <Tag
                     id={tooltipId}
                     value={rowData.status}
-                    severity={severity}
+                    severity={severityMap[rowData.status]}
                 />
-                {rowData.status === 'Responded' && rowData.response && (
+                {rowData.resolutionNotes && (
                     <Tooltip
                         target={`#${tooltipId}`}
-                        content={rowData.response}
+                        content={rowData.resolutionNotes}
                         position="left"
-                        showDelay={100}
-                        hideDelay={200}
                     />
                 )}
             </div>
         );
     };
+
+    const resolvedInfoTemplate = (rowData) => {
+        if (!rowData.resolvedAt) return '-';
+        return (
+            <div className="resolved-info">
+                <div>{rowData.resolvedBy?.name || '-'}</div>
+                <div className="resolved-date">
+                    {new Date(rowData.resolvedAt).toLocaleDateString()}
+                </div>
+            </div>
+        );
+    };
+
+
     const handleDelete = async (contacts) => {
         setDeleting(true);
         try {
@@ -152,8 +176,55 @@ const ContactTable = () => {
         }
     };
 
+    const handleStatusUpdate = async () => {
+        setUpdatingStatus(true);
+        try {
+            await axios.put(
+                `${API_URL}/contact/${selectedStatusContact.id}/status`,
+                statusData,
+                { headers: { Authorization: `Bearer ${localStorage.token}` } }
+            );
+
+            setContacts(prev => prev.map(contact =>
+                contact.id === selectedStatusContact.id
+                    ? { ...contact, status: statusData.status, resolutionNotes: statusData.resolutionNotes }
+                    : contact
+            ));
+
+            toast.current.show({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Status updated successfully',
+                life: 3000
+            });
+        } catch (error) {
+            console.log(error)
+            toast.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to update status',
+                life: 3000
+            });
+        } finally {
+            setUpdatingStatus(false);
+            setStatusDialog(false);
+            setSelectedStatusContact(null);
+            setStatusData({ status: '', resolutionNotes: '' });
+        }
+    };
+
     const actionBodyTemplate = (rowData) => (
         <div className="action-buttons">
+            <Button
+                icon="pi pi-pencil"
+                className="p-button-rounded p-button-primary p-button-text"
+                onClick={() => {
+                    setSelectedStatusContact(rowData);
+                    setStatusData({ status: rowData.status, resolutionNotes: rowData.resolutionNotes || '' });
+                    setStatusDialog(true);
+                }}
+                tooltip="Update Status"
+            />
             <Button
                 icon="pi pi-envelope"
                 className="p-button-rounded p-button-success p-button-text"
@@ -249,19 +320,32 @@ const ContactTable = () => {
                     />
                     <Column
                         field="status"
-                        header="Response"
+                        header="Status"
                         body={statusBodyTemplate}
                         sortable
                         filter
                         filterElement={(options) => (
                             <Dropdown
                                 value={options.value}
-                                options={['Pending', 'Responded']}
+                                options={validStatuses}
                                 onChange={(e) => options.filterCallback(e.value)}
                                 placeholder="Select Status"
                                 className="p-column-filter"
                             />
                         )}
+                    />
+                    <Column
+                        field="resolvedBy"
+                        header="Resolved By"
+                        body={resolvedInfoTemplate}
+                        sortable
+                    />
+                    <Column
+                        field="resolvedAt"
+                        header="Resolved Date"
+                        body={(rowData) => rowData.resolvedAt ?
+                            new Date(rowData.resolvedAt).toLocaleDateString() : '-'}
+                        sortable
                     />
                     <Column
                         field="actions"
@@ -339,6 +423,54 @@ const ContactTable = () => {
                             rows={5}
                         />
                     </div>
+                </div>
+            </Dialog>
+
+            <Dialog
+                visible={statusDialog}
+                onHide={() => setStatusDialog(false)}
+                header="Update Status"
+                footer={
+                    <div>
+                        <Button
+                            label="Cancel"
+                            icon="pi pi-times"
+                            className="p-button-text"
+                            onClick={() => setStatusDialog(false)}
+                        />
+                        <Button
+                            label="Update"
+                            icon="pi pi-check"
+                            className="p-button-success"
+                            onClick={handleStatusUpdate}
+                            loading={updatingStatus}
+                        />
+                    </div>
+                }
+            >
+                <div className="p-fluid">
+                    <div className="p-field">
+                        <label htmlFor="status">Status</label>
+                        <Dropdown
+                            id="status"
+                            value={statusData.status}
+                            options={validStatuses}
+                            onChange={(e) => setStatusData(prev => ({ ...prev, status: e.value }))}
+                            placeholder="Select Status"
+                        />
+                    </div>
+                    {statusData.status === 'resolved' && (
+                        <div className="p-field">
+                            <label htmlFor="resolutionNotes">Resolution Notes</label>
+                            <InputText
+                                id="resolutionNotes"
+                                value={statusData.resolutionNotes}
+                                onChange={(e) => setStatusData(prev => ({ ...prev, resolutionNotes: e.target.value }))}
+                                rows={5}
+                                required
+                            />
+                        </div>
+                    )}
                 </div>
             </Dialog>
         </>
