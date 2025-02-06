@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {
     Box, Paper, Typography, TextField, Button,
-    CircularProgress, Alert, FormControl, MenuItem
+    CircularProgress, Alert, FormControl, MenuItem, Card, CardContent, AlertTitle
 } from '@mui/material';
 import axios from 'axios';
 import { fetchContent } from '../../helper/contentFetcher';
@@ -18,14 +18,12 @@ export default function DonateItem() {
         name: '',
         email: '',
         contactNumber: '',
-        itemType: '',
+        itemType: [],
         itemDescription: '',
         quantity: '',
         pickupAddress: ''
     });
-    const [images, setImages] = useState([]);
     const [success, setSuccess] = useState(false);
-    const [fileNames, setFileNames] = useState([]);
 
     useEffect(() => {
         const loadContent = async () => {
@@ -51,59 +49,59 @@ export default function DonateItem() {
     }, []);
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        if (e.target.name === 'itemType') {
+            setFormData({
+                ...formData,
+                itemType: typeof e.target.value === 'string' ? e.target.value.split(',') : e.target.value
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [e.target.name]: e.target.value
+            });
+        }
     };
 
-    const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
-        setImages(files);
-        setFileNames(files.map(file => file.name));
-    };
+    const [processing, setProcessing] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+        setProcessing(true);
         setError(null);
-
-        const formDataToSend = new FormData();
-        Object.keys(formData).forEach(key => {
-            formDataToSend.append(key, formData[key]);
-        });
-
-        images.forEach(image => {
-            formDataToSend.append('images', image);
-        });
+        setSuccess(false);
 
         try {
             const response = await axios.post(
                 `${API_URL}/donation/item`,
-                formDataToSend,
+                formData,
                 {
-                    headers: { 'Content-Type': 'multipart/form-data' }
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.token}`
+                    }
                 }
             );
 
             if (response.status === 201) {
                 setSuccess(true);
+                setSubmitted(true);
                 setFormData({
                     name: '',
                     email: '',
                     contactNumber: '',
-                    itemType: '',
+                    itemType: [],
                     itemDescription: '',
                     quantity: '',
                     pickupAddress: ''
                 });
-                setImages([]);
-                setFileNames([]);
+                // Scroll to top after success
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         } catch (err) {
-            setError(err.response?.data?.message || 'An error occurred');
+            setError(err.response?.data?.message || 'Failed to submit donation request');
         } finally {
-            setLoading(false);
+            setProcessing(false);
         }
     };
 
@@ -117,18 +115,40 @@ export default function DonateItem() {
 
     return (
         <div className="donation-container">
-            <Box className="form-box">
-                <Typography variant="h2" className="page-title">
+            <Box className="form-box donation-main">
+                <Typography variant="h3" className="page-title">
                     {hero?.title || 'Donate Items'}
                 </Typography>
                 <Typography variant="subtitle1" className="page-subtitle">
                     {hero?.subtitle || 'Help us by donating items'}
                 </Typography>
 
+                <div className="steps-wrapper">
+                    {content?.steps?.map((step, index) => (
+                        <Card key={index} className="step-card">
+                            <CardContent>
+                                <Typography variant="h2" className="step-number">
+                                    {index + 1}
+                                </Typography>
+                                <Typography variant="h6" className="step-title">
+                                    {step.title}
+                                </Typography>
+                                <Typography variant="body2" className="step-description">
+                                    {step.description}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+
                 <Paper component="form" className="donation-form" onSubmit={handleSubmit}>
-                    <div className="form-grid">
+                    <Typography variant="h4" className="section-title">
+                        Donation Details
+                    </Typography>
+
+                    <div className="form-grid-donate">
                         <TextField
-                            className="custom-textfield"
+                            className="custom-textfield custom-textfield-donation"
                             label="Name"
                             name="name"
                             value={formData.name}
@@ -137,7 +157,7 @@ export default function DonateItem() {
                             fullWidth
                         />
                         <TextField
-                            className="custom-textfield"
+                            className="custom-textfield custom-textfield-donation"
                             label="Email"
                             name="email"
                             type="email"
@@ -147,7 +167,7 @@ export default function DonateItem() {
                             fullWidth
                         />
                         <TextField
-                            className="custom-textfield"
+                            className="custom-textfield custom-textfield-donation"
                             label="Contact Number"
                             name="contactNumber"
                             value={formData.contactNumber}
@@ -155,15 +175,18 @@ export default function DonateItem() {
                             required
                             fullWidth
                         />
-                        <FormControl fullWidth className="custom-textfield">
+                        <FormControl fullWidth className="custom-textfield custom-textfield-donation">
                             <TextField
                                 select
-                                label="Item Type"
+                                label="Item Types"
                                 name="itemType"
                                 value={formData.itemType}
                                 onChange={handleChange}
                                 required
                                 fullWidth
+                                SelectProps={{
+                                    multiple: true
+                                }}
                             >
                                 {itemTypes?.map((type) => (
                                     <MenuItem key={type} value={type}>
@@ -173,7 +196,7 @@ export default function DonateItem() {
                             </TextField>
                         </FormControl>
                         <TextField
-                            className="custom-textfield"
+                            className="custom-textfield custom-textfield-donation"
                             label="Quantity"
                             name="quantity"
                             type="number"
@@ -183,7 +206,7 @@ export default function DonateItem() {
                             fullWidth
                         />
                         <TextField
-                            className="custom-textfield"
+                            className="custom-textfield custom-textfield-donation"
                             label="Item Description"
                             name="itemDescription"
                             value={formData.itemDescription}
@@ -195,7 +218,7 @@ export default function DonateItem() {
                             style={{ gridColumn: '1 / -1' }}
                         />
                         <TextField
-                            className="custom-textfield"
+                            className="custom-textfield custom-textfield-donation"
                             label="Pickup Address"
                             name="pickupAddress"
                             value={formData.pickupAddress}
@@ -207,39 +230,47 @@ export default function DonateItem() {
                             style={{ gridColumn: '1 / -1' }}
                         />
 
-                        <div className="file-input-container">
-                            <label className="file-input-label">
-                                {fileNames.length ? fileNames.join(', ') : 'Upload Item Images'}
-                                <input
-                                    type="file"
-                                    onChange={handleImageChange}
-                                    accept="image/*"
-                                    multiple
-                                    className="file-input"
-                                />
-                            </label>
-                        </div>
-
                         <Button
                             type="submit"
                             variant="contained"
                             className="submit-button"
-                            disabled={loading}
+                            disabled={processing}
                             fullWidth
                         >
-                            {loading ? <CircularProgress size={24} /> : 'Submit Donation'}
+                            {processing ? (
+                                <div className="button-content">
+                                    <CircularProgress size={20} color="inherit" />
+                                    <span>Processing...</span>
+                                </div>
+                            ) : (
+                                'Submit Donation'
+                            )}
                         </Button>
                     </div>
 
-                    {success && (
-                        <Alert severity="success" sx={{ mt: 2 }}>
-                            Thank you for your donation! We will contact you soon.
-                        </Alert>
-                    )}
-                    {error && (
-                        <Alert severity="error" sx={{ mt: 2 }}>
-                            {error}
-                        </Alert>
+                    {(success || error) && (
+                        <div className={`status-container ${submitted ? 'fade-in' : ''}`}>
+                            {success && (
+                                <Alert
+                                    severity="success"
+                                    className="status-message"
+                                    onClose={() => setSuccess(false)}
+                                >
+                                    <AlertTitle>Thank You!</AlertTitle>
+                                    Your donation request has been received. We will contact you soon.
+                                </Alert>
+                            )}
+                            {error && (
+                                <Alert
+                                    severity="error"
+                                    className="status-message"
+                                    onClose={() => setError(null)}
+                                >
+                                    <AlertTitle>Error</AlertTitle>
+                                    {error}
+                                </Alert>
+                            )}
+                        </div>
                     )}
                 </Paper>
             </Box>
