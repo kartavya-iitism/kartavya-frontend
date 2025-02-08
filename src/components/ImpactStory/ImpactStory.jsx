@@ -73,7 +73,7 @@ const ImpactStory = () => {
                             </Typography>
                         ))}
 
-                        <Box className="cta-container">
+                        <Box className="cta-container-founder">
                             <Link to={cta.link} style={{ textDecoration: 'none' }}>
                                 {cta.text}
                             </Link>
