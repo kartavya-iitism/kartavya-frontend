@@ -1,31 +1,40 @@
-import CssBaseline from "@mui/material/CssBaseline"
 import React from 'react';
-import { Routes, Route } from 'react-router-dom'
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom'
+import CssBaseline from "@mui/material/CssBaseline"
 import './App.css'
+
+// components
+import Navbar from "./components/Navbar/Navbar"
+import Footer from "./components/Footer/Footer";
+import GoogleCallback from "./components/GoogleCallBack/GoogleCallBack";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+
+// helpers
+import { UserRoute, AdminRoute } from "./helper/routeProtection";
+import { AuthProvider } from './helper/AuthContext';
+
+// user
+import Profile from "./pages/user/Profile/Profile"
+import Dashboard from "./pages/user/Dashboard/Dashboard"
+import ResetPassword from "./pages/user/ResetPassword/ResetPassword";
+
+// public
 import LandingPage from "./pages/Landing/Landing";
 import RegisterForm from "./pages/Registration/Registration";
 import LoginForm from "./pages/Login/Login";
-import Navbar from "./components/Navbar/Navbar"
-import Profile from "./pages/user/Profile/Profile"
-import Dashboard from "./pages/user/Dashboard/Dashboard"
 import DonationForm from "./pages/Donate/Donate";
-import Footer from "./components/Footer/Footer";
 import About from "./pages/About/About";
 import Works from "./pages/Works/Works";
 import Contact from "./pages/Contact/Contact";
 import FAQ from "./pages/FAQ/FAQ";
-import AdminDashboard from "./pages/admin/Dashboard/Dashboard";
-import { UserRoute, AdminRoute } from "./helper/routeProtection";
-import General from "./pages/admin/General/General";
 import DonateItem from "./pages/DonateItem/DonateItem";
-import ResetPassword from "./pages/user/ResetPassword/ResetPassword";
-import GoogleCallback from "./components/GoogleCallBack/GoogleCallBack";
-import { AuthProvider } from './helper/AuthContext';
 import NewsAchievements from "./pages/NewsAchievement/NewsAchievement";
+
+// admin
+import AdminDashboard from "./pages/admin/Dashboard/Dashboard";
+import General from "./pages/admin/General/General";
 import ManageNewsAchievements from "./pages/admin/ManageNewsAchievements/ManageNewsAchievements";
-import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 const routes = {
   public: [
