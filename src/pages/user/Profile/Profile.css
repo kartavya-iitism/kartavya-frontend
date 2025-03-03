@@ -136,6 +136,20 @@
     margin-top: 20px;
 }
 
+.student-link {
+    border: none;
+    background: none;
+    font-family: inherit;
+    padding: 0;
+    text-align: left;
+    color: var(--admin-primary);
+    cursor: pointer;
+}
+
+.student-link:hover {
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 768px) {
     .profile-container {
         padding: 60px 20px;

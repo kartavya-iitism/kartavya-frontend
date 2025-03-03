@@ -345,6 +345,68 @@
     transform: translateY(-2px);
 }
 
+.sponsored-students {
+    margin-top: 50px !important;
+    padding: 40px !important;
+    border-radius: 10px !important;
+    background: white !important;
+    border-top: 5px solid var(--color-primary) !important;
+    animation: fadeIn 0.5s ease;
+}
+
+.students-list {
+    margin-top: 1.5rem;
+    padding: 1rem;
+}
+
+.student-card {
+    background: #f8f9fa !important;
+    border-radius: 15px !important;
+    transition: all 0.3s ease !important;
+    border: 1px solid rgba(67, 122, 30, 0.1) !important;
+}
+
+.student-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.student-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.student-avatar {
+    border: 3px solid var(--color-primary) !important;
+    margin-bottom: 1rem !important;
+}
+
+.student-name {
+    color: var(--color-primary) !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.25rem !important;
+}
+
+.student-info {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.student-info .MuiTypography-body2 {
+    margin-bottom: 0.5rem !important;
+    font-family: "Poppins", sans-serif !important;
+}
+
+.student-info strong {
+    color: var(--color-primary);
+    margin-right: 0.5rem;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -362,6 +424,20 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .sponsored-students {
+        padding: 20px !important;
+    }
+
+    .students-list {
+        padding: 0.5rem;
+    }
+
+    .student-card {
+        margin-bottom: 1rem;
     }
 }
 

@@ -14,11 +14,13 @@ import {
     DialogActions,
     Alert,
     IconButton,
-    CircularProgress
+    CircularProgress,
+    Avatar
 } from '@mui/material';
 
 import { DeleteOutlineOutlined as DeleteIcon } from '@mui/icons-material';
 import { PictureAsPdf, InsertDriveFile } from '@mui/icons-material';
+import StudentDetailsDialog from '../../../components/Dialogs/StudentDetails/StudentDetailsDialog';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../../../config';
@@ -42,6 +44,10 @@ const Dashboard = () => {
     const [deleteDialog, setDeleteDialog] = useState(false);
     const [selectedForDelete, setSelectedForDelete] = useState(null);
     const [deleting, setDeleting] = useState(false);
+    const [selectedStudent, setSelectedStudent] = useState(null);
+
+    const handleOpenStudentDialog = (student) => setSelectedStudent(student);
+    const handleCloseStudentDialog = () => setSelectedStudent(null);
 
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -350,6 +356,73 @@ const Dashboard = () => {
                                     )}
                                 </Dialog>
                             </Stack>
+                        </Paper>
+
+                        <Paper className="sponsored-students">
+                            <Typography variant="h4" className="section-title">
+                                Sponsored Students
+                            </Typography>
+                            <Stack
+                                direction="row"
+                                flexWrap="wrap"
+                                gap={3}
+                                className="students-list"
+                            >
+                                {userStats.sponsoredStudents?.length > 0 ? (
+                                    userStats.sponsoredStudents.map((student, index) => (
+                                        <Card
+                                            key={index}
+                                            onClick={() => handleOpenStudentDialog(student)}
+                                            className="student-card"
+                                            sx={{
+                                                cursor: 'pointer',
+                                                flex: {
+                                                    xs: '0 0 100%',
+                                                    sm: '0 0 48%',
+                                                    md: '0 0 31%'
+                                                }
+                                            }}
+                                        >
+                                            <CardContent>
+                                                <Box className="student-header">
+                                                    <Avatar
+                                                        src={student.profilePhoto}
+                                                        alt={student.studentName}
+                                                        sx={{ width: 80, height: 80 }}
+                                                        className="student-avatar"
+                                                    />
+                                                    <Typography variant="h6" className="student-name">
+                                                        {student.studentName}
+                                                    </Typography>
+                                                    <Typography variant="body2" color="text.secondary">
+                                                        Class {student.class}
+                                                    </Typography>
+                                                </Box>
+                                                <Box className="student-info">
+                                                    <Typography variant="body2">
+                                                        <strong>School:</strong> {student.school}
+                                                    </Typography>
+                                                    <Typography variant="body2">
+                                                        <strong>Centre:</strong> {student.centre}
+                                                    </Typography>
+                                                    <Typography variant="body2">
+                                                        <strong>Session:</strong> {student.currentSession}
+                                                    </Typography>
+                                                </Box>
+                                            </CardContent>
+                                        </Card>
+                                    ))
+                                ) : (
+                                    <Typography variant="body1" sx={{ width: '100%', textAlign: 'center' }}>
+                                        No sponsored students available.
+                                    </Typography>
+                                )}
+                            </Stack>
+                            <StudentDetailsDialog
+                                open={Boolean(selectedStudent)}
+                                onClose={handleCloseStudentDialog}
+                                student={selectedStudent || {}}
+                            />
                         </Paper>
 
                         <Paper className="user-documents">

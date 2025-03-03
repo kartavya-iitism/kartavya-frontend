@@ -23,6 +23,7 @@ import { API_URL } from '../../../config';
 import ChangePasswordDialog from '../../../components/Dialogs/ChangePasswordDialog/ChangePassword'
 import EditProfileDialog from '../../../components/Dialogs/EditProfileDialog/EditProfile';
 import ChangeEmailDialog from '../../../components/Dialogs/ChangeEmailDialog/ChangeEmailDialog';
+import StudentDetailsDialog from '../../../components/Dialogs/StudentDetails/StudentDetailsDialog';
 import './Profile.css'
 
 export default function Profile() {
@@ -34,6 +35,7 @@ export default function Profile() {
     const [editProfileDialogOpen, setEditProfileDialogOpen] = useState(false);
     const [initialLoad, setInitialLoad] = useState(true);
     const [emailDialogOpen, setEmailDialogOpen] = useState(false);
+    const [selectedStudent, setSelectedStudent] = useState(null);
 
     const handleOpenDialog = () => {
         setDialogOpen(true);
@@ -52,6 +54,8 @@ export default function Profile() {
     };
     const handleOpenEmailDialog = () => setEmailDialogOpen(true);
     const handleCloseEmailDialog = () => setEmailDialogOpen(false);
+    const handleOpenStudentDialog = (student) => setSelectedStudent(student);
+    const handleCloseStudentDialog = () => setSelectedStudent(null);
 
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
@@ -304,12 +308,21 @@ export default function Profile() {
                                                 {user.sponsoredStudents.map((student, index) => (
                                                     <TableRow key={index} className="table-row">
                                                         <TableCell>{index + 1}</TableCell>
-                                                        <TableCell>{student.name}</TableCell>
+                                                        <TableCell>{student.studentName}</TableCell>
                                                         <TableCell>{student.school}</TableCell>
                                                         <TableCell>
                                                             <Link
-                                                                href={`/student/${student.id}`}
+                                                                component="button"
+                                                                onClick={() => handleOpenStudentDialog(student)}
                                                                 className="student-link"
+                                                                sx={{
+                                                                    textDecoration: 'none',
+                                                                    color: 'primary.main',
+                                                                    '&:hover': {
+                                                                        textDecoration: 'underline',
+                                                                        cursor: 'pointer'
+                                                                    }
+                                                                }}
                                                             >
                                                                 View Profile
                                                             </Link>
@@ -384,6 +397,11 @@ export default function Profile() {
                 open={emailDialogOpen}
                 onClose={handleCloseEmailDialog}
                 username={user?.username || ''}
+            />
+            <StudentDetailsDialog
+                open={Boolean(selectedStudent)}
+                onClose={handleCloseStudentDialog}
+                student={selectedStudent || {}}
             />
         </Box>
     );

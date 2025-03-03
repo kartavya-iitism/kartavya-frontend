@@ -1,0 +1,156 @@
+.student-details-dialog .MuiPaper-root {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1) !important;
+    overflow: hidden !important;
+    max-width: 600px !important;
+    margin: 20px auto !important;
+}
+
+.student-details-dialog .dialog-title {
+    background: var(--admin-primary) !important;
+    color: white !important;
+    padding: 1.5rem !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 500 !important;
+}
+
+.student-details-dialog .dialog-content {
+    padding: 2rem !important;
+}
+
+.student-details-dialog .content-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.student-details-dialog .details-section {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.student-details-dialog .details-section:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+.student-details-dialog .section-title {
+    color: var(--admin-primary) !important;
+    margin-bottom: 1.2rem !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    border-bottom: 2px solid var(--admin-primary);
+    padding-bottom: 0.5rem;
+    width: fit-content;
+}
+
+.student-details-dialog .MuiTypography-body1 {
+    font-family: "Poppins", sans-serif !important;
+    margin-bottom: 0.75rem !important;
+    color: #4a4a4a !important;
+    font-size: 0.9rem !important;
+    display: flex;
+    align-items: baseline;
+}
+
+.student-details-dialog .MuiTypography-body1 strong {
+    min-width: 160px;
+    color: #2d2d2d;
+}
+
+.student-details-dialog .status-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.student-details-dialog .status-chip {
+    margin: 0 !important;
+    border-width: 2px !important;
+}
+
+.student-details-dialog .sponsorship-info {
+    margin-top: 1.2rem !important;
+    padding-top: 1.2rem !important;
+    border-top: 1px solid #e9ecef;
+}
+
+.student-details-dialog .dialog-actions {
+    padding: 1.5rem !important;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #f0f0f0;
+}
+
+.student-details-dialog .close-button {
+    background-color: var(--admin-primary) !important;
+    color: white !important;
+    padding: 0.5rem 2rem !important;
+    border-radius: 25px !important;
+    text-transform: none !important;
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+.student-details-dialog .close-button:hover {
+    background-color: var(--admin-secondary) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.student-details-dialog .profile-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.student-details-dialog .student-avatar {
+    width: 100px !important;
+    height: 100px !important;
+    border: 3px solid var(--admin-primary) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.student-details-dialog .profile-basic-info {
+    flex: 1;
+}
+
+.student-details-dialog .profile-basic-info .MuiTypography-body1 {
+    margin-bottom: 0.5rem !important;
+}
+
+@media screen and (max-width: 600px) {
+    .student-details-dialog .dialog-content {
+        padding: 1rem !important;
+    }
+
+    .student-details-dialog .details-section {
+        padding: 1rem;
+    }
+
+    .student-details-dialog .MuiTypography-body1 {
+        flex-direction: column;
+    }
+
+    .student-details-dialog .MuiTypography-body1 strong {
+        margin-bottom: 0.25rem;
+    }
+    .student-details-dialog .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .student-details-dialog .profile-basic-info {
+        width: 100%;
+    }
+}
