@@ -41,17 +41,6 @@
     margin-bottom: 2rem;
 }
 
-.welcome-title {
-    color: #1a4d2e;
-    font-size: 2rem !important;
-    font-weight: 500 !important;
-    margin-bottom: 1rem !important;
-}
-
-.welcome-subtitle {
-    color: #666;
-    font-size: 1rem !important;
-}
 .cta-container {
     text-align: center;
     max-width: 450px;

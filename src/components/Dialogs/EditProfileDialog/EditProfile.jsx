@@ -22,7 +22,7 @@ import { API_URL } from '../../../config';
 import axios from 'axios';
 import './EditProfile.css'
 
-const EditProfileDialog = ({ open, onClose, username, initialData }) => {
+const EditProfileDialog = ({ open, onClose, username, initialData = { gender: '' } }) => {
     const [formData, setFormData] = useState({
         contactNumber: initialData?.contactNumber || '',
         address: initialData?.address || '',
@@ -187,7 +187,7 @@ const EditProfileDialog = ({ open, onClose, username, initialData }) => {
                                 <FormLabel className='radio-label'>Gender</FormLabel>
                                 <RadioGroup
                                     name="gender"
-                                    value={formData.gender}
+                                    value={formData.gender || ''} // Handle null/undefined
                                     onChange={handleChange}
                                     row
                                 >
@@ -338,7 +338,7 @@ EditProfileDialog.propTypes = {
         currentJob: PropTypes.string,
         name: PropTypes.string,
         dateOfBirth: PropTypes.string,
-        gender: PropTypes.oneOf(['male', 'female']),
+        gender: PropTypes.oneOf(['male', 'female', '']),
         ismPassout: PropTypes.bool,
         batch: PropTypes.oneOfType([
             PropTypes.string,
@@ -347,7 +347,7 @@ EditProfileDialog.propTypes = {
         kartavyaVolunteer: PropTypes.bool,
         yearsOfServiceStart: PropTypes.string,
         yearsOfServiceEnd: PropTypes.string
-    }).isRequired
+    })
 };
 
 export default EditProfileDialog;

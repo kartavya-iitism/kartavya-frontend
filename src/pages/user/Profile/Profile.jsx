@@ -88,8 +88,9 @@ export default function Profile() {
     }, [])
 
     useEffect(() => {
-        if (!initialLoad && !loading && user?.username) {
-            setShowOtpDialog(!user.isVerified);
+        if (!initialLoad && !loading) {
+            // Only show OTP dialog if we have a username and user is not verified
+            setShowOtpDialog(!user?.isVerified && Boolean(user?.username));
         }
     }, [user, initialLoad, loading]);
 
@@ -371,7 +372,8 @@ export default function Profile() {
             <OtpDialog
                 open={showOtpDialog && !loading && !initialLoad && user?.username && !user.isVerified}
                 onClose={() => user?.isVerified && setShowOtpDialog(false)}
-                username={user?.username}
+                // Add null check for username
+                username={user?.username || ''} // Ensure username is never undefined
                 onSuccess={() => {
                     setUser({ ...user, isVerified: true });
                     setShowOtpDialog(false);
