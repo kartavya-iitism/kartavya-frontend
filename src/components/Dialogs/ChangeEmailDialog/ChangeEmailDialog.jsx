@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
     Dialog,
@@ -21,6 +21,7 @@ const ChangeEmailDialog = ({ open, onClose, username }) => {
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [isGoogleAccount, setIsGoogleAccount] = useState(false);
 
     const handleChangeEmail = async () => {
         setError('');
@@ -60,6 +61,30 @@ const ChangeEmailDialog = ({ open, onClose, username }) => {
         }
     };
 
+    useEffect(() => {
+        const checkGoogleAccount = async () => {
+            if (username && open) {
+                try {
+                    const response = await axios.get(
+                        `${API_URL}/user/check-login-type/${username}`,
+                        {
+                            headers: {
+                                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                            }
+                        }
+                    );
+                    setIsGoogleAccount(response.data.isGoogleAccount || false);
+                } catch (err) {
+                    console.error("Failed to check account type:", err);
+                    // Default to non-Google account on error
+                    setIsGoogleAccount(false);
+                }
+            }
+        };
+
+        checkGoogleAccount();
+    }, [username, open]);
+
     const handleClose = () => {
         setNewEmail('');
         setError('');
@@ -90,6 +115,28 @@ const ChangeEmailDialog = ({ open, onClose, username }) => {
                         </Box>
                     </DialogContent>
                 </Box>
+            ) : isGoogleAccount ? (
+                <>
+                    <DialogTitle className="dialog-title">
+                        Email Change Not Allowed
+                    </DialogTitle>
+                    <DialogContent className="dialog-content">
+                        <Box className="form-container" sx={{ py: 2 }}>
+                            <Typography variant="body1" align="center">
+                                Email change is not allowed for Google accounts.
+                            </Typography>
+                        </Box>
+                    </DialogContent>
+                    <DialogActions className="dialog-actions">
+                        <Button
+                            onClick={handleClose}
+                            variant="contained"
+                            className="submit-button"
+                        >
+                            Close
+                        </Button>
+                    </DialogActions>
+                </>
             ) : (
                 <>
                     <DialogTitle className="dialog-title">
