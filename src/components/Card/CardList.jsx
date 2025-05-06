@@ -15,9 +15,9 @@ const CardList = () => {
                 "to": "/donate"
             },
             {
-                "image": training,
-                "title": "Training and Providing Financial Supports",
-                "backgroundColor": "#3da76e",
+                "image": environment,
+                "title": "Creating Environmental and Social Awareness",
+                "backgroundColor": "#13628c",
                 "to": "/contact"
             },
             {
@@ -27,9 +27,10 @@ const CardList = () => {
                 "to": "/contact"
             },
             {
-                "image": environment,
-                "title": "Creating Environmental and Social Awareness",
-                "backgroundColor": "#13628c",
+
+                "image": training,
+                "title": "Donate Essential Goods!",
+                "backgroundColor": "#3da76e",
                 "to": "/donate-item"
             }
         ]

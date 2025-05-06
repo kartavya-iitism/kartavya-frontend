@@ -19,20 +19,20 @@ function Slider() {
         "items": [
             {
                 "img": slide1,
-                "title": "Educate a Child. Empower a Society",
-                "description": "Young readers are future leaders!",
+                "title": "Educate a Child. Empower a Nation",
+                "description": "Today's young readers are tomorrow's leaders.",
                 "alt": "Slide 1"
             },
             {
                 "img": slide2,
                 "title": "Towards an educated India",
-                "description": "Dedicated to all-round development of children with academics, sports, and culture.",
+                "description": "Committed to the holistic development of children through academics, sports, and cultural enrichment.",
                 "alt": "Slide 2"
             },
             {
                 "img": slide3,
-                "title": "Educate and Empower Young Girls and Women",
-                "description": "The progress of a community is measured by the degree of progress of both men and women.",
+                "title": "Empower Girls. Uplift Communities",
+                "description": "A society thrives when both women and men progress together.",
                 "alt": "Slide 3"
             }
         ]
