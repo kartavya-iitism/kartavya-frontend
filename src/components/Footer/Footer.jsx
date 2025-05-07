@@ -113,6 +113,13 @@ export default function Footer() {
                                     </Link>
                                 </span>
                             </p>
+                            <p>
+                                <span className="text-reset">
+                                    <Link to="https://drive.google.com/file/d/1mn-qIOOcPYb22bXAxfoJsUx58BnooaFq/view?usp=sharing" style={{ textDecoration: "none" }}>
+                                        Privacy Policy{" "}
+                                    </Link>
+                                </span>
+                            </p>
                         </MDBCol>
 
                         <MDBCol md="4" lg="3" xl="3" className="mx-auto mb-md-0 mb-4">
