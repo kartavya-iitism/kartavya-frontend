@@ -115,8 +115,8 @@ export default function Footer() {
                             </p>
                             <p>
                                 <span className="text-reset">
-                                    <Link to="https://drive.google.com/file/d/1mn-qIOOcPYb22bXAxfoJsUx58BnooaFq/view?usp=sharing" style={{ textDecoration: "none" }}>
-                                        Privacy Policy{" "}
+                                    <Link to="/privacy-policy" style={{ textDecoration: "none" }}>
+                                        Privacy Policy
                                     </Link>
                                 </span>
                             </p>

@@ -30,6 +30,7 @@ import Contact from "./pages/Contact/Contact";
 import FAQ from "./pages/FAQ/FAQ";
 import DonateItem from "./pages/DonateItem/DonateItem";
 import NewsAchievements from "./pages/NewsAchievement/NewsAchievement";
+import PrivacyPolicy from "./components/PrivacyPolicy/PrivacyPolicy";
 
 // admin
 import AdminDashboard from "./pages/admin/Dashboard/Dashboard";
@@ -50,6 +51,7 @@ const routes = {
     { path: "/news", element: <NewsAchievements />, title: "News & Achievements | Kartavya" },
     { path: "/reset-password/:token", element: <ResetPassword />, title: "Reset Password | Kartavya" },
     { path: "/auth/callback", element: <GoogleCallback />, title: "Authentication | Kartavya" },
+    { path: "/privacy-policy", element: <PrivacyPolicy />, title: "Privacy Policy | Kartavya" },
   ],
   user: [
     { path: "/user/profile", element: <Profile />, title: "My Profile | Kartavya" },
