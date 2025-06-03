@@ -2,7 +2,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button, 
 import PropTypes from 'prop-types';
 import './ConfirmDialog.css';
 
-const ConfirmDialog = ({ open, onClose, onConfirm, formData, loading }) => {
+const ConfirmDialog = ({ open, onClose, onConfirm, formData, amount, loading }) => {
     return (
         <Dialog
             open={open}
@@ -33,7 +33,7 @@ const ConfirmDialog = ({ open, onClose, onConfirm, formData, loading }) => {
                     <strong>Number of Children:</strong> {formData.numChild || 0}
                 </Typography>
                 <Typography variant="body1">
-                    <strong>Children Sponsorship Amount:</strong> ₹{parseInt(formData.numChild * 8000 || 0).toLocaleString('en-IN')}
+                    <strong>Children Sponsorship Amount:</strong> ₹{parseInt(formData.numChild * amount || 0).toLocaleString('en-IN')}
                 </Typography>
                 <Typography variant="body1">
                     <strong>Extra Amount:</strong> ₹{parseInt(formData.extamount || 0).toLocaleString('en-IN')}
@@ -80,6 +80,7 @@ ConfirmDialog.propTypes = {
         extamount: PropTypes.string,
         amount: PropTypes.string
     }).isRequired,
+    amount: PropTypes.string.isRequired,
     loading: PropTypes.bool.isRequired
 };
 

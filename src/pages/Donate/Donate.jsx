@@ -338,6 +338,7 @@ export default function DonationForm() {
                 onClose={() => setOpenConfirmDialog(false)}
                 onConfirm={handleSubmit}
                 formData={formData}
+                amount={sponsorship.amountPerChild}
                 loading={loading}
             />
         </div>
