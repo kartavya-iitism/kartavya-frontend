@@ -135,7 +135,7 @@ export default function Footer() {
                             </p>
                             <p>
                                 <MDBIcon color="secondary" icon="phone" className="me-3" />
-                                +918709899923
+                                +917264822356
                             </p>
 
                         </MDBCol>
