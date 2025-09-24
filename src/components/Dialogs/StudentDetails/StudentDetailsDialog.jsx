@@ -92,9 +92,9 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
                         <Typography variant="body1">
                             <strong>Current Session:</strong> {student.currentSession}
                         </Typography>
-                        <Typography variant="body1">
+                        {/* <Typography variant="body1">
                             <strong>Annual Fees:</strong> {formatCurrency(student.annualFees)}
-                        </Typography>
+                        </Typography> */}
                     </Box>
 
                     <Box className="details-section family">
@@ -124,18 +124,17 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
                         </Typography>
                         <Box className="status-chips">
                             <StatusChip label={student.activeStatus ? "Active" : "Inactive"} value={student.activeStatus} />
-                            <StatusChip label="Sponsorship" value={student.sponsorshipStatus} />
                             <StatusChip label="Aadhar" value={student.aadhar} />
                             <StatusChip label="Domicile" value={student.domicile} />
                             <StatusChip label="Birth Certificate" value={student.birthCertificate} />
                             <StatusChip label="Disability" value={student.disability} />
                             <StatusChip label="Single Parent" value={student.singleParent} />
                         </Box>
-                        {student.sponsorshipStatus && (
+                        {/* {student.sponsorshipStatus && (
                             <Typography variant="body1" className="sponsorship-info">
                                 <strong>Sponsorship Percentage:</strong> {student.sponsorshipPercent}%
                             </Typography>
-                        )}
+                        )} */}
                     </Box>
                 </Box>
             </DialogContent>

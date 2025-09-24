@@ -23,7 +23,7 @@ export default function DonationForm() {
         name: '',
         contactNumber: '',
         email: '',
-        numChild: '',
+        numChild: 0,
         amount: ''
     });
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -58,7 +58,7 @@ export default function DonationForm() {
             name: storedUser?.name || '',
             contactNumber: storedUser?.contactNumber || '',
             email: storedUser?.email || '',
-            numChild: '',
+            numChild: 0,
             extamount: '',
             amount: '0',
             donationDate: today
