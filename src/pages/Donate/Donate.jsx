@@ -59,7 +59,7 @@ export default function DonationForm() {
             contactNumber: storedUser?.contactNumber || '',
             email: storedUser?.email || '',
             numChild: 0,
-            extamount: '',
+            extamount: '0',
             amount: '0',
             donationDate: today
         });
@@ -67,12 +67,14 @@ export default function DonationForm() {
     }, []);
 
     useEffect(() => {
-        const childAmount = parseInt(formData.numChild || 0) * content?.sponsorship.amountPerChild || 0;
-        const extraAmount = parseInt(formData.extamount || 0);
-        const totalAmount = childAmount + extraAmount;
+        const childAmount = Math.max(0, parseInt(formData.numChild || 0)) * content?.sponsorship.amountPerChild || 0;
+        const extamount = Math.max(parseInt(formData.extamount || 0), 0);
+        const totalAmount = childAmount + extamount;
 
         setformData(prev => ({
             ...prev,
+            numChild: Math.max(0, parseInt(formData.numChild || 0)),
+            extamount: extamount.toString(),
             amount: totalAmount.toString()
         }));
     }, [formData.numChild, formData.extamount, content]);
