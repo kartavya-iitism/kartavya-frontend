@@ -180,6 +180,11 @@ export default function LoginForm() {
                     {success && <div className="status-message success-message">Login Successful</div>}
                     {error && <div className="status-message error-message">{errorMessage}</div>}
                     {loading && <div className="status-message loading-message">Please Wait...</div>}
+                    
+                    <span className="register-link-text mobile-only">
+                         Not a member? <a href="/register">Register Now</a>
+                    </span>
+                    
                 </Box>
             </Box>
 
