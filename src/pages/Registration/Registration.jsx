@@ -13,7 +13,8 @@ import {
     FormControlLabel,
     Button,
     Typography,
-    CircularProgress
+    CircularProgress,
+    FormHelperText
 } from '@mui/material';
 import { API_URL } from '../../config';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -24,13 +25,16 @@ import DateField from '../../components/DateField/DateField';
 import './Registration.css';
 import OtpDialog from '../../components/Dialogs/OtpDialog/OtpDialog';
 
+
 export default function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [formData, setformData] = useState({
         name: "",
         email: "",
         username: "",
         password: "",
+        confirmPassword: "",
         contactNumber: "",
         currentJob: "",
         address: "",
@@ -48,16 +52,20 @@ export default function RegisterForm() {
     const [otpDialogOpen, setOtpDialogOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleChange = (evt) => {
         const fieldName = evt.target.name;
-        const value = evt.target.value;
+        let value = evt.target.value;
+
+        if (fieldName === "governmentOfficial" || fieldName === "ismPassout" || fieldName === "kartavyaVolunteer") {
+            value = value === "true";
+        }
+
         setformData((currdata) => ({
             ...currdata,
-            [fieldName]: (fieldName === "governmentOfficial" || fieldName === "ismPassout" || fieldName === "kartavyaVolunteer") ? value === "true" : value,
+            [fieldName]: value,
         }));
     };
 
@@ -67,14 +75,27 @@ export default function RegisterForm() {
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
+    const handleClickShowConfirmPassword = () => setShowConfirmPassword(prev => !prev);
+
+    const passwordsMatch = () => formData.password === formData.confirmPassword;
+
     const handleSubmit = async (evt) => {
         evt.preventDefault();
-        setLoading(true);
-        setSuccess(false);
         setError(false);
+        setErrorMessage('');
+        setSuccess(false);
+
+        if (!passwordsMatch()) {
+            setError(true);
+            setErrorMessage("Passwords do not match.");
+            return;
+        }
+
+        setLoading(true);
 
         const ReactFormData = new FormData();
         for (let prop in formData) {
+            if (prop === 'confirmPassword') continue; 
             ReactFormData.append(prop, formData[prop]);
         }
         if (profilePicture) {
@@ -90,15 +111,15 @@ export default function RegisterForm() {
             setLoading(false);
             if (response.status === 201) {
                 setSuccess(true);
-                setOtpDialogOpen(true); // Open the OTP dialog after successful registration
+                setOtpDialogOpen(true);
             } else {
                 setError(true);
-                setErrorMessage(response.data.message);
+                setErrorMessage(response.data?.message || "Registration failed");
             }
         } catch (err) {
             setLoading(false);
             setError(true);
-            setErrorMessage(err.response ? err.response.data.error : "Some Error Occured");
+            setErrorMessage(err.response?.data?.error || "Some Error Occurred");
         }
     };
 
@@ -112,7 +133,6 @@ export default function RegisterForm() {
         if (AuthVerify(token)) navigate('/');
         setLoading(false);
     }, []);
-
 
     return (
         <Box className="split-registration-container">
@@ -129,6 +149,7 @@ export default function RegisterForm() {
                     <Typography variant="h1" className="form-title section-title">
                         Register
                     </Typography>
+
                     {[
                         { name: 'name', label: 'Name', type: 'text', required: true },
                         { name: 'email', label: 'Email', type: 'email', required: true },
@@ -162,8 +183,32 @@ export default function RegisterForm() {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
+                            required
                         />
                     </FormControl>
+
+                    <FormControl className="custom-textfield" variant="outlined" fullWidth error={!!(formData.confirmPassword && !passwordsMatch())}>
+                        <InputLabel required>Confirm Password</InputLabel>
+                        <OutlinedInput
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton onClick={handleClickShowConfirmPassword} edge="end">
+                                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                            label="Confirm Password"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            required
+                        />
+                            {formData.confirmPassword && !passwordsMatch() && (
+                            <FormHelperText>Passwords do not match.</FormHelperText>
+                            )}
+                            </FormControl>
+
 
                     <div className="file-input-container">
                         <label className="file-input-label">
@@ -234,8 +279,6 @@ export default function RegisterForm() {
                             <FormControlLabel value="false" control={<Radio />} label="No" />
                         </RadioGroup>
                     </FormControl>
-
-
 
                     <FormControl component="fieldset" className="custom-textfield-2" fullWidth>
                         <FormLabel required>IIT ISM Passout</FormLabel>
@@ -319,8 +362,8 @@ export default function RegisterForm() {
                     <Button
                         className="submit-button"
                         variant="contained"
-                        onClick={handleSubmit}
-                        disabled={loading || success}
+                        type="submit"
+                        disabled={loading || success || (formData.confirmPassword && !passwordsMatch())}
                     >
                         {loading ? (
                             <>
