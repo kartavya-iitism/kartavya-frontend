@@ -271,6 +271,11 @@ const About = () => {
                                                 <Typography variant="h6" className="media-title">
                                                     {photo.title}
                                                 </Typography>
+                                                <div variant="h2" className="media-description-container">
+                                                    <div className='media-description-text'>
+                                                        {photo.description}
+                                                    </div>             
+                                                </div>
                                                 <div className="media-metadata">
                                                     <CalendarTodayIcon fontSize="small" />
                                                     <Typography variant="body2" className="media-date">
