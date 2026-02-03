@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     MDBNavbar,
     MDBContainer,
@@ -11,13 +11,45 @@ import {
     MDBNavbarNav,
     MDBIcon,
 } from 'mdb-react-ui-kit';
+import axios from 'axios';
 import './Navbar.css'
 import logo from '../../assets/kartavya-logo.png'
 import { useNavigate } from "react-router-dom";
+import { API_URL } from '../../config';
 
 export default function App() {
     const [openNavNoTogglerThird, setOpenNavNoTogglerThird] = useState(false);
+    const [hasPreviousDonation, setHasPreviousDonation] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Fetch user data from API if logged in
+        const fetchUserDonations = async () => {
+            if (localStorage.token) {
+                try {
+                    const response = await axios.get(
+                        `${API_URL}/user/getuser`,
+                        {
+                            headers: { Authorization: `Bearer ${localStorage.token}` }
+                        }
+                    );
+
+                    if (response.data) {
+                        // Check if donations array exists and is not empty
+                        const hasDonations = response.data.donations && response.data.donations.length > 0;
+                        setHasPreviousDonation(hasDonations);
+                    }
+                } catch (error) {
+                    console.error('Error fetching user donations:', error);
+                    setHasPreviousDonation(false);
+                }
+            } else {
+                setHasPreviousDonation(false);
+            }
+        };
+
+        fetchUserDonations();
+    }, [localStorage.token]);
 
     const handleLogout = () => {
         localStorage.clear();
@@ -29,8 +61,6 @@ export default function App() {
         setOpenNavNoTogglerThird(false);
         navigate(path);
     }
-
-
 
     return (
         <>
@@ -105,9 +135,15 @@ export default function App() {
                                 </>
                             }
                             <MDBNavbarItem className="d-flex justify-content-center">
-                                <MDBBtn style={{ width: '110px' }} onClick={() => handleNavigate('/donate')} className='btn-donate me-2' type='button'>
-                                    <span>Donate</span>
-                                </MDBBtn>
+                                {localStorage.token && hasPreviousDonation ? (
+                                    <MDBBtn style={{ width: '130px' }} onClick={() => handleNavigate('/redonate')} className='btn-donate me-2' type='button'>
+                                        <span>Re-Donate</span>
+                                    </MDBBtn>
+                                ) : (
+                                    <MDBBtn style={{ width: '110px' }} onClick={() => handleNavigate('/donate')} className='btn-donate me-2' type='button'>
+                                        <span>Donate</span>
+                                    </MDBBtn>
+                                )}
                             </MDBNavbarItem>
                         </MDBNavbarNav>
                     </MDBCollapse>

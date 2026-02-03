@@ -24,6 +24,7 @@ import LandingPage from "./pages/Landing/Landing";
 import RegisterForm from "./pages/Registration/Registration";
 import LoginForm from "./pages/Login/Login";
 import DonationForm from "./pages/Donate/Donate";
+import RedonateForm from "./pages/Redonate/Redonate";
 import About from "./pages/About/About";
 import Works from "./pages/Works/Works";
 import Contact from "./pages/Contact/Contact";
@@ -43,6 +44,7 @@ const routes = {
     { path: "/register", element: <RegisterForm />, title: "Register | Kartavya" },
     { path: "/login", element: <LoginForm />, title: "Login | Kartavya" },
     { path: "/donate", element: <DonationForm />, title: "Donate | Kartavya" },
+    { path: "/redonate", element: <RedonateForm />, title: "Re-Donate | Kartavya" },
     { path: "/donate-item", element: <DonateItem />, title: "Donate Items | Kartavya" },
     { path: "/about", element: <About />, title: "About Us | Kartavya" },
     { path: "/work", element: <Works />, title: "Our Work | Kartavya" },

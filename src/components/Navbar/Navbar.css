@@ -29,11 +29,9 @@
     height: 2px;
     bottom: 0;
     left: 0;
-    background: linear-gradient(
-        90deg,
-        var(--color-accent),
-        var(--color-secondary)
-    );
+    background: linear-gradient(90deg,
+            var(--color-accent),
+            var(--color-secondary));
     transition: width 0.3s ease;
 }
 
@@ -84,16 +82,15 @@
 
 /* Donate Button */
 .btn-donate {
-    background: linear-gradient(
-        45deg,
-        var(--color-orange-dark),
-        var(--color-orange)
-    ) !important;
+    background: linear-gradient(45deg,
+            var(--color-orange-dark),
+            var(--color-orange)) !important;
     border: none !important;
-    padding: 10px 25px !important;
+    padding: 10px 24px !important;
     color: white !important;
     box-shadow: 0 4px 15px rgba(244, 81, 30, 0.3) !important;
     font-weight: 500 !important;
+    white-space: nowrap !important;
 }
 
 .btn-donate:hover {

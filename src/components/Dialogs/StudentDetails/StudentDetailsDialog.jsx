@@ -23,7 +23,11 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
 
     StatusChip.propTypes = {
         label: PropTypes.string.isRequired,
-        value: PropTypes.bool.isRequired
+        value: PropTypes.bool
+    };
+
+    StatusChip.defaultProps = {
+        value: false
     };
 
     const formatCurrency = (amount) => {
@@ -123,12 +127,12 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
                             Status & Documents
                         </Typography>
                         <Box className="status-chips">
-                            <StatusChip label={student.activeStatus ? "Active" : "Inactive"} value={student.activeStatus} />
-                            <StatusChip label="Aadhar" value={student.aadhar} />
-                            <StatusChip label="Domicile" value={student.domicile} />
-                            <StatusChip label="Birth Certificate" value={student.birthCertificate} />
-                            <StatusChip label="Disability" value={student.disability} />
-                            <StatusChip label="Single Parent" value={student.singleParent} />
+                            <StatusChip label={student.activeStatus ? "Active" : "Inactive"} value={!!student.activeStatus} />
+                            <StatusChip label="Aadhar" value={!!student.aadhar} />
+                            <StatusChip label="Domicile" value={!!student.domicile} />
+                            <StatusChip label="Birth Certificate" value={!!student.birthCertificate} />
+                            <StatusChip label="Disability" value={!!student.disability} />
+                            <StatusChip label="Single Parent" value={!!student.singleParent} />
                         </Box>
                         {/* {student.sponsorshipStatus && (
                             <Typography variant="body1" className="sponsorship-info">

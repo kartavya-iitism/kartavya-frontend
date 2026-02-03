@@ -38,6 +38,7 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [selectedDonation, setSelectedDonation] = useState(null);
     const [error, setError] = useState('');
+    const [hasPreviousDonation, setHasPreviousDonation] = useState(false);
     const handleOpenDialog = (donation) => setSelectedDonation(donation);
     const handleCloseDialog = () => setSelectedDonation(null);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -68,6 +69,36 @@ const Dashboard = () => {
 
         fetchDashboardData();
     }, []);
+
+    useEffect(() => {
+        // Fetch user data from API if logged in
+        const fetchUserDonations = async () => {
+            if (localStorage.token) {
+                try {
+                    const response = await axios.get(
+                        `${API_URL}/user/getuser`,
+                        {
+                            headers: { Authorization: `Bearer ${localStorage.token}` }
+                        }
+                    );
+
+                    if (response.data) {
+                        // Check if donations array exists and is not empty
+                        const hasDonations = response.data.donations && response.data.donations.length > 0;
+                        setHasPreviousDonation(hasDonations);
+                    }
+                } catch (error) {
+                    console.error('Error fetching user donations:', error);
+                    setHasPreviousDonation(false);
+                }
+            } else {
+                setHasPreviousDonation(false);
+            }
+        };
+
+        fetchUserDonations();
+    }, [localStorage.token]);
+
 
     const handleDeleteDocument = async () => {
         setDeleting(true);
@@ -222,13 +253,24 @@ const Dashboard = () => {
                                 <Typography variant="body1" className="card-content">
                                     Continue supporting our mission to educate and empower
                                 </Typography>
-                                <Button
-                                    component={Link}
-                                    to="/donate"
-                                    className="action-button donate-button"
-                                >
-                                    Donate Now
-                                </Button>
+
+                                {localStorage.token && hasPreviousDonation ? (
+                                    <Button
+                                        component={Link}
+                                        to="/redonate"
+                                        className="action-button donate-button"
+                                    >
+                                        Re-Donate Now
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        component={Link}
+                                        to="/donate"
+                                        className="action-button donate-button"
+                                    >
+                                        Donate Now
+                                    </Button>
+                                )}
                             </Paper>
 
                             <Paper className="action-card profile-card">
@@ -418,11 +460,13 @@ const Dashboard = () => {
                                     </Typography>
                                 )}
                             </Stack>
-                            <StudentDetailsDialog
-                                open={Boolean(selectedStudent)}
-                                onClose={handleCloseStudentDialog}
-                                student={selectedStudent || {}}
-                            />
+                            {selectedStudent && (
+                                <StudentDetailsDialog
+                                    open={Boolean(selectedStudent)}
+                                    onClose={handleCloseStudentDialog}
+                                    student={selectedStudent}
+                                />
+                            )}
                         </Paper>
 
                         <Paper className="user-documents">
