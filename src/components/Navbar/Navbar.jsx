@@ -12,8 +12,8 @@ import {
     MDBIcon,
 } from 'mdb-react-ui-kit';
 import axios from 'axios';
-import './Navbar.css'
-import logo from '../../assets/kartavya-logo.png'
+import './Navbar.css';
+import logo from '../../assets/kartavya-logo.png';
 import { useNavigate } from "react-router-dom";
 import { API_URL } from '../../config';
 
@@ -23,20 +23,21 @@ export default function App() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch user data from API if logged in
         const fetchUserDonations = async () => {
             if (localStorage.token) {
                 try {
                     const response = await axios.get(
-                        `${API_URL}/user/getuser`,
+                        `${API_URL}/user/dashboard`,
                         {
                             headers: { Authorization: `Bearer ${localStorage.token}` }
                         }
                     );
 
                     if (response.data) {
-                        // Check if donations array exists and is not empty
-                        const hasDonations = response.data.donations && response.data.donations.length > 0;
+                        const hasDonations =
+                            response.data.totalDonations &&
+                            response.data.totalDonations > 0;
+
                         setHasPreviousDonation(hasDonations);
                     }
                 } catch (error) {
@@ -55,33 +56,40 @@ export default function App() {
         localStorage.clear();
         setOpenNavNoTogglerThird(false);
         window.location.reload();
-    }
+    };
 
     const handleNavigate = (path) => {
         setOpenNavNoTogglerThird(false);
         navigate(path);
-    }
+    };
 
     return (
         <>
-            <MDBNavbar sticky expand='lg' bgColor='light' style={{ "--mdb-bg-opacity": "0.9", 'backdropFilter': 'blur(2px)' }} >
+            <MDBNavbar
+                sticky
+                expand='lg'
+                bgColor='light'
+                style={{ "--mdb-bg-opacity": "0.9", backdropFilter: 'blur(2px)' }}
+            >
                 <MDBContainer fluid className="d-flex justify-content-between">
-                    <MDBNavbarBrand href='/' onClick={() => handleNavigate('/')} className="flex-shrink-0">
+
+                    {/* Logo */}
+                    <MDBNavbarBrand onClick={() => handleNavigate('/')} className="flex-shrink-0">
                         <img
                             src={logo}
                             height='110'
-                            style={{ 'margin': '-20px 0 -30px 10px' }}
-                            alt=''
+                            style={{ margin: '-20px 0 -30px 10px' }}
+                            alt='Kartavya Logo'
                             loading='lazy'
                         />
                     </MDBNavbarBrand>
+
+                    {/* Toggle Button */}
                     <MDBNavbarToggler
                         type='button'
-                        data-target='#navbarTogglerDemo03'
-                        aria-controls='navbarTogglerDemo03'
                         aria-expanded='false'
                         aria-label='Toggle navigation'
-                        style={{ 'color': '#24a845' }}
+                        style={{ color: '#24a845' }}
                         onClick={(e) => {
                             e.stopPropagation();
                             setOpenNavNoTogglerThird(!openNavNoTogglerThird);
@@ -89,58 +97,90 @@ export default function App() {
                     >
                         <MDBIcon icon='bars' fas />
                     </MDBNavbarToggler>
+
+                    {/* Menu */}
                     <MDBCollapse navbar open={openNavNoTogglerThird} className="flex-grow-0">
                         <MDBNavbarNav className="justify-content-lg-end justify-content-center align-items-center text-center">
+
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/' onClick={() => handleNavigate('/')}>
-                                    Home
-                                </MDBNavbarLink>
+                                <MDBNavbarLink onClick={() => handleNavigate('/')}>Home</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/about' onClick={() => handleNavigate('/about')}>About Us</MDBNavbarLink>
+                                <MDBNavbarLink onClick={() => handleNavigate('/about')}>About Us</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/work' onClick={() => handleNavigate('/work')}>Our Work</MDBNavbarLink>
+                                <MDBNavbarLink onClick={() => handleNavigate('/work')}>Our Work</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/news' onClick={() => handleNavigate('/news')}>Impact Stories</MDBNavbarLink>
+                                <MDBNavbarLink onClick={() => handleNavigate('/news')}>Impact Stories</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/faqs' onClick={() => handleNavigate('/faqs')}>FAQs</MDBNavbarLink>
+                                <MDBNavbarLink onClick={() => handleNavigate('/faqs')}>FAQs</MDBNavbarLink>
                             </MDBNavbarItem>
                             <MDBNavbarItem>
-                                <MDBNavbarLink href='/contact' onClick={() => handleNavigate('/contact')}>Contact Us</MDBNavbarLink>
-                            </MDBNavbarItem>
-                            <MDBNavbarItem>
-                                {localStorage.token ?
-                                    <MDBNavbarLink href={localStorage.role === 'admin' ? '/admin/general' : '/user/dash'} onClick={() => handleNavigate(localStorage.role === 'admin' ? '/admin/general' : '/user/dash')} tabIndex={-1} aria-disabled='true'>
-                                        {localStorage.role === 'admin' ? 'Settings' : 'Dashboard'}
-                                    </MDBNavbarLink> : <></>
-                                }
+                                <MDBNavbarLink onClick={() => handleNavigate('/contact')}>Contact Us</MDBNavbarLink>
                             </MDBNavbarItem>
 
-                            {localStorage.token ?
+                            {/* Dashboard */}
+                            {localStorage.token && (
+                                <MDBNavbarItem>
+                                    <MDBNavbarLink
+                                        onClick={() =>
+                                            handleNavigate(
+                                                localStorage.role === 'admin'
+                                                    ? '/admin/general'
+                                                    : '/user/dash'
+                                            )
+                                        }
+                                    >
+                                        {localStorage.role === 'admin' ? 'Settings' : 'Dashboard'}
+                                    </MDBNavbarLink>
+                                </MDBNavbarItem>
+                            )}
+
+                            {/* Login / Logout */}
+                            {localStorage.token ? (
                                 <MDBNavbarItem className="d-flex justify-content-center">
-                                    <MDBBtn outline style={{ width: '108px' }} onClick={handleLogout} color="danger" className='me-2' type='button'>
+                                    <MDBBtn
+                                        outline
+                                        style={{ width: '108px' }}
+                                        onClick={handleLogout}
+                                        color="danger"
+                                        className='me-2'
+                                    >
                                         Logout
                                     </MDBBtn>
                                 </MDBNavbarItem>
-                                :
-                                <>
-                                    <MDBNavbarItem className="d-flex justify-content-center">
-                                        <MDBBtn outline style={{ width: '110px' }} onClick={() => handleNavigate('/login')} color="success" className='me-2' type='button'>
-                                            Login
-                                        </MDBBtn>
-                                    </MDBNavbarItem>
-                                </>
-                            }
+                            ) : (
+                                <MDBNavbarItem className="d-flex justify-content-center">
+                                    <MDBBtn
+                                        outline
+                                        style={{ width: '110px' }}
+                                        onClick={() => handleNavigate('/login')}
+                                        color="success"
+                                        className='me-2'
+                                    >
+                                        Login
+                                    </MDBBtn>
+                                </MDBNavbarItem>
+                            )}
+
+                            {/* Donate / Re-Donate */}
                             <MDBNavbarItem className="d-flex justify-content-center">
                                 {localStorage.token && hasPreviousDonation ? (
-                                    <MDBBtn style={{ width: '130px' }} onClick={() => handleNavigate('/redonate')} className='btn-donate me-2' type='button'>
+                                    <MDBBtn
+                                        style={{ width: '130px' }}
+                                        onClick={() => handleNavigate('/redonate')}
+                                        className='btn-donate me-2'
+                                    >
                                         <span>Re-Donate</span>
                                     </MDBBtn>
                                 ) : (
-                                    <MDBBtn style={{ width: '110px' }} onClick={() => handleNavigate('/donate')} className='btn-donate me-2' type='button'>
+                                    <MDBBtn
+                                        style={{ width: '110px' }}
+                                        onClick={() => handleNavigate('/donate')}
+                                        className='btn-donate me-2'
+                                    >
                                         <span>Donate</span>
                                     </MDBBtn>
                                 )}
