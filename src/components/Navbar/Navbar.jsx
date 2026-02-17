@@ -105,9 +105,15 @@ export default function App() {
                                 </>
                             }
                             <MDBNavbarItem className="d-flex justify-content-center">
-                                <MDBBtn style={{ width: '110px' }} onClick={() => handleNavigate('/donate')} className='btn-donate me-2' type='button'>
-                                    <span>Donate</span>
-                                </MDBBtn>
+                                {(
+                                    <MDBBtn
+                                        style={{ width: '110px' }}
+                                        onClick={() => handleNavigate('/donate')}
+                                        className='btn-donate me-2'
+                                    >
+                                        <span>Donate</span>
+                                    </MDBBtn>
+                                )}
                             </MDBNavbarItem>
                         </MDBNavbarNav>
                     </MDBCollapse>

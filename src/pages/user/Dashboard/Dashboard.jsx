@@ -204,32 +204,30 @@ const Dashboard = () => {
                             ))}
                         </Stack>
 
-                        <Stack
-                            direction={{ xs: 'column', md: 'row' }}
-                            spacing={4}
-                            className="dashboard-actions"
-                            justifyContent="center"
-                            alignItems="center"
-                            sx={{
-                                width: '100%',
-                                margin: '0 auto'
-                            }}
-                        >
-                            <Paper className="action-card profile-card">
-                                <Typography variant="h4" className="card-title">
-                                    Make a New Donation
-                                </Typography>
-                                <Typography variant="body1" className="card-content">
-                                    Continue supporting our mission to educate and empower
-                                </Typography>
-                                <Button
-                                    component={Link}
-                                    to="/donate"
-                                    className="action-button donate-button"
-                                >
-                                    Donate Now
-                                </Button>
-                            </Paper>
+                {/* Donate + Profile */}
+                <Stack
+                    direction={{ xs: "column", md: "row" }}
+                    spacing={4}
+                    justifyContent="center"
+                    alignItems="center"
+                    className="dashboard-actions"
+                >
+                    <Paper className="action-card profile-card">
+                        <Typography variant="h4">Make a New Donation</Typography>
+                        <Typography variant="body1">
+                            Continue supporting children's education
+                        </Typography>
+
+                        {hasPreviousDonation ? (
+                            <Button component={Link} to="/redonate" className="action-button donate-button">
+                                Renewal Now
+                            </Button>
+                        ) : (
+                            <Button component={Link} to="/donate" className="action-button donate-button">
+                                Donate Now
+                            </Button>
+                        )}
+                    </Paper>
 
                             <Paper className="action-card profile-card">
                                 <Typography variant="h4" className="card-title">

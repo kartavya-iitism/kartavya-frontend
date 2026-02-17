@@ -6,6 +6,7 @@ import {
 import axios from 'axios';
 import ConfirmDialog from '../../components/Dialogs/ConfirmDialog/ConfirmDialog';
 import DateField from '../../components/DateField/DateField';
+import { useNavigate } from 'react-router-dom';
 import { fetchContent } from '../../helper/contentFetcher';
 import { API_URL } from '../../config';
 import qr from "../../assets/qr.png"
@@ -39,6 +40,9 @@ export default function DonationForm() {
         GUEST: 5000
     };
 
+    const [hasSponsoredStudents, setHasSponsoredStudents] = useState(false);
+    const navigate = useNavigate();
+
     useEffect(() => {
         const loadContent = async () => {
             try {
@@ -52,18 +56,40 @@ export default function DonationForm() {
         };
         loadContent();
 
-        setLoading(true);
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        setformData({
-            name: storedUser?.name || '',
-            contactNumber: storedUser?.contactNumber || '',
-            email: storedUser?.email || '',
-            numChild: 0,
-            extamount: '0',
-            amount: '0',
-            donationDate: today
-        });
-        setLoading(false);
+        const checkUserStatus = async () => {
+            setLoading(true);
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+
+            if (localStorage.token) {
+                try {
+                    const response = await axios.get(
+                        `${API_URL}/user/dashboard`,
+                        {
+                            headers: { Authorization: `Bearer ${localStorage.token}` }
+                        }
+                    );
+
+                    if (response.data && response.data.sponsoredStudents && response.data.sponsoredStudents.length > 0) {
+                        setHasSponsoredStudents(true);
+                    }
+                } catch (error) {
+                    console.error('Error fetching user details:', error);
+                }
+            }
+
+            setformData({
+                name: storedUser?.name || '',
+                contactNumber: storedUser?.contactNumber || '',
+                email: storedUser?.email || '',
+                numChild: 0,
+                extamount: '0',
+                amount: '0',
+                donationDate: today
+            });
+            setLoading(false);
+        };
+
+        checkUserStatus();
     }, []);
 
     useEffect(() => {
@@ -181,6 +207,31 @@ export default function DonationForm() {
                         </p>
                     )}
                 </Typography>
+
+                {hasSponsoredStudents && (
+                    <Alert
+                        severity="success"
+                        variant="filled"
+                        className="renewal-banner"
+                        sx={{
+                            '& .MuiAlert-message': { width: '100%' }
+                        }}
+                    >
+                        <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" flexWrap="wrap" gap={2}>
+                            <Typography variant="body1" style={{ fontWeight: 500 }} className='renewal-text'>
+                                You are already sponsoring students. Would you like to renew your donation?
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                className="renewal-button"
+                                size="small"
+                                onClick={() => navigate('/redonate')}
+                            >
+                                Go to Renewal
+                            </Button>
+                        </Box>
+                    </Alert>
+                )}
 
                 <div className="steps-wrapper">
                     {steps.map((step, index) => (
