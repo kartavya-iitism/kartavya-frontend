@@ -40,7 +40,7 @@ export default function DonationForm() {
         GUEST: 5000
     };
 
-    const [hasSponsoredStudents, setHasSponsoredStudents] = useState(true);
+    const [hasSponsoredStudents, setHasSponsoredStudents] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
