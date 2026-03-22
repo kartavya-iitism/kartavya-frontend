@@ -211,14 +211,16 @@ const Dashboard = () => {
                     direction={{ xs: "column", md: "row" }}
                     spacing={4}
                     justifyContent="center"
-                    alignItems="center"
+                    alignItems="stretch"
                     className="dashboard-actions"
                 >
                     <Paper className="action-card profile-card">
-                        <Typography variant="h4">Make a New Donation</Typography>
-                        <Typography variant="body1">
-                            Continue supporting children's education
-                        </Typography>
+                        <Box>
+                            <Typography variant="h4" className="card-title">Make a New Donation</Typography>
+                            <Typography variant="body1" className="card-content">
+                                Continue supporting children's education
+                            </Typography>
+                        </Box>
 
                         {hasPreviousDonation ? (
                             <Button component={Link} to="/redonate" className="action-button donate-button">
@@ -231,22 +233,24 @@ const Dashboard = () => {
                         )}
                     </Paper>
 
-                            <Paper className="action-card profile-card">
-                                <Typography variant="h4" className="card-title">
-                                    Your Profile
-                                </Typography>
-                                <Typography variant="body1" className="card-content">
-                                    View and update your account details
-                                </Typography>
-                                <Button
-                                    component={Link}
-                                    to="/user/profile"
-                                    className="action-button profile-button"
-                                >
-                                    View Profile
-                                </Button>
-                            </Paper>
-                        </Stack>
+                    <Paper className="action-card profile-card">
+                        <Box>
+                            <Typography variant="h4" className="card-title">
+                                Your Profile
+                            </Typography>
+                            <Typography variant="body1" className="card-content">
+                                View and update your account details
+                            </Typography>
+                        </Box>
+                        <Button
+                            component={Link}
+                            to="/user/profile"
+                            className="action-button profile-button"
+                        >
+                            View Profile
+                        </Button>
+                    </Paper>
+                </Stack>
 
                         <Paper className="recent-donations">
                             <Typography variant="h4" className="section-title">
