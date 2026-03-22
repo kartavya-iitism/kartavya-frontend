@@ -24,6 +24,7 @@ import LandingPage from "./pages/Landing/Landing";
 import RegisterForm from "./pages/Registration/Registration";
 import LoginForm from "./pages/Login/Login";
 import DonationForm from "./pages/Donate/Donate";
+import RedonateForm from "./pages/Redonate/Redonate";
 import About from "./pages/About/About";
 import Works from "./pages/Works/Works";
 import Contact from "./pages/Contact/Contact";
@@ -56,6 +57,7 @@ const routes = {
   user: [
     { path: "/user/profile", element: <Profile />, title: "My Profile | Kartavya" },
     { path: "/user/dash", element: <Dashboard />, title: "Dashboard | Kartavya" },
+    { path: "/redonate", element: <RedonateForm />, title: "Renewal | Kartavya" },
   ],
   admin: [
     { path: "/admin/dash", element: <AdminDashboard />, title: "Admin Dashboard | Kartavya" },

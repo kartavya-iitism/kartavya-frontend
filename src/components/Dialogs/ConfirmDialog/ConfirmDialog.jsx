@@ -4,14 +4,14 @@ import './ConfirmDialog.css';
 
 const ConfirmDialog = ({ open, onClose, onConfirm, formData, amount, loading, warningMessage, onReasonChange }) => {
     return (
-        <Dialog
-            open={open}
-            onClose={onClose}
-            className="confirm-dialog"
-        >
-            <DialogTitle className="dialog-title">
-                Confirm Donation Details
-            </DialogTitle>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      className="confirm-dialog"
+    >
+      <DialogTitle className="dialog-title" sx={{ backgroundColor: '#1b4d2e', color: 'white', textAlign: 'center', fontWeight: 'bold' }}>
+        Confirm Donation Details
+      </DialogTitle>
             <DialogContent className="dialog-content">
                 <Typography variant="body1">
                     <strong>Name:</strong> {formData.name}
@@ -98,11 +98,11 @@ ConfirmDialog.propTypes = {
         email: PropTypes.string,
         contactNumber: PropTypes.string,
         donationDate: PropTypes.string,
-        numChild: PropTypes.string,
-        extamount: PropTypes.string,
-        amount: PropTypes.string
+        numChild: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        extamount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     }).isRequired,
-    amount: PropTypes.string.isRequired,
+    amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     loading: PropTypes.bool.isRequired,
     warningMessage: PropTypes.string,
     onReasonChange: PropTypes.func

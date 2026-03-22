@@ -11,7 +11,7 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
         });
     };
 
-    const StatusChip = ({ label, value }) => (
+    const StatusChip = ({ label, value = false }) => (
         <Chip
             label={label}
             color={value ? "success" : "error"}
@@ -23,7 +23,7 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
 
     StatusChip.propTypes = {
         label: PropTypes.string.isRequired,
-        value: PropTypes.bool.isRequired
+        value: PropTypes.bool
     };
 
     const formatCurrency = (amount) => {
@@ -156,30 +156,30 @@ StudentDetailsDialog.propTypes = {
     onClose: PropTypes.func.isRequired,
     student: PropTypes.shape({
         profilePhoto: PropTypes.string,
-        studentName: PropTypes.string.isRequired,
-        rollNumber: PropTypes.string.isRequired,
-        gender: PropTypes.string.isRequired,
-        dob: PropTypes.string.isRequired,
-        contactNumber: PropTypes.string.isRequired,
-        class: PropTypes.string.isRequired,
-        school: PropTypes.string.isRequired,
-        centre: PropTypes.string.isRequired,
-        address: PropTypes.string.isRequired,
-        fathersName: PropTypes.string.isRequired,
-        fathersOccupation: PropTypes.string.isRequired,
-        mothersName: PropTypes.string.isRequired,
-        mothersOccupation: PropTypes.string.isRequired,
-        currentSession: PropTypes.string.isRequired,
-        sponsorshipStatus: PropTypes.bool.isRequired,
+        studentName: PropTypes.string,
+        rollNumber: PropTypes.string,
+        gender: PropTypes.string,
+        dob: PropTypes.string,
+        contactNumber: PropTypes.string,
+        class: PropTypes.string,
+        school: PropTypes.string,
+        centre: PropTypes.string,
+        address: PropTypes.string,
+        fathersName: PropTypes.string,
+        fathersOccupation: PropTypes.string,
+        mothersName: PropTypes.string,
+        mothersOccupation: PropTypes.string,
+        currentSession: PropTypes.string,
+        sponsorshipStatus: PropTypes.bool,
         annualIncome: PropTypes.number,
         sponsorshipPercent: PropTypes.number,
         annualFees: PropTypes.number,
-        activeStatus: PropTypes.bool.isRequired,
-        aadhar: PropTypes.bool.isRequired,
-        domicile: PropTypes.bool.isRequired,
-        birthCertificate: PropTypes.bool.isRequired,
-        disability: PropTypes.bool.isRequired,
-        singleParent: PropTypes.bool.isRequired,
+        activeStatus: PropTypes.bool,
+        aadhar: PropTypes.bool,
+        domicile: PropTypes.bool,
+        birthCertificate: PropTypes.bool,
+        disability: PropTypes.bool,
+        singleParent: PropTypes.bool,
     }).isRequired
 };
 

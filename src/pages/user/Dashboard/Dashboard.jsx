@@ -162,6 +162,8 @@ const Dashboard = () => {
         }
     ];
 
+    const hasPreviousDonation = userStats.totalDonations > 0;
+
     return (
         <Box className="dashboard-container">
             <Container maxWidth="lg">
