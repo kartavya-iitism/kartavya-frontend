@@ -390,6 +390,11 @@ export default function RedonateForm() {
                 NEXT YEAR ({nextAcademicYear})
               </Button>
             </Box>
+            <Alert severity="info" style={{ marginTop: '30px', marginBottom: '15px' }}>
+              <Typography variant="body2">
+                <strong>Note:</strong> If you wish to increase the number of sponsored students, you may update the "Number of Children" field on this page.
+              </Typography>
+            </Alert>
           </Box>
 
           <div className="form-grid-donate">
