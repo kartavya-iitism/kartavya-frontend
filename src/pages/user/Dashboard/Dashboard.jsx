@@ -48,6 +48,7 @@ const Dashboard = () => {
     const [deleting, setDeleting] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [receiptDonation, setReceiptDonation] = useState(null);
+    const [hasSponsoredStudents, setHasSponsoredStudents] = useState(false);
 
 
     const handleOpenStudentDialog = (student) => setSelectedStudent(student);
@@ -60,6 +61,11 @@ const Dashboard = () => {
                 const response = await axios.get(`${API_URL}/user/dashboard`, {
                     headers: { Authorization: `Bearer ${localStorage.token}` }
                 });
+
+                if (response.data && response.data.sponsoredStudents && response.data.sponsoredStudents.length > 0) {
+                    setHasSponsoredStudents(true);
+                }
+
                 console.log(response.data)
                 setUserStats(response.data);
                 setIsAdmin(localStorage.role === 'admin');
@@ -165,9 +171,7 @@ const Dashboard = () => {
             description: "Donations in last 30 days"
         }
     ];
-
-    const hasPreviousDonation = userStats.totalDonations > 0;
-
+    
     return (
         <Box className="dashboard-container">
             <Container maxWidth="lg">
@@ -226,7 +230,7 @@ const Dashboard = () => {
                             </Typography>
                         </Box>
 
-                        {hasPreviousDonation ? (
+                        {hasSponsoredStudents ? (
                             <Button component={Link} to="/redonate" className="action-button donate-button">
                                 Renewal Now
                             </Button>
