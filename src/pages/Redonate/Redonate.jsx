@@ -185,6 +185,7 @@ export default function RedonateForm() {
 
   const handleOpenConfirm = (evt) => {
     evt.preventDefault();
+    if (success) return;
     setOpenConfirmDialog(true);
   };
 
@@ -205,9 +206,9 @@ export default function RedonateForm() {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    if (success) return;
     setOpenConfirmDialog(false);
     setLoading(true);
-    setSuccess(false);
     setError(false);
 
     if (!localStorage.token && Number(formData.amount) > DONATION_LIMITS.GUEST) {
@@ -275,7 +276,7 @@ export default function RedonateForm() {
         {/* Sponsored Students */}
         {sponsoredStudents && sponsoredStudents.length > 0 && (
           <Paper elevation={3} className="sponsored-students-section" style={{ marginBottom: '30px', padding: '20px' }}>
-            <Typography variant="h5" style={{ marginBottom: '15px', fontFamily:"Playfair Display", fontWeight:"bold", color: "#1a4d2e"}}>
+            <Typography variant="h5" style={{ marginBottom: '15px', fontFamily: "Playfair Display", fontWeight: "bold", color: "#1a4d2e" }}>
               Your Sponsored Students ({sponsoredStudents.length})
             </Typography>
             <Grid container spacing={2}>
@@ -522,15 +523,17 @@ export default function RedonateForm() {
             type="submit"
             variant="contained"
             className="submit-button"
-            disabled={loading}
+            disabled={loading || success}
           >
             {loading ? (
               <>
                 <span className="button-text">Submit</span>
                 <CircularProgress size={24} className="button-loader" />
               </>
+            ) : success ? (
+              'Donation Submitted ✓'
             ) : (
-              'Complete Renewal'
+              'Complete Donation'
             )}
           </Button>
           {loading && (

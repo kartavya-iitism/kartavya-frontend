@@ -119,6 +119,8 @@ export default function DonationForm() {
 
     const handleOpenConfirm = (evt) => {
         evt.preventDefault();
+
+        if (success) return;
         setOpenConfirmDialog(true);
     };
 
@@ -139,9 +141,9 @@ export default function DonationForm() {
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();
+        if (success) return;
         setOpenConfirmDialog(false);
         setLoading(true);
-        setSuccess(false);
         setError(false);
 
         if (!localStorage.token && Number(formData.amount) > DONATION_LIMITS.GUEST) {
@@ -353,13 +355,15 @@ export default function DonationForm() {
                             type="submit"
                             variant="contained"
                             className="submit-button"
-                            disabled={loading}
+                            disabled={loading || success}
                         >
                             {loading ? (
                                 <>
                                     <span className="button-text">Submit</span>
                                     <CircularProgress size={24} className="button-loader" />
                                 </>
+                            ) : success ? (
+                                'Donation Submitted ✓'
                             ) : (
                                 'Complete Donation'
                             )}

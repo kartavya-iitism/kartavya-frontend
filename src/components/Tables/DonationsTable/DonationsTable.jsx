@@ -257,27 +257,61 @@ const DonationsTable = () => {
             maximizable
             draggable={false}
             resizable={false}
+            style={{
+                width: '98vw',
+                height: '98vh',
+                maxWidth: '1600px'
+            }}
+            contentStyle={{
+                height: 'calc(98vh - 120px)',
+                padding: '0',
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column'
+            }}
         >
-            <div className="receipt-container">
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+                width: '100%'
+            }}>
                 {selectedReceipt && (
                     <>
                         <iframe
                             src={selectedReceipt}
                             title="Receipt Preview"
                             allowFullScreen
+                            style={{
+                                flex: 1,
+                                width: '100%',
+                                height: '100%',
+                                minHeight: '0',
+                                border: 'none',
+                                overflow: 'auto'
+                            }}
                         />
-                        <div className="receipt-actions">
+                        <div style={{
+                            display: 'flex',
+                            gap: '12px',
+                            padding: '12px 15px',
+                            backgroundColor: '#f5f5f5',
+                            borderTop: '1px solid #ddd',
+                            flexShrink: 0
+                        }}>
                             <Button
                                 label="Open in New Tab"
                                 icon="pi pi-external-link"
                                 onClick={() => window.open(selectedReceipt, '_blank')}
                                 className="p-button-secondary"
+                                style={{ flex: 1 }}
                             />
                             <Button
                                 label="Download"
                                 icon="pi pi-download"
                                 onClick={() => window.open(selectedReceipt, '_blank', 'download')}
                                 className="p-button-primary"
+                                style={{ flex: 1 }}
                             />
                         </div>
                     </>
