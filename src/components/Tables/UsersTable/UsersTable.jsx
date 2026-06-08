@@ -20,6 +20,7 @@ const UsersTable = () => {
     const [userDetailsDialog, setUserDetailsDialog] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const toast = useRef(null);
+    const fileInputRef = useRef(null);
     const [promoteDialog, setPromoteDialog] = useState(false);
     const [selectedPromoteUser, setSelectedPromoteUser] = useState(null);
     const [promoting, setPromoting] = useState(false);
@@ -31,8 +32,9 @@ const UsersTable = () => {
     const [demoting, setDemoting] = useState(false);
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [emailDialog, setEmailDialog] = useState(false);
-    const [emailData, setEmailData] = useState({ subject: '', message: '' });
+    const [emailData, setEmailData] = useState({ subject: '', message: '', attachments: [] });
     const [sending, setSending] = useState(false);
+    const [attachmentError, setAttachmentError] = useState('');
 
     const roleOptions = [
         { label: 'Admin', value: 'admin' },
@@ -44,16 +46,67 @@ const UsersTable = () => {
     ];
 
 
+    const handleFileAttachment = (e) => {
+        const files = e.target.files;
+        setAttachmentError('');
+
+        if (!files || files.length === 0) return;
+
+        const currentCount = emailData.attachments.length;
+        const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg'];
+        const maxSize = 5 * 1024 * 1024;
+        const maxFiles = 5;
+
+        const newFiles = Array.from(files).filter(file => {
+            if (currentCount + emailData.attachments.filter(f => f === file).length >= maxFiles) {
+                setAttachmentError(`Maximum ${maxFiles} files allowed`);
+                return false;
+            }
+
+            if (!allowedTypes.includes(file.type)) {
+                setAttachmentError('Only PDF and JPG files are allowed');
+                return false;
+            }
+
+            if (file.size > maxSize) {
+                setAttachmentError(`${file.name} exceeds 5MB limit`);
+                return false;
+            }
+
+            return true;
+        });
+
+        if (newFiles.length > 0) {
+            const totalFiles = currentCount + newFiles.length;
+            if (totalFiles > maxFiles) {
+                setAttachmentError(`Can only add ${maxFiles - currentCount} more file(s)`);
+                return;
+            }
+            setEmailData(prev => ({
+                ...prev,
+                attachments: [...prev.attachments, ...newFiles]
+            }));
+        }
+    };
+
     const handleSendEmail = async (users) => {
         setSending(true);
         try {
             const emails = Array.isArray(users) ? users.map(u => u.email) : [users.email];
-            await axios.post(`${API_URL}/user/send-mails`, {
-                users: emails,
-                subject: emailData.subject,
-                message: emailData.message
-            }, {
-                headers: { Authorization: `Bearer ${localStorage.token}` }
+            const formData = new FormData();
+            formData.append('users', JSON.stringify(emails));
+            formData.append('subject', emailData.subject);
+            formData.append('message', emailData.message);
+
+            emailData.attachments.forEach((file, index) => {
+                formData.append(`attachment_${index}`, file);
+            });
+
+            await axios.post(`${API_URL}/user/send-mails`, formData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
             });
 
             toast.current.show({
@@ -73,7 +126,11 @@ const UsersTable = () => {
         } finally {
             setSending(false);
             setEmailDialog(false);
-            setEmailData({ subject: '', message: '' });
+            setEmailData({ subject: '', message: '', attachments: [] });
+            setAttachmentError('');
+            if (fileInputRef.current) {
+                fileInputRef.current.value = '';
+            }
         }
     };
 
@@ -380,8 +437,61 @@ const UsersTable = () => {
                     value={emailData.message}
                     onChange={(e) => setEmailData(prev => ({ ...prev, message: e.target.value }))}
                     rows={5}
-                    className="w-full"
+                    className="w-full mb-3"
                 />
+                <div className="mb-3">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                        <label style={{ fontWeight: '600', margin: 0 }}>Attach Files (PDF/JPG)</label>
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            multiple
+                            accept=".pdf,.jpg,.jpeg"
+                            onChange={handleFileAttachment}
+                            style={{ display: 'none' }}
+                            disabled={emailData.attachments.length >= 5}
+                        />
+                        <Button
+                            icon="pi pi-upload"
+                            label={emailData.attachments.length >= 5 ? 'Max Files Reached' : 'Choose File(s)'}
+                            onClick={() => fileInputRef.current?.click()}
+                            disabled={emailData.attachments.length >= 5}
+                            className="p-2 rounded"
+                            style={{ marginLeft: 'auto' }}
+                        />
+                    </div>
+                    {emailData.attachments.length > 0 && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                            {emailData.attachments.map((file, index) => (
+                                <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem', backgroundColor: '#f0f0f0', borderRadius: '4px' }}>
+                                    <i className="pi pi-file" style={{ color: '#4CAF50' }} />
+                                    <span style={{ fontSize: '0.875rem', color: '#333', flex: 1 }}>
+                                        {file.name}
+                                    </span>
+                                    <span style={{ fontSize: '0.75rem', color: '#999' }}>
+                                        {(file.size / 1024 / 1024).toFixed(2)} MB
+                                    </span>
+                                    <Button
+                                        icon="pi pi-times"
+                                        className="p-button-rounded p-button-text p-button-plain p-button-sm"
+                                        onClick={() => {
+                                            setEmailData(prev => ({
+                                                ...prev,
+                                                attachments: prev.attachments.filter((_, i) => i !== index)
+                                            }));
+                                            setAttachmentError('');
+                                        }}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    {attachmentError && (
+                        <div style={{ color: '#f44336', marginTop: '0.5rem', fontSize: '0.875rem' }}>
+                            {attachmentError}
+                        </div>
+                    )}
+                </div>
             </div>
         </Dialog>
     );
